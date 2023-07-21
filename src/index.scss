@@ -1,5 +1,6 @@
 :root {
-  --border-radius: 20px;
+  --app-border-radius: 20px;
+  --border-radius: 4px;
   --background: #000;
   --background-inverse: #fff;
   --main-background: #202020;
@@ -7,16 +8,28 @@
   --titlebar-height: 1.2rem;
   --content-offset: 0.5rem;
   --text: white;
+  --page-padding: 1rem;
+
+  .active-route {
+    color: #fff !important;
+
+    svg {
+      fill: #fff !important;
+    }
+  }
 }
 
 :root[theme="light"] {
   --background: white;
   --text: black;
-}
 
-:root[theme="dark"] {
-  --background: black;
-  --text: white;
+  .active-route {
+    color: #4f4f4f !important;
+
+    svg {
+      fill: #4f4f4f !important;
+    }
+  }
 }
 
 body,
@@ -25,7 +38,7 @@ html {
   width: 100%;
   margin: 0;
   padding: 0;
-  border-radius: var(--border-radius);
+  border-radius: var(--app-border-radius);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;

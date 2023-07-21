@@ -5,13 +5,13 @@
   right: var(--content-offset);
   width: calc(100% - var(--drawer-width) - var(--content-offset));
   z-index: 100;
-  border-radius: var(--border-radius);
+  border-radius: var(--app-border-radius);
   background-color: var(--main-background);
   overflow: hidden;
 
   > div {
     height: 100%;
     background-color: #202020;
-    color: #fff;
+    color: var(--text);
   }
 }

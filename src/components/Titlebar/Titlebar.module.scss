@@ -1,5 +1,11 @@
 :root {
   --titlebar-button-hover: #333;
+  --titlebar-button-active: #666;
+}
+
+:root[theme="light"] {
+  --titlebar-button-hover: #c9c9c9;
+  --titlebar-button-active: #a8a8a8;
 }
 
 .titlebar {
@@ -16,7 +22,7 @@
   z-index: 101;
 
   .titlebar--button {
-    color: white;
+    color: var(--text);
     width: 1.4rem;
     height: 1.2rem;
     display: flex;
@@ -30,8 +36,8 @@
       background-color: var(--titlebar-button-hover);
     }
 
-    svg {
-      pointer-events: none;
+    &:active {
+      background-color: var(--titlebar-button-active);
     }
   }
 }

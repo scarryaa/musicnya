@@ -1,3 +1,13 @@
+:root {
+  --link-active: #999;
+  --link-hover: #ccc;
+}
+
+:root[theme="light"] {
+  --link-active: #666;
+  --link-hover: #333;
+}
+
 .drawer {
   height: 100%;
   position: fixed;
@@ -8,8 +18,8 @@
   left: 0;
   width: 4rem;
   z-index: 99;
-  border-top-right-radius: var(--border-radius);
-  border-bottom-right-radius: var(--border-radius);
+  border-top-right-radius: var(--app-border-radius);
+  border-bottom-right-radius: var(--app-border-radius);
 }
 
 .top {
@@ -27,6 +37,18 @@
   align-items: center;
   width: 100%;
   height: 100%;
+
+  > * {
+    svg {
+      &:hover {
+        fill: var(--link-hover);
+      }
+
+      &:active {
+        fill: var(--link-active);
+      }
+    }
+  }
 }
 
 .bottom {
@@ -35,4 +57,16 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+
+  > * {
+    svg {
+      &:hover {
+        fill: var(--link-hover);
+      }
+
+      &:active {
+        fill: var(--link-active);
+      }
+    }
+  }
 }

@@ -1,5 +1,9 @@
 import styles from "./Home.module.scss";
 
 export function Home() {
-  return <h1 class={styles.home}>home</h1>;
+  return (
+    <div class={styles.home}>
+      <h1>home</h1>
+    </div>
+  );
 }
