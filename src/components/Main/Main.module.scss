@@ -1,0 +1,13 @@
+.main {
+  height: calc(100% - var(--content-offset) * 2);
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: var(--content-offset);
+  right: var(--content-offset);
+  width: calc(100% - var(--drawer-width) - var(--content-offset));
+  z-index: 201;
+  border-radius: var(--border-radius);
+  background-color: var(--main-background);
+}

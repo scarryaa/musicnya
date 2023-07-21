@@ -1,0 +1,40 @@
+:root {
+  --border-radius: 20px;
+  --background: #000;
+  --background-inverse: #fff;
+  --main-background: #202020;
+  --drawer-width: 4rem;
+  --content-offset: 0.5rem;
+}
+
+:root[theme="light"] {
+  --background: white;
+  --text: black;
+}
+
+:root[theme="dark"] {
+  --background: black;
+  --text: white;
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-radius: var(--border-radius);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: auto;
+}
