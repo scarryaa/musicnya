@@ -1,10 +1,10 @@
 .main {
-  height: calc(100% - var(--content-offset) * 2);
+  height: calc(100% - var(--content-offset) * 2 - var(--titlebar-height));
   position: fixed;
-  top: var(--content-offset);
+  top: calc(var(--content-offset) + var(--titlebar-height) / 2);
   right: var(--content-offset);
   width: calc(100% - var(--drawer-width) - var(--content-offset));
-  z-index: 201;
+  z-index: 100;
   border-radius: var(--border-radius);
   background-color: var(--main-background);
   overflow: hidden;

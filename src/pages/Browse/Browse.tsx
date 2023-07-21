@@ -1,5 +1,5 @@
 import styles from "./Browse.module.scss";
 
 export function Browse() {
-  return <div class={styles.browse}>browse</div>;
+  return <h1 class={styles.browse}>browse</h1>;
 }

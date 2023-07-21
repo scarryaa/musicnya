@@ -1,0 +1,37 @@
+:root {
+  --titlebar-button-hover: #333;
+}
+
+.titlebar {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  height: var(--titlebar-height);
+  background-color: #000;
+  -webkit-app-region: drag;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 101;
+
+  .titlebar--button {
+    color: white;
+    width: 1.4rem;
+    height: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 102;
+    --webkit-app-region: no-drag;
+    app-region: no-drag;
+
+    &:hover {
+      background-color: var(--titlebar-button-hover);
+    }
+
+    svg {
+      pointer-events: none;
+    }
+  }
+}

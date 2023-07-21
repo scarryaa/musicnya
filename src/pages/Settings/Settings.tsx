@@ -1,5 +1,5 @@
 import styles from "./Settings.module.scss";
 
 export function Settings() {
-  return <div class={styles.settings}>settings</div>;
+  return <h1 class={styles.settings}>settings</h1>;
 }

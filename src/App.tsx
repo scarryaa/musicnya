@@ -1,13 +1,13 @@
 import type { Component } from "solid-js";
 
 import { Drawer } from "./components/Drawer/Drawer";
-import { TopBar } from "./components/TopBar/TopBar";
+import { Titlebar } from "./components/Titlebar/Titlebar";
 import { Main } from "./components/Main/Main";
 
 const App: Component = () => {
   return (
     <div>
-      <TopBar />
+      <Titlebar />
       <Drawer />
       <Main />
     </div>
