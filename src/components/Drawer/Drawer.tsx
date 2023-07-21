@@ -11,10 +11,10 @@ const lightTheme = false;
 export function Drawer() {
   return (
     <div class={styles.drawer}>
-      <div class={styles.top}>
+      <div class={styles.drawer__top}>
         <CircleIcon style="margin-top: 10px;" />
       </div>
-      <div class={styles.middle}>
+      <div class={styles.drawer__middle}>
         <A title="home" href="/home" activeClass="active-route">
           <BiSolidHome size={25} fill={lightTheme ? "#aaa" : "#757575"} />
         </A>
@@ -46,7 +46,7 @@ export function Drawer() {
           <BsPeopleFill size={25} fill={lightTheme ? "#aaa" : "#757575"} />
         </A>
       </div>
-      <div class={styles.bottom}>
+      <div class={styles.drawer__bottom}>
         <A title="settings" href="/settings" activeClass="active-route">
           <IoSettings size={25} fill={lightTheme ? "#aaa" : "#757575"} />
         </A>

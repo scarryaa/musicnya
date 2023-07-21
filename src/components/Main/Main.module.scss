@@ -9,7 +9,7 @@
   background-color: var(--main-background);
   overflow: hidden;
 
-  > div {
+  > Outlet {
     height: 100%;
     background-color: #202020;
     color: var(--text);

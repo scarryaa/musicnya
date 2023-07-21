@@ -1,0 +1,15 @@
+:root {
+  --font-large: 1.6rem;
+  --font-medium: 1.4rem;
+  --font-small: 1.2rem;
+  --font-tiny: 1rem;
+  --font-micro: 0.9rem;
+
+  --text: white;
+  --text-muted: #999;
+}
+
+:root[theme="light"] {
+  --text: black;
+  --text-muted: #666;
+}

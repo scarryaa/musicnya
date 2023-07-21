@@ -7,7 +7,6 @@
   --drawer-width: 4rem;
   --titlebar-height: 1.2rem;
   --content-offset: 0.5rem;
-  --text: white;
   --page-padding: 1rem;
 
   .active-route {
@@ -21,7 +20,6 @@
 
 :root[theme="light"] {
   --background: white;
-  --text: black;
 
   .active-route {
     color: #4f4f4f !important;
