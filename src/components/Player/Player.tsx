@@ -13,7 +13,7 @@ export function Player() {
       <div class={styles.player__left}>
         <img
           class={styles.player__left__albumArt}
-          src="https://via.placeholder.com/40"
+          src="https://via.placeholder.com/150"
           alt="Album Art"
         />
         <div class={styles.player__left__songInfo}>

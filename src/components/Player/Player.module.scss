@@ -8,6 +8,7 @@
   height: 4rem;
   display: flex;
   overflow: hidden;
+  user-select: none;
 
   > * {
     color: var(--text);
@@ -64,7 +65,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 0 1rem;
+    padding: 0 2rem;
     flex: 1;
     margin-inline: auto;
     max-width: 50rem;
@@ -78,6 +79,7 @@
       &__time {
         font-size: var(--font-micro);
         color: var(--text-muted);
+        margin-top: -0.1rem;
       }
 
       &__bar {
@@ -115,7 +117,7 @@
         width: 4rem;
         height: 0.2rem;
         position: relative;
-        margin-top: -0.2rem;
+        margin-top: -0.1rem;
         margin-left: -0.4rem;
         border-radius: var(--border-radius);
       }

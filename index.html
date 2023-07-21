@@ -11,6 +11,21 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
 
+    <script src="https://jpillora.com/xhook/dist/xhook.min.js"></script>
+    <script>
+      xhook.before(function (request, callback) {
+      if (
+        request.url.includes('music.apple.com') ||
+        request.url.includes(
+        'https://amp-api.music.apple.com/v1/me/storefront'
+        ) || request.url.includes('buy.itunes.apple.com') || request.url.includes('universal-activity-service')
+      ) {
+        request.url = 'http://localhost:8080/' + request.url;
+      }
+
+      callback();
+      });
+    </script>
     <script src="/src/index.tsx" type="module"></script>
     <script src="https://js-cdn.music.apple.com/musickit/v3/amp/musickit.js"></script>
     <script src="https://js-cdn.music.apple.com/hls.js/2.141.0/hls.js/hls.js"></script>
