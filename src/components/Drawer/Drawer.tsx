@@ -17,10 +17,14 @@ export function Drawer() {
         <A href="/browse">
           <IoGrid size={25} fill="#d6d6d6" />
         </A>
-        <IoRadio size={25} fill="#d6d6d6" />
+        <A href="/radio">
+          <IoRadio size={25} fill="#d6d6d6" />
+        </A>
       </div>
       <div class={styles.bottom}>
-        <IoSettings size={25} fill="#d6d6d6" />
+        <A href="/settings">
+          <IoSettings size={25} fill="#d6d6d6" />
+        </A>
       </div>
     </div>
   );
