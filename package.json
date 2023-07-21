@@ -1,0 +1,32 @@
+{
+  "name": "vite-template-solid",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite & steam-run electron .",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "main": "index.ts",
+  "license": "MIT",
+  "build": {
+    "productName": "musicnya",
+    "artifactName": "musicnya-desktop",
+    "appId": "org.nyan-inc.musicnya",
+    "copyright": "Copyright © 2023 nyan-inc",
+    "electronDownload": {
+      "mirror": "https://github.com/castlabs/electron-releases/releases/download/v"
+    }
+  },
+  "devDependencies": {
+    "solid-devtools": "^0.27.3",
+    "typescript": "^5.1.3",
+    "vite": "^4.3.9",
+    "vite-plugin-solid": "^2.7.0",
+    "electron": "https://github.com/castlabs/electron-releases#26.0.0-alpha.6+wvcus"
+  },
+  "dependencies": {
+    "solid-js": "^1.7.6"
+  }
+}
