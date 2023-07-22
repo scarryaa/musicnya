@@ -5,7 +5,6 @@ import { MediaTile } from "../../components/MediaTile/MediaTile";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { MediaShelf } from "../../components/MediaShelf/MediaShelf";
 import { replaceSrc, splitArtists } from "../../util/utils";
-import { MusicKit } from "../../../types/musickit";
 
 export function Home() {
   const [data] = createResource<
