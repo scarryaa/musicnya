@@ -1,0 +1,51 @@
+:root {
+  --media_tile-max-width: 12rem;
+  --media_tile-max-height: 12rem;
+  --media_tile-min-width: 12rem;
+  --media_tile-min-height: 12rem;
+  --media_tile-margin: 0.1rem;
+  --media_tile-gap: 0.2rem;
+}
+
+.mediaTile {
+  &__image {
+    border-radius: var(--border-radius);
+    max-width: var(--media_tile-max-width);
+    max-height: var(--media_tile-max-height);
+    width: var(--media_tile-min-width);
+    height: var(--media_tile-min-height);
+  }
+
+  &__songInfo {
+    display: flex;
+    flex-direction: column;
+    max-width: var(--media_tile-min-width);
+    margin-top: var(--media_tile-margin);
+    gap: var(--media_tile-gap);
+
+    &__title {
+      margin-top: 0.1rem;
+      font-weight: 500;
+      color: var(--text);
+      transition:
+        transform 0.2s ease-in-out,
+        opacity 0.2s ease-in-out;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &__artist {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-muted);
+
+      &__name:not(&__seperator) {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

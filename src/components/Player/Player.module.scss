@@ -3,8 +3,8 @@
   border-radius: var(--app-border-radius);
   position: absolute;
   bottom: var(--content-offset);
-  left: var(--content-offset);
-  width: calc(100% - var(--content-offset) * 2);
+  left: calc(var(--content-offset) * 2);
+  width: calc(100% - var(--content-offset) * 4);
   height: 4rem;
   display: flex;
   overflow: hidden;

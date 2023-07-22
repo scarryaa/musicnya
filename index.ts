@@ -29,14 +29,16 @@ cors_proxy
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    width: 800,
+    width: 850,
     height: 600,
+    minWidth: 850,
+    minHeight: 600,
     webPreferences: { nodeIntegration: true, contextIsolation: false },
     autoHideMenuBar: true,
     frame: false,
   });
 
-  win.loadURL("http://localhost:3000");
+  win.loadURL("http://localhost:3001");
 };
 
 app.whenReady().then(async () => {
