@@ -40,26 +40,4 @@ export const fetchRecommendations = async ({
       console.error(e);
       return e;
     });
-
-  const recommendations = (await response.json()) as Response;
-
-  if (recommendations.errors) {
-    return new Error(recommendations.errors[0].detail);
-  }
-
-  console.log(recommendations);
-
-  return recommendations.data.map((item) => {
-    const map = recommendations.resources[item.type][item.id];
-    const data = map.relationships?.contents?.data;
-    const e = (map.relationships.contents.data = data.map((item) => {
-      const map = recommendations.resources[item.type][item.id];
-      console.log(map);
-      return map;
-    }));
-
-    console.log(e);
-
-    return e;
-  });
 };

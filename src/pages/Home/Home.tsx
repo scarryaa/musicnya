@@ -1,13 +1,21 @@
-import { For, Show, createResource } from "solid-js";
 import styles from "./Home.module.scss";
+import { For, Show, createResource } from "solid-js";
 import { fetchRecommendations } from "../../api/home";
 import { MediaTile } from "../../components/MediaTile/MediaTile";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { MediaShelf } from "../../components/MediaShelf/MediaShelf";
 import { replaceSrc, splitArtists } from "../../util/utils";
+import { MusicKit } from "../../../types/musickit";
 
 export function Home() {
-  const [data] = createResource<any, string>(
+  const [data] = createResource<
+    any,
+    {
+      devToken: string;
+      musicUserToken: string;
+    },
+    string
+  >(
     {
       devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
       musicUserToken: MusicKit.getInstance()?.musicUserToken,
@@ -25,7 +33,7 @@ export function Home() {
       <Show when={data()}>
         <div class={styles.home__content}>
           <For
-            each={data().data}
+            each={data()?.data}
             fallback={
               <div>
                 <p>An error occured.</p>

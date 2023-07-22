@@ -3,6 +3,7 @@ import type { Component } from "solid-js";
 import { Drawer } from "./components/Drawer/Drawer";
 import { Titlebar } from "./components/Titlebar/Titlebar";
 import { Main } from "./components/Main/Main";
+import { MusicKit } from "../types/musickit";
 
 const App: Component = () => {
   // Check if user is logged in
