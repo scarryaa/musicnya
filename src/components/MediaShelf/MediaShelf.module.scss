@@ -34,6 +34,18 @@
       margin-left: var(--spacing-media_shelf);
       border-radius: var(--border-radius);
       fill: var(--text-muted);
+
+      &:hover {
+        fill: var(--text);
+      }
+
+      &:disabled {
+        fill: var(--text-muted);
+      }
+
+      &:active {
+        fill: var(--text-muted);
+      }
     }
   }
 }

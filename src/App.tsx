@@ -15,7 +15,15 @@ const App: Component = () => {
       build: "1.0.0",
     },
     sourceType: 24,
-  });
+  })
+    .then((music) => {
+      music.authorize().then(() => {
+        console.log("Authorized");
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
   return (
     <div>

@@ -12,9 +12,13 @@ cors_proxy
     originWhitelist: [], // Allow all origins
     methodWhitelist: ["GET", "HEAD", "POST", "PUT", "DELETE"],
     setHeaders: {
-      origin: "https://music.apple.com",
-      "access-control-allow-origin":
-        "https://music.apple.com, https://localhost:4200, https://localhost:3000",
+      origin: "https://beta.music.apple.com",
+      "access-control-allow-origin": [
+        "https://music.apple.com",
+        "https://localhost:4200",
+        "https://localhost:3000",
+        "https://localhost:3001",
+      ],
       // set recieved headers
       "access-control-allow-headers":
         "Origin, X-Requested-With, Content-Type, Accept, Range",
@@ -33,12 +37,12 @@ const createWindow = () => {
     height: 600,
     minWidth: 850,
     minHeight: 600,
-    webPreferences: { nodeIntegration: true, contextIsolation: false },
+    webPreferences: { nodeIntegration: true, contextIsolation: true },
     autoHideMenuBar: true,
     frame: false,
   });
 
-  win.loadURL("http://localhost:3001");
+  win.loadURL("http://localhost:3000");
 };
 
 app.whenReady().then(async () => {

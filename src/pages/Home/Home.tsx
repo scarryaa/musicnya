@@ -47,7 +47,12 @@ export function Home() {
                 <For each={item.relationships.contents.data}>
                   {(item) => (
                     <MediaTile
-                      albumArt={replaceSrc(item?.attributes?.artwork?.url, 250)}
+                      id={item?.id}
+                      albumArt={{
+                        ...item?.attributes?.artwork,
+                        url: replaceSrc(item?.attributes?.artwork?.url, 200),
+                      }}
+                      type={item?.type}
                       title={item?.attributes?.name}
                       artist={splitArtists(item?.attributes?.artistName)}
                     />
