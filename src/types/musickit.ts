@@ -655,7 +655,7 @@ declare module MusicKit {
   }
 
   /**An enum containing events for a {@link MusicKitinstance}.*/
-  interface Events {
+  export interface Events {
     /**A notification indicating an audio track has been added to the media element.
      *
      * Consumers should access the audioTracks field on the MusicKit instance. */

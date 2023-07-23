@@ -3,6 +3,7 @@ import type { Component } from "solid-js";
 import { Drawer } from "./components/Drawer/Drawer";
 import { Titlebar } from "./components/Titlebar/Titlebar";
 import { Main } from "./components/Main/Main";
+import { setupEvents } from "./util/utils";
 
 const App: Component = () => {
   // Check if user is logged in
@@ -20,6 +21,9 @@ const App: Component = () => {
       music.authorize().then(() => {
         console.log("Authorized");
       });
+
+      setupEvents();
+      music.volume = 0.2;
     })
     .catch((err) => {
       console.log(err);

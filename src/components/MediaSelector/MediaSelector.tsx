@@ -47,6 +47,40 @@ const LinkFactory = () => {
   };
 };
 
+const renderComponentSwitch = (props: MediaSelectorProps) => {
+  const childType = props.children[0].type;
+  console.log(childType);
+
+  return (
+    <Switch fallback={<div>Something went wrong.</div>}>
+      <Match when={childType === "albums"}>
+        {MediaComponents["albums"](props)}
+      </Match>
+      <Match when={childType === "playlists"}>
+        {MediaComponents["playlists"](props)}
+      </Match>
+      <Match when={childType === "songs"}>
+        {MediaComponents["songs"](props)}
+      </Match>
+      <Match when={childType === "music-videos"}>
+        {MediaComponents["music-videos"](props)}
+      </Match>
+      <Match when={childType === "uploaded-videos"}>
+        {MediaComponents["uploaded-videos"](props)}
+      </Match>
+      <Match when={childType === "artists"}>
+        {MediaComponents["artists"](props)}
+      </Match>
+      <Match when={childType === "stations"}>
+        {MediaComponents["stations"](props)}
+      </Match>
+      <Match when={childType === "apple-curators"}>
+        {MediaComponents["apple-curators"](props)}
+      </Match>
+    </Switch>
+  );
+};
+
 const MediaComponentFactory = (
   ComponentType: (props: ComponentProps) => JSX.Element,
   extraData?: ExtraData,
@@ -73,7 +107,7 @@ const MediaComponentFactory = (
                     ?.editorialArtwork?.subscriptionHero?.height ||
                     item?.attributes?.artwork?.height ||
                     item.relationships?.contents?.data?.[0]?.attributes?.artwork
-                      .height,
+                      .height / 2,
                 ),
               }}
               type={item?.type}
@@ -118,34 +152,8 @@ const MediaComponents = {
   ),
   316: MediaComponentFactory(EditorialTile),
   322: LinkFactory(),
-  326: (props: MediaSelectorProps) => (
-    <Switch fallback={<div>Something went wrong.</div>}>
-      <Match when={props.children[0].type === "albums"}>
-        {MediaComponents["albums"](props)}
-      </Match>
-      <Match when={props.children[0].type === "playlists"}>
-        {MediaComponents["playlists"](props)}
-      </Match>
-      <Match when={props.children[0].type === "songs"}>
-        {MediaComponents["songs"](props)}
-      </Match>
-      <Match when={props.children[0].type === "music-videos"}>
-        {MediaComponents["music-videos"](props)}
-      </Match>
-      <Match when={props.children[0].type === "uploaded-videos"}>
-        {MediaComponents["uploaded-videos"](props)}
-      </Match>
-      <Match when={props.children[0].type === "artists"}>
-        {MediaComponents["artists"](props)}
-      </Match>
-      <Match when={props.children[0].type === "apple-curators"}>
-        {MediaComponents["artists"](props)}
-      </Match>
-      <Match when={props.children[0].type === "stations"}>
-        {MediaComponents["stations"](props)}
-      </Match>
-    </Switch>
-  ),
+  326: (props: MediaSelectorProps) => renderComponentSwitch(props),
+  327: MediaComponentFactory(MediaTile),
   // recently played on radio page
   332: () => null,
   336: MediaComponentFactory(MediaTile),
@@ -154,31 +162,8 @@ const MediaComponents = {
   394: MediaComponentFactory(EditorialTile),
   488: () => null,
   "editorial-elements": MediaComponentFactory(EditorialTile),
-  "personal-recommendation": (props: MediaSelectorProps) => (
-    <Switch fallback={<div>Something went wrong.</div>}>
-      <Match when={props.children[0].type === "albums"}>
-        {MediaComponents["albums"](props)}
-      </Match>
-      <Match when={props.children[0].type === "playlists"}>
-        {MediaComponents["playlists"](props)}
-      </Match>
-      <Match when={props.children[0].type === "songs"}>
-        {MediaComponents["songs"](props)}
-      </Match>
-      <Match when={props.children[0].type === "music-videos"}>
-        {MediaComponents["music-videos"](props)}
-      </Match>
-      <Match when={props.children[0].type === "uploaded-videos"}>
-        {MediaComponents["uploaded-videos"](props)}
-      </Match>
-      <Match when={props.children[0].type === "artists"}>
-        {MediaComponents["artists"](props)}
-      </Match>
-      <Match when={props.children[0].type === "stations"}>
-        {MediaComponents["stations"](props)}
-      </Match>
-    </Switch>
-  ),
+  "personal-recommendation": (props: MediaSelectorProps) =>
+    renderComponentSwitch(props),
   albums: MediaComponentFactory(MediaTile),
   playlists: MediaComponentFactory(MediaTile),
   songs: MediaComponentFactory(MediaTile),
@@ -186,6 +171,7 @@ const MediaComponents = {
   "uploaded-videos": MediaComponentFactory(VideoTile),
   artists: MediaComponentFactory(MediaTile),
   stations: MediaComponentFactory(MediaTile),
+  "apple-curators": MediaComponentFactory(MediaTile),
 };
 
 const isMediaComponentsKey = (
