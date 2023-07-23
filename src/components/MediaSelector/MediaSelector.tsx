@@ -5,6 +5,7 @@ import { MediaShelf } from "../MediaShelf/MediaShelf";
 import { MediaTileLarge } from "../MediaTileLarge/MediaTileLarge";
 import { MediaTileGlass } from "../MediaTileGlass/MediaTileGlass";
 import { LinkSet } from "../LinkSet/LinkSet";
+import { EditorialTile } from "../EditorialTile/EditorialTile";
 
 export type MediaSelectorProps = {
   children: any;
@@ -25,6 +26,7 @@ interface ComponentProps {
   type: MusicKit.MediaItemType;
   title: string;
   artist: string[];
+  children?: JSX.Element[];
 }
 
 interface ExtraData {
@@ -35,7 +37,7 @@ const LinkFactory = () => {
   return (props: MediaSelectorProps) => {
     return (
       <LinkSet
-        links={props.links.map((item: any) => ({
+        links={props?.links?.map((item: any) => ({
           label: item?.label,
           url: item?.url,
         }))}
@@ -68,7 +70,11 @@ const MediaComponentFactory = (
                 ),
               }}
               type={item?.type}
-              title={item?.attributes?.name}
+              title={
+                item?.attributes?.name ||
+                item?.attributes?.designTag ||
+                item.relationships?.contents?.data?.[0]?.attributes?.name
+              }
               artist={splitArtists(
                 item?.attributes?.artistName || item?.attributes?.curatorName,
               )}
@@ -106,8 +112,13 @@ const MediaComponents = {
   316: MediaComponentFactory(MediaTile),
   322: LinkFactory(),
   326: MediaComponentFactory(MediaTile),
+  // recently played on radio page
+  332: () => null,
   336: MediaComponentFactory(MediaTile),
+  385: MediaComponentFactory(EditorialTile),
   391: LinkFactory(),
+  394: MediaComponentFactory(EditorialTile),
+  488: () => null,
   "editorial-elements": MediaComponentFactory(MediaTile),
   "personal-recommendation": (props: MediaSelectorProps) => (
     <Switch fallback={<div>Something went wrong.</div>}>
@@ -160,7 +171,7 @@ export function MediaSelector(props: MediaSelectorProps) {
                 props.type === key
               }
             >
-              {MediaComponents[key](props)}
+              {MediaComponents?.[key]?.(props)}
             </Match>
           );
         }

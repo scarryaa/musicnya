@@ -52,6 +52,7 @@ export function Radio() {
                   item.relationships?.children?.data ||
                   item.relationships?.contents?.data
                 }
+                links={item?.attributes?.links}
                 editorialElementKind={item?.attributes?.editorialElementKind}
               ></MediaSelector>
             )}
