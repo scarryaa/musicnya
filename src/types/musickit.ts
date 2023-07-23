@@ -781,7 +781,7 @@ declare module MusicKit {
     /**The average background color of the image. */
     height: number | null;
     /**The maximum width available for the image. */
-    width: number | null;
+    width?: number | null;
     /**The primary text color used if the background color gets displayed. */
     textColor1?: string;
     /**The secondary text color used if the background color gets displayed. */

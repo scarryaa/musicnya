@@ -1,4 +1,4 @@
-import { For, Match, Switch } from "solid-js";
+import { For, JSX, Match, Switch } from "solid-js";
 import styles from "./MediaShelf.module.scss";
 import { MediaTile } from "../MediaTile/MediaTile";
 import { replaceSrc, splitArtists } from "../../util/utils";
@@ -15,15 +15,30 @@ export type MediaSelectorProps = {
   editorialElementKind?: string;
 };
 
-const MediaComponentFactory = (ComponentType, extraData?) => {
-  return (props) => {
+interface ComponentProps {
+  id: string;
+  mediaArt: MusicKit.Artwork;
+  type: MusicKit.MediaItemType;
+  title: string;
+  artist: string[];
+}
+
+interface ExtraData {
+  artistKey?: string;
+}
+
+const MediaComponentFactory = (
+  ComponentType: (props: ComponentProps) => JSX.Element,
+  extraData?: ExtraData,
+) => {
+  return (props: MediaSelectorProps) => {
     return (
       <MediaShelf {...props}>
         <For each={props.children}>
           {(item) => (
             <ComponentType
               id={item?.id}
-              albumArt={{
+              mediaArt={{
                 ...(item.attributes.artwork ||
                   item.relationships?.contents?.data?.[0]?.attributes?.artwork),
                 url: replaceSrc(
@@ -50,7 +65,7 @@ const MediaComponentFactory = (ComponentType, extraData?) => {
 
 const MediaComponents = {
   MusicNotesHeroShelf: MediaComponentFactory(MediaTileGlass),
-  MusicSuperHeroShelf: (props) => (
+  MusicSuperHeroShelf: (props: MediaSelectorProps) => (
     <MediaTileLarge
       {...props}
       id={props.children[0]?.id}
@@ -58,10 +73,11 @@ const MediaComponents = {
         props.children[0]?.attributes?.plainEditorialNotes?.tagline ||
         props.children[0]?.attributes?.name
       }
-      albumArt={{
+      mediaArt={{
         ...props.children[0]?.attributes?.artwork,
         url: replaceSrc(
-          props.children[0]?.attributes?.artwork?.url,
+          props.children[0]?.attributes?.artwork?.url ||
+            props.children[0]?.attributes?.artwork?.bgColor,
           props.children[0]?.attributes?.artwork?.height,
         ),
       }}
@@ -72,7 +88,7 @@ const MediaComponents = {
   326: MediaComponentFactory(MediaTile),
   336: MediaComponentFactory(MediaTile),
   "editorial-elements": MediaComponentFactory(MediaTile),
-  "personal-recommendation": (props) => (
+  "personal-recommendation": (props: MediaSelectorProps) => (
     <Switch fallback={<div>Something went wrong.</div>}>
       <Match when={props.children[0].type === "albums"}>
         {MediaComponents["albums"](props)}
@@ -102,22 +118,32 @@ const MediaComponents = {
   stations: MediaComponentFactory(MediaTile),
 };
 
+const isMediaComponentsKey = (
+  key: any,
+): key is keyof typeof MediaComponents => {
+  return typeof key === "string" && MediaComponents.hasOwnProperty(key);
+};
+
 export function MediaSelector(props: MediaSelectorProps) {
   console.log(props);
 
   return (
     <Switch fallback={<div>Something went wrong.</div>}>
-      {Object.keys(MediaComponents).map((key) => (
-        <Match
-          when={
-            props.displayKind === key ||
-            props.editorialElementKind === key ||
-            props.type === key
-          }
-        >
-          {MediaComponents[key](props)}
-        </Match>
-      ))}
+      {Object.keys(MediaComponents).map((key) => {
+        if (isMediaComponentsKey(key)) {
+          return (
+            <Match
+              when={
+                props.displayKind === key ||
+                props.editorialElementKind === key ||
+                props.type === key
+              }
+            >
+              {MediaComponents[key](props)}
+            </Match>
+          );
+        }
+      })}
     </Switch>
   );
 }

@@ -14,15 +14,15 @@ export function Player() {
         <img
           loading="lazy"
           decoding="async"
-          class={styles.player__left__albumArt}
+          class={styles.player__left__mediaArt}
           src="https://via.placeholder.com/150"
           alt="Album Art"
           width={150}
           height={150}
         />
-        <div class={styles.player__left__songInfo}>
-          <div class={styles.player__left__songInfo__title}>Song Title</div>
-          <div class={styles.player__left__songInfo__artist}>Artist</div>
+        <div class={styles.player__left__mediaInfo}>
+          <div class={styles.player__left__mediaInfo__title}>Song Title</div>
+          <div class={styles.player__left__mediaInfo__artist}>Artist</div>
         </div>
         <div class={styles.player__left__controls}>
           <button class={styles.player__left__controls__button}>

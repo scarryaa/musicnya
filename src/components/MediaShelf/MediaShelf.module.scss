@@ -24,16 +24,19 @@
     display: inline-block;
     font-size: var(--font-medium);
     margin-bottom: var(--spacing-media_shelf-lg);
+    margin-right: var(--spacing-media_shelf);
   }
 
   &__controls {
-    margin-left: var(--spacing-media_shelf);
     display: inline-block;
 
     &__button {
-      margin-left: var(--spacing-media_shelf);
       border-radius: var(--border-radius);
       fill: var(--text-muted);
+
+      &:last-child {
+        margin-left: var(--spacing-media_shelf);
+      }
 
       &:hover {
         fill: var(--text);

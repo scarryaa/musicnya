@@ -6,14 +6,14 @@ export type MediaTileLargeProps = {
   title?: string;
   type: MusicKit.MediaItemType;
   id: string;
-  albumArt: MusicKit.Artwork;
+  mediaArt: MusicKit.Artwork;
 };
 
 export function MediaTileLarge(props: MediaTileLargeProps) {
   return (
     <div class={styles.mediaTileLarge}>
-      <div class={styles.mediaTileLarge__songInfo}>
-        <h2 class={styles.mediaTileLarge__songInfo__title}>{props.title}</h2>
+      <div class={styles.mediaTileLarge__mediaInfo}>
+        <h2 class={styles.mediaTileLarge__mediaInfo__title}>{props.title}</h2>
       </div>
       <div class={styles.mediaTileLarge__overlay}>
         <div class={styles.mediaTileLarge__overlay__inner}>
@@ -38,7 +38,7 @@ export function MediaTileLarge(props: MediaTileLargeProps) {
           loading="lazy"
           decoding="async"
           class={styles.mediaTileLarge__image}
-          src={props.albumArt.url}
+          src={props.mediaArt.url}
           alt="Album Art"
           width={150}
           height={150}

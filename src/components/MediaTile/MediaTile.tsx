@@ -3,7 +3,7 @@ import { IoPlay, IoEllipsisVertical } from "solid-icons/io";
 import styles from "./MediaTile.module.scss";
 
 export type MediaTileProps = {
-  albumArt: MusicKit.Artwork;
+  mediaArt: MusicKit.Artwork;
   title: string;
   artist: string[];
   type: MusicKit.MediaItemType;
@@ -36,18 +36,18 @@ export function MediaTile(props: MediaTileProps) {
           loading="lazy"
           decoding="async"
           class={styles.mediaTile__image}
-          src={props.albumArt.url}
+          src={props.mediaArt.url}
           alt="Album Art"
           width={150}
           height={150}
         />
       </div>
-      <div class={styles.mediaTile__songInfo}>
-        <div class={styles.mediaTile__songInfo__title}>{props.title}</div>
-        <div class={styles.mediaTile__songInfo__artist}>
+      <div class={styles.mediaTile__mediaInfo}>
+        <div class={styles.mediaTile__mediaInfo__title}>{props.title}</div>
+        <div class={styles.mediaTile__mediaInfo__artist}>
           <For each={props.artist}>
             {(artist) => (
-              <span class={styles.mediaTile__songInfo__artist__name}>
+              <span class={styles.mediaTile__mediaInfo__artist__name}>
                 {artist}
                 <Show
                   when={
@@ -55,7 +55,7 @@ export function MediaTile(props: MediaTileProps) {
                     artist !== props.artist[props.artist.length - 1]
                   }
                 >
-                  <span class={styles.mediaTile__songInfo__artist__separator}>
+                  <span class={styles.mediaTile__mediaInfo__artist__separator}>
                     ,{" "}
                   </span>
                 </Show>

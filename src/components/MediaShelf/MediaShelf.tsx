@@ -1,3 +1,4 @@
+import { Show } from "solid-js";
 import styles from "./MediaShelf.module.scss";
 import { IoCaretBack, IoCaretForward } from "solid-icons/io";
 
@@ -32,7 +33,9 @@ export function MediaShelf(props: MediaShelfProps) {
 
   return (
     <div class={styles.mediaShelf + props.class}>
-      <h2 class={styles.mediaShelf__title}>{props.title}</h2>
+      <Show when={props.title}>
+        <h2 class={styles.mediaShelf__title}>{props.title}</h2>
+      </Show>
       <div class={styles.mediaShelf__controls}>
         <IoCaretBack
           size={20}

@@ -3,7 +3,7 @@ import { IoPlay, IoEllipsisVertical } from "solid-icons/io";
 import styles from "./MediaTileGlass.module.scss";
 
 export type MediaTileProps = {
-  albumArt: MusicKit.Artwork;
+  mediaArt: MusicKit.Artwork;
   title: string;
   artist: string[];
   type: MusicKit.MediaItemType;
@@ -36,16 +36,23 @@ export function MediaTileGlass(props: MediaTileProps) {
           loading="lazy"
           decoding="async"
           class={styles.mediaTileGlass__image}
-          src={props.albumArt.url}
+          src={props.mediaArt.url}
           alt="Album Art"
         />
       </div>
-      <div class={styles.mediaTileGlass__songInfo}>
-        <div class={styles.mediaTileGlass__songInfo__title}>{props.title}</div>
-        <div class={styles.mediaTileGlass__songInfo__artist}>
+      <div
+        class={styles.mediaTileGlass__backdrop}
+        style={{
+          background: `url(${props.mediaArt.url})`,
+          "background-position": "center",
+        }}
+      ></div>
+      <div class={styles.mediaTileGlass__mediaInfo}>
+        <div class={styles.mediaTileGlass__mediaInfo__title}>{props.title}</div>
+        <div class={styles.mediaTileGlass__mediaInfo__artist}>
           <For each={props.artist}>
             {(artist) => (
-              <span class={styles.mediaTileGlass__songInfo__artist__name}>
+              <span class={styles.mediaTileGlass__mediaInfo__artist__name}>
                 {artist}
                 <Show
                   when={
@@ -54,7 +61,7 @@ export function MediaTileGlass(props: MediaTileProps) {
                   }
                 >
                   <span
-                    class={styles.mediaTileGlass__songInfo__artist__separator}
+                    class={styles.mediaTileGlass__mediaInfo__artist__separator}
                   >
                     ,{" "}
                   </span>
