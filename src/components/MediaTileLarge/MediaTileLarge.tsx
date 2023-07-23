@@ -17,18 +17,6 @@ export function MediaTileLarge(props: MediaTileLargeProps) {
       </div>
       <div class={styles.mediaTileLarge__overlay}>
         <div class={styles.mediaTileLarge__overlay__inner}>
-          <IoPlay
-            size={40}
-            class={styles.mediaTileLarge__overlay__inner__button}
-            onclick={async () => {
-              console.log(props.id);
-              console.log(props.type);
-              await MusicKit.getInstance().setQueue({
-                album: props.id,
-                startPlaying: true,
-              });
-            }}
-          />
           <IoEllipsisVertical
             size={26}
             class={styles.mediaTileLarge__overlay__inner__button__more}

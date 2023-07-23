@@ -1,5 +1,4 @@
 import { For, JSX, Match, Switch } from "solid-js";
-import styles from "./MediaShelf.module.scss";
 import { MediaTile } from "../MediaTile/MediaTile";
 import { replaceSrc, splitArtists } from "../../util/utils";
 import { MediaShelf } from "../MediaShelf/MediaShelf";
@@ -53,7 +52,7 @@ const MediaComponentFactory = (
               type={item?.type}
               title={item?.attributes?.name}
               artist={splitArtists(
-                item?.attributes?.artistName || extraData?.artistKey,
+                item?.attributes?.artistName || item?.attributes?.curatorName,
               )}
             />
           )}
@@ -77,8 +76,11 @@ const MediaComponents = {
         ...props.children[0]?.attributes?.artwork,
         url: replaceSrc(
           props.children[0]?.attributes?.artwork?.url ||
-            props.children[0]?.attributes?.artwork?.bgColor,
-          props.children[0]?.attributes?.artwork?.height,
+            props.children[0]?.attributes?.editorialArtwork?.subscriptionHero
+              .url,
+          props.children[0]?.attributes?.artwork?.height ||
+            props.children[0]?.attributes?.editorialArtwork?.subscriptionHero
+              .height,
         ),
       }}
     />
@@ -111,7 +113,7 @@ const MediaComponents = {
     </Switch>
   ),
   albums: MediaComponentFactory(MediaTile),
-  playlists: MediaComponentFactory(MediaTile, { artistKey: "curatorName" }),
+  playlists: MediaComponentFactory(MediaTile),
   songs: MediaComponentFactory(MediaTile),
   "music-videos": MediaComponentFactory(MediaTile),
   artists: MediaComponentFactory(MediaTile),

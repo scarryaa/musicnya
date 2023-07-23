@@ -50,25 +50,29 @@ export function MediaTileGlass(props: MediaTileProps) {
       <div class={styles.mediaTileGlass__mediaInfo}>
         <div class={styles.mediaTileGlass__mediaInfo__title}>{props.title}</div>
         <div class={styles.mediaTileGlass__mediaInfo__artist}>
-          <For each={props.artist}>
-            {(artist) => (
-              <span class={styles.mediaTileGlass__mediaInfo__artist__name}>
-                {artist}
-                <Show
-                  when={
-                    props.artist.length > 1 &&
-                    artist !== props.artist[props.artist.length - 1]
-                  }
-                >
-                  <span
-                    class={styles.mediaTileGlass__mediaInfo__artist__separator}
+          <Show when={props.artist.length > 1}>
+            <For each={props.artist}>
+              {(artist) => (
+                <span class={styles.mediaTileGlass__mediaInfo__artist__name}>
+                  {artist}
+                  <Show
+                    when={
+                      props.artist.length > 1 &&
+                      artist !== props.artist[props.artist.length - 1]
+                    }
                   >
-                    ,{" "}
-                  </span>
-                </Show>
-              </span>
-            )}
-          </For>
+                    <span
+                      class={
+                        styles.mediaTileGlass__mediaInfo__artist__separator
+                      }
+                    >
+                      ,{" "}
+                    </span>
+                  </Show>
+                </span>
+              )}
+            </For>
+          </Show>
         </div>
       </div>
     </div>
