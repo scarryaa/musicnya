@@ -6,6 +6,7 @@ import { MediaTileLarge } from "../MediaTileLarge/MediaTileLarge";
 import { MediaTileGlass } from "../MediaTileGlass/MediaTileGlass";
 import { LinkSet } from "../LinkSet/LinkSet";
 import { EditorialTile } from "../EditorialTile/EditorialTile";
+import { VideoTile } from "../VideoTile/VideoTile";
 
 export type MediaSelectorProps = {
   children: any;
@@ -61,10 +62,16 @@ const MediaComponentFactory = (
                 ...(item.attributes.artwork ||
                   item.relationships?.contents?.data?.[0]?.attributes?.artwork),
                 url: replaceSrc(
-                  item?.attributes?.artwork?.url ||
+                  item.relationships?.contents?.data?.[0]?.relationships?.events
+                    ?.data?.[0]?.attributes?.heroArtwork?.url ||
+                    item.relationships?.contents?.data?.[0]?.attributes
+                      ?.editorialArtwork?.subscriptionHero?.url ||
+                    item?.attributes?.artwork?.url ||
                     item.relationships?.contents?.data?.[0]?.attributes?.artwork
                       .url,
-                  item?.attributes?.artwork?.height ||
+                  item.relationships?.contents?.data?.[0]?.attributes
+                    ?.editorialArtwork?.subscriptionHero?.height ||
+                    item?.attributes?.artwork?.height ||
                     item.relationships?.contents?.data?.[0]?.attributes?.artwork
                       .height,
                 ),
@@ -109,9 +116,36 @@ const MediaComponents = {
       }}
     />
   ),
-  316: MediaComponentFactory(MediaTile),
+  316: MediaComponentFactory(EditorialTile),
   322: LinkFactory(),
-  326: MediaComponentFactory(MediaTile),
+  326: (props: MediaSelectorProps) => (
+    <Switch fallback={<div>Something went wrong.</div>}>
+      <Match when={props.children[0].type === "albums"}>
+        {MediaComponents["albums"](props)}
+      </Match>
+      <Match when={props.children[0].type === "playlists"}>
+        {MediaComponents["playlists"](props)}
+      </Match>
+      <Match when={props.children[0].type === "songs"}>
+        {MediaComponents["songs"](props)}
+      </Match>
+      <Match when={props.children[0].type === "music-videos"}>
+        {MediaComponents["music-videos"](props)}
+      </Match>
+      <Match when={props.children[0].type === "uploaded-videos"}>
+        {MediaComponents["uploaded-videos"](props)}
+      </Match>
+      <Match when={props.children[0].type === "artists"}>
+        {MediaComponents["artists"](props)}
+      </Match>
+      <Match when={props.children[0].type === "apple-curators"}>
+        {MediaComponents["artists"](props)}
+      </Match>
+      <Match when={props.children[0].type === "stations"}>
+        {MediaComponents["stations"](props)}
+      </Match>
+    </Switch>
+  ),
   // recently played on radio page
   332: () => null,
   336: MediaComponentFactory(MediaTile),
@@ -119,7 +153,7 @@ const MediaComponents = {
   391: LinkFactory(),
   394: MediaComponentFactory(EditorialTile),
   488: () => null,
-  "editorial-elements": MediaComponentFactory(MediaTile),
+  "editorial-elements": MediaComponentFactory(EditorialTile),
   "personal-recommendation": (props: MediaSelectorProps) => (
     <Switch fallback={<div>Something went wrong.</div>}>
       <Match when={props.children[0].type === "albums"}>
@@ -134,6 +168,9 @@ const MediaComponents = {
       <Match when={props.children[0].type === "music-videos"}>
         {MediaComponents["music-videos"](props)}
       </Match>
+      <Match when={props.children[0].type === "uploaded-videos"}>
+        {MediaComponents["uploaded-videos"](props)}
+      </Match>
       <Match when={props.children[0].type === "artists"}>
         {MediaComponents["artists"](props)}
       </Match>
@@ -145,7 +182,8 @@ const MediaComponents = {
   albums: MediaComponentFactory(MediaTile),
   playlists: MediaComponentFactory(MediaTile),
   songs: MediaComponentFactory(MediaTile),
-  "music-videos": MediaComponentFactory(MediaTile),
+  "music-videos": MediaComponentFactory(VideoTile),
+  "uploaded-videos": MediaComponentFactory(VideoTile),
   artists: MediaComponentFactory(MediaTile),
   stations: MediaComponentFactory(MediaTile),
 };
