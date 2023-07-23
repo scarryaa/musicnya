@@ -48,7 +48,7 @@ const LinkFactory = () => {
 };
 
 const renderComponentSwitch = (props: MediaSelectorProps) => {
-  const childType = props.children[0].type;
+  const childType = props?.children?.[0].type;
   console.log(childType);
 
   return (
@@ -56,8 +56,14 @@ const renderComponentSwitch = (props: MediaSelectorProps) => {
       <Match when={childType === "albums"}>
         {MediaComponents["albums"](props)}
       </Match>
+      <Match when={childType === "library-albums"}>
+        {MediaComponents["library-albums"](props)}
+      </Match>
       <Match when={childType === "playlists"}>
         {MediaComponents["playlists"](props)}
+      </Match>
+      <Match when={childType === "library-playlists"}>
+        {MediaComponents["library-playlists"](props)}
       </Match>
       <Match when={childType === "songs"}>
         {MediaComponents["songs"](props)}
@@ -107,15 +113,12 @@ const MediaComponentFactory = (
                     ?.editorialArtwork?.subscriptionHero?.height ||
                     item?.attributes?.artwork?.height ||
                     item.relationships?.contents?.data?.[0]?.attributes?.artwork
-                      .height / 2,
+                      .height / 2 ||
+                    300,
                 ),
               }}
               type={item?.type}
-              title={
-                item?.attributes?.name ||
-                item?.attributes?.designTag ||
-                item.relationships?.contents?.data?.[0]?.attributes?.name
-              }
+              title={item?.attributes?.name || item?.attributes?.designTag}
               artist={splitArtists(
                 item?.attributes?.artistName || item?.attributes?.curatorName,
               )}
@@ -135,6 +138,7 @@ const MediaComponents = {
       id={props.children[0]?.id}
       title={
         props.children[0]?.attributes?.plainEditorialNotes?.tagline ||
+        props.children[0]?.attributes?.plainEditorialNotes?.standard ||
         props.children[0]?.attributes?.name
       }
       mediaArt={{
@@ -165,6 +169,7 @@ const MediaComponents = {
   "personal-recommendation": (props: MediaSelectorProps) =>
     renderComponentSwitch(props),
   albums: MediaComponentFactory(MediaTile),
+  "library-albums": MediaComponentFactory(MediaTile),
   playlists: MediaComponentFactory(MediaTile),
   songs: MediaComponentFactory(MediaTile),
   "music-videos": MediaComponentFactory(VideoTile),
@@ -172,6 +177,7 @@ const MediaComponents = {
   artists: MediaComponentFactory(MediaTile),
   stations: MediaComponentFactory(MediaTile),
   "apple-curators": MediaComponentFactory(MediaTile),
+  "library-playlists": MediaComponentFactory(MediaTile),
 };
 
 const isMediaComponentsKey = (

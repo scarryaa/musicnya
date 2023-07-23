@@ -1,6 +1,7 @@
 import { For, Show } from "solid-js";
 import { IoPlay, IoEllipsisVertical } from "solid-icons/io";
 import styles from "./MediaTile.module.scss";
+import { setQueue } from "../../api/musickit";
 
 export type MediaTileProps = {
   mediaArt: MusicKit.Artwork;
@@ -19,12 +20,13 @@ export function MediaTile(props: MediaTileProps) {
             size={40}
             class={styles.mediaTile__overlay__inner__button}
             onclick={async () => {
-              console.log(props.id);
-              console.log(props.type);
-              await MusicKit.getInstance().setQueue({
-                [props.type.substring(0, props.type.length - 1)]: props.id,
-                startPlaying: true,
-              });
+              setQueue(
+                props.type
+                  .substring(0, props.type.length - 1)
+                  .replace("library-", ""),
+                props.id,
+                true,
+              );
             }}
           />
           <IoEllipsisVertical

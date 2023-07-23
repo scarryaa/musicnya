@@ -14,6 +14,14 @@ export const pause = () => {
   MusicKit.getInstance().pause();
 };
 
+export const setQueue = (
+  type: string,
+  id: string,
+  startPlaying: boolean = false,
+) => {
+  MusicKit.getInstance().setQueue({ [type]: id, startPlaying });
+};
+
 export const skipToNextItem = () => {
   MusicKit.getInstance().skipToNextItem();
 };
