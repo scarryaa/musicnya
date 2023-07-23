@@ -970,6 +970,11 @@ extract-zip@^2.0.1:
   optionalDependencies:
     "@types/yauzl" "^2.9.1"
 
+fast-average-color@^9.3.0:
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/fast-average-color/-/fast-average-color-9.3.0.tgz#062cffbbfc8d3d305db667450f1ed74f42b9e620"
+  integrity sha512-FlPROSqDMOnoBgkFhWMHJODPvpS0Od0WDpedcKq4U/t0JVapGAkblNwxOr75qT+ZNd0dQM4qlgqrtnXbCJ8cNg==
+
 fd-slicer@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/fd-slicer/-/fd-slicer-1.1.0.tgz#25c7c89cb1f9077f8891bbe61d8f390eae256f1e"

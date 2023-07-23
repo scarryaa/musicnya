@@ -12,9 +12,13 @@ export function Player() {
     <div class={styles.player}>
       <div class={styles.player__left}>
         <img
+          loading="lazy"
+          decoding="async"
           class={styles.player__left__albumArt}
           src="https://via.placeholder.com/150"
           alt="Album Art"
+          width={150}
+          height={150}
         />
         <div class={styles.player__left__songInfo}>
           <div class={styles.player__left__songInfo__title}>Song Title</div>

@@ -5,6 +5,7 @@ import { MediaTile } from "../../components/MediaTile/MediaTile";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { MediaShelf } from "../../components/MediaShelf/MediaShelf";
 import { replaceSrc, splitArtists } from "../../util/utils";
+import { MediaSelector } from "../../components/MediaSelector/MediaSelector";
 
 export function Home() {
   const [data] = createResource<
@@ -40,25 +41,12 @@ export function Home() {
             }
           >
             {(item) => (
-              <MediaShelf
-                class={styles.home__shelf}
-                title={item.attributes?.title?.stringForDisplay}
-              >
-                <For each={item.relationships.contents.data}>
-                  {(item) => (
-                    <MediaTile
-                      id={item?.id}
-                      albumArt={{
-                        ...item?.attributes?.artwork,
-                        url: replaceSrc(item?.attributes?.artwork?.url, 200),
-                      }}
-                      type={item?.type}
-                      title={item?.attributes?.name}
-                      artist={splitArtists(item?.attributes?.artistName)}
-                    />
-                  )}
-                </For>
-              </MediaShelf>
+              <MediaSelector
+                displayKind={item?.attributes?.display.kind}
+                title={item?.attributes?.title?.stringForDisplay}
+                type={item?.type}
+                children={item.relationships.contents.data}
+              ></MediaSelector>
             )}
           </For>
         </div>

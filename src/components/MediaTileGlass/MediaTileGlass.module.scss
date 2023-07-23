@@ -8,12 +8,12 @@
   --media-tile-drop-shadow: 0 0 0.1rem rgba(0, 0, 0, 0.4);
 }
 
-.mediaTile {
+.mediaTileGlass {
   position: relative;
   height: max-content;
 
   &:hover {
-    .mediaTile__overlay__inner {
+    .mediaTileGlass__overlay__inner {
       opacity: 1;
     }
   }
@@ -74,8 +74,6 @@
     max-height: var(--media_tile-max-height);
     width: var(--media_tile-min-width);
     height: var(--media_tile-min-height);
-    object-fit: cover;
-    image-rendering: optimizeSpeed;
   }
 
   &__songInfo {

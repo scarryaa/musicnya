@@ -1,0 +1,49 @@
+import { IoEllipsisVertical, IoPlay } from "solid-icons/io";
+import styles from "./MediaTileLarge.module.scss";
+
+export type MediaTileLargeProps = {
+  class?: string;
+  title?: string;
+  type: MusicKit.MediaItemType;
+  id: string;
+  albumArt: MusicKit.Artwork;
+};
+
+export function MediaTileLarge(props: MediaTileLargeProps) {
+  return (
+    <div class={styles.mediaTileLarge}>
+      <div class={styles.mediaTileLarge__songInfo}>
+        <h2 class={styles.mediaTileLarge__songInfo__title}>{props.title}</h2>
+      </div>
+      <div class={styles.mediaTileLarge__overlay}>
+        <div class={styles.mediaTileLarge__overlay__inner}>
+          <IoPlay
+            size={40}
+            class={styles.mediaTileLarge__overlay__inner__button}
+            onclick={async () => {
+              console.log(props.id);
+              console.log(props.type);
+              await MusicKit.getInstance().setQueue({
+                album: props.id,
+                startPlaying: true,
+              });
+            }}
+          />
+          <IoEllipsisVertical
+            size={26}
+            class={styles.mediaTileLarge__overlay__inner__button__more}
+          />
+        </div>
+        <img
+          loading="lazy"
+          decoding="async"
+          class={styles.mediaTileLarge__image}
+          src={props.albumArt.url}
+          alt="Album Art"
+          width={150}
+          height={150}
+        />
+      </div>
+    </div>
+  );
+}

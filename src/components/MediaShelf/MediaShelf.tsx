@@ -5,16 +5,16 @@ export type MediaShelfProps = {
   children: any;
   class?: string;
   title?: string;
+  type: MusicKit.MediaItemType;
 };
 
 export function MediaShelf(props: MediaShelfProps) {
-  let mediaShelf = null as unknown as HTMLElement;
+  let mediaShelf = null as unknown as HTMLDivElement;
 
   const scroll = (direction: string) => {
-    // select the nearest parent element with the class of .mediaShelf__inner__content
     const shelf = mediaShelf.closest(
       `.${styles.mediaShelf__inner__content}`,
-    ) as HTMLElement;
+    ) as HTMLDivElement;
 
     const scrollAmount = shelf.offsetWidth;
     if (direction === "left") {
