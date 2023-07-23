@@ -1,0 +1,10 @@
+:root {
+  --link-set-gap: 0.5rem;
+}
+
+.linkSet {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--link-set-gap);
+}

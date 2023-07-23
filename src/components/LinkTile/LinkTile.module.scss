@@ -1,0 +1,41 @@
+:root {
+  --link_tile-padding: 1rem;
+  --link_tile-margin: 1rem;
+  --link_tile-background: rgba(0, 0, 0, 0.4);
+}
+
+.linkTile {
+  background-color: var(--link_tile-background);
+  padding: var(--link_tile-padding);
+  width: auto;
+  height: auto;
+  border-radius: var(--border-radius);
+  cursor: default !important;
+  user-select: none;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+
+    .linkTile__title {
+      color: var(--accent);
+    }
+
+    .linkTile__arrow {
+      color: var(--accent);
+    }
+  }
+
+  &__title {
+    font-weight: 600;
+    color: var(--text);
+    display: inline;
+    margin-right: var(--link_tile-margin);
+  }
+
+  &__arrow {
+    transform: translateY(0.1rem);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

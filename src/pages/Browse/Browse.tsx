@@ -42,6 +42,7 @@ export function Browse() {
           >
             {(item) => (
               <MediaSelector
+                links={item?.attributes?.links}
                 displayKind={item?.attributes?.display?.kind}
                 title={
                   item?.attributes?.title?.stringForDisplay ||

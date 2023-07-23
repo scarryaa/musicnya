@@ -4,6 +4,7 @@ import { replaceSrc, splitArtists } from "../../util/utils";
 import { MediaShelf } from "../MediaShelf/MediaShelf";
 import { MediaTileLarge } from "../MediaTileLarge/MediaTileLarge";
 import { MediaTileGlass } from "../MediaTileGlass/MediaTileGlass";
+import { LinkSet } from "../LinkSet/LinkSet";
 
 export type MediaSelectorProps = {
   children: any;
@@ -12,6 +13,10 @@ export type MediaSelectorProps = {
   type: MusicKit.MediaItemType;
   displayKind: string;
   editorialElementKind?: string;
+  links: {
+    title: string;
+    url: string;
+  }[];
 };
 
 interface ComponentProps {
@@ -25,6 +30,19 @@ interface ComponentProps {
 interface ExtraData {
   artistKey?: string;
 }
+
+const LinkFactory = () => {
+  return (props: MediaSelectorProps) => {
+    return (
+      <LinkSet
+        links={props.links.map((item: any) => ({
+          label: item?.label,
+          url: item?.url,
+        }))}
+      />
+    );
+  };
+};
 
 const MediaComponentFactory = (
   ComponentType: (props: ComponentProps) => JSX.Element,
@@ -86,9 +104,10 @@ const MediaComponents = {
     />
   ),
   316: MediaComponentFactory(MediaTile),
-  322: MediaComponentFactory(MediaTile),
+  322: LinkFactory(),
   326: MediaComponentFactory(MediaTile),
   336: MediaComponentFactory(MediaTile),
+  391: LinkFactory(),
   "editorial-elements": MediaComponentFactory(MediaTile),
   "personal-recommendation": (props: MediaSelectorProps) => (
     <Switch fallback={<div>Something went wrong.</div>}>
