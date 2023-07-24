@@ -1,4 +1,4 @@
-import { For, JSX, Match, Switch } from "solid-js";
+import { For, JSX, Match, Switch, createMemo } from "solid-js";
 import { MediaTile } from "../MediaTile/MediaTile";
 import { replaceSrc } from "../../util/utils";
 import { MediaShelf } from "../MediaShelf/MediaShelf";
@@ -23,6 +23,33 @@ export type MediaSelectorProps = {
   artistId: string;
 };
 
+type MediaComponentType =
+  | "MusicNotesHeroShelf"
+  | "MusicSuperHeroShelf"
+  | "316"
+  | "322"
+  | "326"
+  | "327"
+  | "332"
+  | "336"
+  | "385"
+  | "387"
+  | "391"
+  | "394"
+  | "488"
+  | "editorial-elements"
+  | "personal-recommendation"
+  | "albums"
+  | "library-albums"
+  | "playlists"
+  | "songs"
+  | "music-videos"
+  | "uploaded-videos"
+  | "artists"
+  | "stations"
+  | "apple-curators"
+  | "library-playlists";
+
 interface ComponentProps {
   id: string;
   mediaArt: MusicKit.Artwork;
@@ -33,11 +60,7 @@ interface ComponentProps {
   artistIds: string[];
 }
 
-interface ExtraData {
-  artistKey?: string;
-}
-
-const LinkFactory = () => {
+const LinkFactory = createMemo(() => {
   return (props: MediaSelectorProps) => {
     return (
       <LinkSet
@@ -48,7 +71,7 @@ const LinkFactory = () => {
       />
     );
   };
-};
+});
 
 const renderComponentSwitch = (props: MediaSelectorProps) => {
   const childType = props?.children?.[0].type;
@@ -90,57 +113,71 @@ const renderComponentSwitch = (props: MediaSelectorProps) => {
   );
 };
 
+const componentCache = new Map();
+
 const MediaComponentFactory = (
   ComponentType: (props: ComponentProps) => JSX.Element,
-  extraData?: ExtraData,
 ) => {
-  return (props: MediaSelectorProps) => {
+  if (componentCache.has(ComponentType)) {
+    return componentCache.get(ComponentType);
+  }
+
+  const FactoryFunction = (props: MediaSelectorProps) => {
     return (
       <MediaShelf {...props}>
         <For each={props.children}>
-          {(item) => (
-            <ComponentType
-              artistIds={item.relationships?.artists?.data?.map(
-                (artist: any) => artist.id,
-              )}
-              id={item?.id}
-              mediaArt={{
-                ...(item.attributes.artwork ||
-                  item.relationships?.contents?.data?.[0]?.attributes?.artwork),
-                url: replaceSrc(
-                  item.relationships?.contents?.data?.[0]?.relationships?.events
-                    ?.data?.[0]?.attributes?.heroArtwork?.url ||
-                    item.relationships?.contents?.data?.[0]?.attributes
-                      ?.editorialArtwork?.subscriptionHero?.url ||
-                    item?.attributes?.artwork?.url ||
-                    item.relationships?.contents?.data?.[0]?.attributes?.artwork
-                      .url,
+          {(item) => {
+            const artistIds = item.relationships?.artists?.data?.map(
+              (artist: any) => artist.id,
+            );
+            const artistNames = item.relationships?.artists?.data?.map(
+              (artist: any) => artist.attributes.name,
+            );
+            const title =
+              item?.attributes?.name ||
+              item?.attributes?.designTag ||
+              item.relationships?.contents?.data?.[0]?.attributes?.name;
+            const mediaArt = {
+              ...(item.attributes.artwork ||
+                item.relationships?.contents?.data?.[0]?.attributes?.artwork),
+              url: replaceSrc(
+                item.relationships?.contents?.data?.[0]?.relationships?.events
+                  ?.data?.[0]?.attributes?.heroArtwork?.url ||
                   item.relationships?.contents?.data?.[0]?.attributes
-                    ?.editorialArtwork?.subscriptionHero?.height ||
-                    item?.attributes?.artwork?.height ||
-                    item.relationships?.contents?.data?.[0]?.attributes?.artwork
-                      .height / 2 ||
-                    300,
-                ),
-              }}
-              type={item?.type}
-              title={
-                item?.attributes?.name ||
-                item?.attributes?.designTag ||
-                item.relationships?.contents?.data?.[0]?.attributes?.name
-              }
-              artists={item.relationships?.artists?.data?.map(
-                (artist: any) => artist.attributes.name,
-              )}
-            />
-          )}
+                    ?.editorialArtwork?.subscriptionHero?.url ||
+                  item?.attributes?.artwork?.url ||
+                  item.relationships?.contents?.data?.[0]?.attributes?.artwork
+                    .url,
+                item.relationships?.contents?.data?.[0]?.attributes
+                  ?.editorialArtwork?.subscriptionHero?.height ||
+                  item?.attributes?.artwork?.height ||
+                  item.relationships?.contents?.data?.[0]?.attributes?.artwork
+                    .height / 2 ||
+                  300,
+              ),
+            };
+
+            return (
+              <ComponentType
+                artistIds={artistIds}
+                id={item?.id}
+                mediaArt={mediaArt}
+                type={item?.type}
+                title={title}
+                artists={artistNames}
+              />
+            );
+          }}
         </For>
       </MediaShelf>
     );
   };
+
+  componentCache.set(ComponentType, FactoryFunction);
+  return FactoryFunction;
 };
 
-const MediaComponents = {
+const MediaComponents: Record<MediaComponentType, any> = {
   MusicNotesHeroShelf: MediaComponentFactory(MediaTileGlass),
   MusicSuperHeroShelf: (props: MediaSelectorProps) => (
     <MediaTileLarge
@@ -191,6 +228,20 @@ const MediaComponents = {
   "library-playlists": MediaComponentFactory(MediaTile),
 };
 
+const sameComponentTypes: MediaComponentType[] = [
+  "albums",
+  "library-albums",
+  "playlists",
+  "songs",
+  "artists",
+  "stations",
+  "library-playlists",
+];
+
+sameComponentTypes.forEach((type: MediaComponentType) => {
+  MediaComponents[type] = MediaComponentFactory(MediaTile);
+});
+
 const isMediaComponentsKey = (
   key: any,
 ): key is keyof typeof MediaComponents => {
@@ -203,16 +254,17 @@ export function MediaSelector(props: MediaSelectorProps) {
   return (
     <Switch fallback={<div>Something went wrong.</div>}>
       {Object.keys(MediaComponents).map((key) => {
-        if (isMediaComponentsKey(key)) {
+        const componentKey = key as MediaComponentType;
+        if (isMediaComponentsKey(componentKey)) {
           return (
             <Match
               when={
-                props.displayKind === key ||
-                props.editorialElementKind === key ||
-                props.type === key
+                props.displayKind === componentKey ||
+                props.editorialElementKind === componentKey ||
+                props.type === componentKey
               }
             >
-              {MediaComponents?.[key]?.(props)}
+              {MediaComponents[componentKey]?.(props)}
             </Match>
           );
         }

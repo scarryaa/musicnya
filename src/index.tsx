@@ -16,6 +16,7 @@ import { Albums } from "./pages/Library/Albums/Albums";
 import { Artists } from "./pages/Library/Artists/Artists";
 import { Artist } from "./pages/Artist/Artist";
 import { Album } from "./pages/Album/Album";
+import { Playlist } from "./pages/Playlist/Playlist";
 
 const root = document.getElementById("root");
 
@@ -39,13 +40,11 @@ render(
           <Route path="/library/albums" component={Albums} />
           <Route path="/library/artists" component={Artists} />
           <Route path="/library/album/:id" component={Album} />
-          <Route path="/library/artist/:id" component={Artists} />
-          <Route path="/library/playlist/:id" component={Playlists} />
-          <Route path="/library/song/:id" component={Songs} />
+          <Route path="/library/artist/:id" component={Artist} />
+          <Route path="/library/playlist/:id" component={Playlist} />
           <Route path="/artist/:id" component={Artist} />
           <Route path="/album/:id" component={Album} />
-          <Route path="/playlist/:id" component={Playlists} />
-          <Route path="/song/:id" component={Songs} />
+          <Route path="/playlist/:id" component={Playlist} />
           <Route path="*" component={NotFound} />
         </Route>
       </Routes>
