@@ -24,6 +24,12 @@
       font-size: var(--font-medium);
       font-weight: 400;
       color: var(--accent);
+
+      &__artist {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
 
     &__description {
@@ -31,6 +37,11 @@
       font-size: var(--font-micro);
       font-weight: 400;
       color: var(--text-muted);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      padding-bottom: 0.1rem;
     }
 
     &__actions {

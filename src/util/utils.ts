@@ -63,6 +63,13 @@ export const constructLink = (type: string, id: string) => {
   }
 };
 
+export const getAlbumIdFromUrl = (url: string) => {
+  if (url === undefined) return "";
+
+  const splitUrl = url.split("/");
+  return splitUrl[splitUrl.length - 1];
+};
+
 export const setupEvents = () => {
   MusicKit.getInstance().addEventListener(
     MusicKit.Events.playbackStateDidChange,

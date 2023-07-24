@@ -69,15 +69,19 @@
       &__artist {
         font-size: 14px;
         color: var(--text-muted);
-        display: -webkit-box;
+        display: inline-block;
         -webkit-line-clamp: 1;
         overflow: hidden;
         padding-bottom: 0.1rem;
         -webkit-box-orient: vertical;
         max-width: max-content;
 
-        &:hover {
-          text-decoration: underline;
+        > * {
+          color: var(--text-muted);
+
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
     }
@@ -89,6 +93,7 @@
     display: -webkit-box;
     -webkit-line-clamp: 1;
     overflow: hidden;
+    padding-bottom: 0.1rem;
     -webkit-box-orient: vertical;
     max-width: max-content;
 

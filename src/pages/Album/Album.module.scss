@@ -1,10 +1,11 @@
 :root {
-  --spacing-home-lg: 2rem;
-  --spacing-home-bottom: 5rem;
+  --spacing-album-lg: 2rem;
+  --spacing-album-bottom: 5rem;
 }
 
 .album {
   padding-block: var(--page-padding);
+  padding-top: var(--spacing-album-lg) !important;
   padding-left: var(--page-padding);
   height: calc(
     100% - var(--content-offset) - var(--titlebar-height) / 2 -
@@ -22,6 +23,11 @@
   &__content {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-home-lg);
+    gap: var(--spacing-album-lg);
+  }
+
+  &__table {
+    margin-top: var(--spacing-album-lg);
+    padding-right: 1rem;
   }
 }

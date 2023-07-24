@@ -2,6 +2,9 @@ import styles from "./MediaDetail.module.scss";
 import { MediaTileNoControls } from "../MediaTileNoControls/MediaTileNoControls";
 import { IoPlay, IoShuffle } from "solid-icons/io";
 import { ButtonPrimary } from "../ButtonPrimary/ButtonPrimary";
+import { A } from "@solidjs/router";
+import { constructLink } from "../../util/utils";
+import { For, Show } from "solid-js";
 
 export type MediaDetailProps = {
   title: string;
@@ -28,7 +31,31 @@ export function MediaDetail(props: MediaDetailProps) {
       <div class={styles.mediaDetail__details}>
         <div class={styles.mediaDetail__details__title}>{props.title}</div>
         <div class={styles.mediaDetail__details__subtitle}>
-          {props.subtitle}
+          <Show
+            when={props.type === "albums" || props.type === "library-albums"}
+          >
+            <For each={props.artists}>
+              {(artist, i) => (
+                <>
+                  <A
+                    title={artist}
+                    href={constructLink("artists", props.artistIds[i()])}
+                    class={styles.mediaDetail__details__subtitle__artist}
+                  >
+                    {artist}
+                  </A>
+                  <Show when={i() < props.artists.length - 1}>, </Show>
+                </>
+              )}
+            </For>
+          </Show>
+          <Show
+            when={
+              props.type === "playlists" || props.type === "library-playlists"
+            }
+          >
+            {props.subtitle}
+          </Show>
         </div>
         <div class={styles.mediaDetail__details__description}>
           {props.description}
