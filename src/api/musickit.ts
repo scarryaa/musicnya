@@ -18,8 +18,13 @@ export const setQueue = (
   type: string,
   id: string,
   startPlaying: boolean = false,
+  startWith: number = 0,
 ) => {
-  MusicKit.getInstance().setQueue({ [type]: id, startPlaying });
+  MusicKit.getInstance().setQueue({
+    [type]: id,
+    startPlaying,
+    startWith: startWith,
+  });
 };
 
 export const skipToNextItem = () => {

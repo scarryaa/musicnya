@@ -5,6 +5,8 @@ import { ButtonPrimary } from "../ButtonPrimary/ButtonPrimary";
 import { A } from "@solidjs/router";
 import { constructLink } from "../../util/utils";
 import { For, Show } from "solid-js";
+import { setQueue, setShuffleMode } from "../../api/musickit";
+import { setIsShuffle } from "../../stores/store";
 
 export type MediaDetailProps = {
   title: string;
@@ -65,14 +67,32 @@ export function MediaDetail(props: MediaDetailProps) {
             icon={IoPlay}
             label="Play"
             onClick={() => {
-              console.log("Play");
+              setShuffleMode(0);
+              setIsShuffle({ value: 0 });
+
+              setQueue(
+                props.type
+                  .substring(0, props.type.length - 1)
+                  .replace("library-", ""),
+                props.id,
+                true,
+              );
             }}
           />
           <ButtonPrimary
             icon={IoShuffle}
             label="Shuffle"
             onClick={() => {
-              console.log("Shuffle");
+              setShuffleMode(1);
+              setIsShuffle({ value: 1 });
+              setQueue(
+                props.type
+                  .substring(0, props.type.length - 1)
+                  .replace("library-", ""),
+                props.id,
+                true,
+                Math.random() * 1000,
+              );
             }}
           />
         </div>

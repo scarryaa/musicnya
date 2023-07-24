@@ -48,11 +48,13 @@ export function Playlist() {
               ?.curatorName
           }
           description={data()?.data[0].attributes?.description?.standard}
-          id={data()?.id}
+          id={data().data?.[0]?.id}
           artistIds={data()?.attributes?.curatorName}
           artists={data()?.attributes?.curatorName}
         />
         <MediaTable
+          type="playlists"
+          id={data().data?.[0]?.id}
           showArt={true}
           items={data()?.data[0].relationships?.tracks?.data}
           class={styles.playlist__table}

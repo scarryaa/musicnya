@@ -50,7 +50,7 @@ export function Album() {
               ?.curatorName
           }
           description={data()?.data[0].attributes?.description?.standard}
-          id={data()?.id}
+          id={data().data?.[0]?.id}
           artistIds={data()?.data?.[0]?.relationships?.artists?.data?.map(
             (artist: any) => artist.id,
           )}
@@ -59,6 +59,8 @@ export function Album() {
           )}
         />
         <MediaTable
+          type="albums"
+          id={data().data?.[0]?.id}
           showArt={false}
           items={data()?.data[0].relationships?.tracks?.data}
           class={styles.album__table}

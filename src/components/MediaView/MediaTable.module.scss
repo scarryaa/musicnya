@@ -1,4 +1,6 @@
 .mediaTable {
+  position: relative;
+
   table {
     width: 100%;
     border-collapse: collapse;
@@ -42,6 +44,14 @@
 
     tbody tr:hover {
       background-color: rgba(0, 0, 0, 0.4);
+
+      .mediaTable__number {
+        opacity: 0;
+      }
+
+      .mediaTable__play {
+        display: inline;
+      }
     }
   }
 
@@ -85,6 +95,13 @@
         }
       }
     }
+  }
+
+  &__play {
+    display: none;
+    position: absolute;
+    left: 1rem;
+    margin-top: 1.15rem;
   }
 
   &__album {
