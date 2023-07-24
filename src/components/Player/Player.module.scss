@@ -1,5 +1,5 @@
 .player {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.7);
   border-radius: var(--app-border-radius);
   position: absolute;
   bottom: var(--content-offset);
@@ -45,6 +45,7 @@
         font-size: var(--font-tiny);
         font-weight: 600;
         width: 100%;
+        max-width: max-content;
 
         &:hover {
           text-decoration: underline;
@@ -58,6 +59,7 @@
         font-size: var(--font-micro);
         color: var(--text-muted);
         width: 100%;
+        max-width: max-content;
 
         &:hover {
           text-decoration: underline;

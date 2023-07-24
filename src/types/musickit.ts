@@ -593,6 +593,7 @@ declare module MusicKit {
     /**A string of information about the album. */
     albumInfo?: string;
     href?: string;
+    _container?: any;
     /**The title of the album. */
     albumName?: string;
     /**The artist for a media item. */

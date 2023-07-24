@@ -2,7 +2,7 @@ import { For, Show } from "solid-js";
 import styles from "./MediaTable.module.scss";
 import { formatTime, getAlbumIdFromUrl, replaceSrc } from "../../util/utils";
 import { A } from "@solidjs/router";
-import { IoPause, IoPlay } from "solid-icons/io";
+import { IoEllipsisHorizontal, IoPause, IoPlay } from "solid-icons/io";
 import {
   currentMediaItem,
   isPlaying,
@@ -142,6 +142,15 @@ export function MediaTable(props: MediaTableProps) {
                 </Show>
                 <td class={styles.mediaTable__duration}>
                   {formatTime(item.attributes?.durationInMillis / 1000)}
+                  <IoEllipsisHorizontal
+                    size={24}
+                    class={styles.mediaTable__more}
+                    fill="var(--text)"
+                    onclick={(e) => {
+                      e.preventDefault();
+                      console.log("more");
+                    }}
+                  />
                 </td>
               </tr>
             )}

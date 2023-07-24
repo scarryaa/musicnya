@@ -24,7 +24,7 @@ import {
   setVolume,
   volume,
 } from "../../stores/store";
-import { formatTime, replaceSrc } from "../../util/utils";
+import { constructLink, formatTime, replaceSrc } from "../../util/utils";
 import {
   adjustVolume,
   seekToTime,
@@ -34,6 +34,7 @@ import {
   skipToPreviousItem,
   togglePlayPause,
 } from "../../api/musickit";
+import { A } from "@solidjs/router";
 
 export function Player() {
   return (
@@ -50,12 +51,19 @@ export function Player() {
           style={{ opacity: currentMediaItem.attributes ? 1 : 0 }}
         />
         <div class={styles.player__left__mediaInfo}>
-          <div class={styles.player__left__mediaInfo__title}>
+          <A
+            class={styles.player__left__mediaInfo__title}
+            href={`${constructLink(
+              currentMediaItem?._container?.type,
+              currentMediaItem?._container?.id,
+            )}`}
+          >
             {currentMediaItem?.attributes?.name}
-          </div>
-          <div class={styles.player__left__mediaInfo__artist}>
+          </A>
+          {/* TODO implement search for artist */}
+          <A class={styles.player__left__mediaInfo__artist} href="#">
             {currentMediaItem?.attributes?.artistName}
-          </div>
+          </A>
         </div>
       </div>
       <div class={styles.player__middle}>

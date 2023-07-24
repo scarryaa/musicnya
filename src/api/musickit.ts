@@ -16,7 +16,7 @@ export const pause = () => {
 
 export const setQueue = (
   type: string,
-  id: string,
+  id: string | string[],
   startPlaying: boolean = false,
   startWith: number = 0,
 ) => {

@@ -33,13 +33,13 @@
 
     th:last-child {
       text-align: right;
-      padding-inline: 2rem;
+      padding-inline: 3rem;
     }
 
     td:last-child {
       width: 50px;
       text-align: right;
-      padding-inline: 2rem;
+      padding-inline: 3rem;
     }
 
     tbody tr:hover {
@@ -50,6 +50,10 @@
       }
 
       .mediaTable__play {
+        display: inline;
+      }
+
+      .mediaTable__more {
         display: inline;
       }
     }
@@ -101,7 +105,7 @@
     display: none;
     position: absolute;
     left: 1rem;
-    margin-top: 1.15rem;
+    margin-top: 1rem;
   }
 
   &__album {
@@ -122,5 +126,12 @@
   &__duration {
     font-size: 14px;
     color: var(--text-muted);
+  }
+
+  &__more {
+    display: none;
+    position: absolute;
+    right: 1.6rem;
+    margin-top: -0.25rem;
   }
 }
