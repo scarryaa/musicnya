@@ -33,8 +33,8 @@ export const getArtworkColor = (src: string) => {
 
 export const formatTime = (timeInSeconds: number) => {
   const minutes = Math.floor(timeInSeconds / 60);
-  const seconds = timeInSeconds % 60;
-  return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  const seconds = Math.floor(timeInSeconds % 60).toFixed(0);
+  return `${minutes}:${seconds.length === 1 ? "0" + seconds : seconds}`;
 };
 
 export const constructLink = (type: string, id: string) => {

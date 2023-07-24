@@ -1,22 +1,3 @@
-type Response = {
-  data: [
-    {
-      id: string;
-      type: string;
-      href: string;
-    },
-  ];
-  errors: [
-    {
-      id: string;
-      status: string;
-      code: string;
-      title: string;
-      detail: string;
-    },
-  ];
-};
-
 export const fetchBrowse = async ({
   devToken,
   musicUserToken,

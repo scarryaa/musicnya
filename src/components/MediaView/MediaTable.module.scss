@@ -1,0 +1,104 @@
+.mediaTable {
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      font-weight: bold;
+    }
+
+    th:first-child {
+      padding-right: 2rem;
+      text-align: right;
+    }
+
+    tr:nth-child(even) {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    td:first-child {
+      width: 20px;
+      text-align: right;
+      padding-inline: 0.8rem;
+      padding-right: 2.1rem;
+    }
+
+    th:last-child {
+      text-align: right;
+      padding-inline: 2rem;
+    }
+
+    td:last-child {
+      width: 50px;
+      text-align: right;
+      padding-inline: 2rem;
+    }
+
+    tbody tr:hover {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  &__title__container {
+    display: flex;
+    align-items: center;
+
+    &__image {
+      margin-right: 10px;
+      border-radius: 4px;
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+
+      &__title {
+        font-weight: bold;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+      }
+
+      &__artist {
+        font-size: 14px;
+        color: var(--text-muted);
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+        padding-bottom: 0.1rem;
+        -webkit-box-orient: vertical;
+        max-width: max-content;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  &__album {
+    font-size: 14px;
+    color: var(--text-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    max-width: max-content;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__duration {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+}

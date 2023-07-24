@@ -1,0 +1,20 @@
+.buttonPrimary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  background: var(--accent);
+  color: white;
+  fill: white;
+  font-size: var(--font-micro);
+  font-weight: 500;
+
+  &:hover {
+    background: var(--accent-hover);
+  }
+
+  &:active {
+    background: var(--accent-active);
+  }
+}

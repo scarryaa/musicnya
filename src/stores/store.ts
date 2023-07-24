@@ -1,5 +1,6 @@
 import { createStore } from "solid-js/store";
 
+export const [countryCode, setCountryCode] = createStore({ value: "us" });
 export const [currentMediaItem, setCurrentMediaItem] = createStore(
   {} as MusicKit.MediaItem,
 );

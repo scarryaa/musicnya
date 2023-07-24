@@ -1,0 +1,33 @@
+:root {
+  --media_tile_no_controls-max-width: 14rem;
+  --media_tile_no_controls-max-height: 14rem;
+  --media_tile_no_controls-min-width: 14rem;
+  --media_tile_no_controls-min-height: 14rem;
+  --media_tile_no_controls-margin: 0.1rem;
+}
+
+.mediaTileNoControls {
+  position: relative;
+  height: max-content;
+
+  &:hover {
+    .mediaTile__overlay__inner {
+      opacity: 1;
+    }
+  }
+
+  &__overlay {
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__image {
+    border-radius: var(--border-radius);
+    max-width: var(--media_tile_no_controls-max-width);
+    max-height: var(--media_tile_no_controls-max-height);
+    width: var(--media_tile_no_controls-min-width);
+    height: var(--media_tile_no_controls-min-height);
+    object-fit: cover;
+    image-rendering: optimizeSpeed;
+  }
+}
