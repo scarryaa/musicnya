@@ -24,7 +24,8 @@ export function MediaTileGlass(props: MediaTileProps) {
           <IoPlay
             size={40}
             class={styles.mediaTileGlass__overlay__inner__button}
-            onclick={async () => {
+            onclick={async (e) => {
+              e.preventDefault();
               console.log(props.id);
               console.log(props.type);
               await MusicKit.getInstance().setQueue({
@@ -36,6 +37,10 @@ export function MediaTileGlass(props: MediaTileProps) {
           <IoEllipsisVertical
             size={26}
             class={styles.mediaTileGlass__overlay__inner__button__more}
+            onclick={(e) => {
+              e.preventDefault();
+              console.log("more");
+            }}
           />
         </A>
         <img

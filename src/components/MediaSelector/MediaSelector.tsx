@@ -7,6 +7,7 @@ import { MediaTileGlass } from "../MediaTileGlass/MediaTileGlass";
 import { LinkSet } from "../LinkSet/LinkSet";
 import { EditorialTile } from "../EditorialTile/EditorialTile";
 import { VideoTile } from "../VideoTile/VideoTile";
+import { CuratorTile } from "../CuratorTile/CuratorTile";
 
 export type MediaSelectorProps = {
   children: any;
@@ -123,7 +124,11 @@ const MediaComponentFactory = (
                 ),
               }}
               type={item?.type}
-              title={item?.attributes?.name || item?.attributes?.designTag}
+              title={
+                item?.attributes?.name ||
+                item?.attributes?.designTag ||
+                item.relationships?.contents?.data?.[0]?.attributes?.name
+              }
               artists={item.relationships?.artists?.data?.map(
                 (artist: any) => artist.attributes.name,
               )}
@@ -167,6 +172,7 @@ const MediaComponents = {
   332: () => null,
   336: MediaComponentFactory(MediaTile),
   385: MediaComponentFactory(EditorialTile),
+  387: MediaComponentFactory(MediaTile),
   391: LinkFactory(),
   394: MediaComponentFactory(EditorialTile),
   488: () => null,
@@ -181,7 +187,7 @@ const MediaComponents = {
   "uploaded-videos": MediaComponentFactory(VideoTile),
   artists: MediaComponentFactory(MediaTile),
   stations: MediaComponentFactory(MediaTile),
-  "apple-curators": MediaComponentFactory(MediaTile),
+  "apple-curators": MediaComponentFactory(CuratorTile),
   "library-playlists": MediaComponentFactory(MediaTile),
 };
 
