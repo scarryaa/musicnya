@@ -22,7 +22,7 @@ export const replaceSrc = (
 
 export const splitArtists = (artists: string) => {
   if (artists === undefined) return [];
-  return artists.split("& ").map((artist) => artist.trim());
+  return artists.split("&").map((artist) => artist.trim());
 };
 
 export const getArtworkColor = (src: string) => {
@@ -35,6 +35,32 @@ export const formatTime = (timeInSeconds: number) => {
   const minutes = Math.floor(timeInSeconds / 60);
   const seconds = timeInSeconds % 60;
   return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+};
+
+export const constructLink = (type: string, id: string) => {
+  if (id === undefined) return "";
+
+  switch (type) {
+    case "library-albums":
+      return `/library/album/${id}`;
+    case "library-artists":
+      return `/library/artist/${id}`;
+    case "library-playlists":
+      return `/library/playlist/${id}`;
+    case "albums":
+      return `/album/${id}`;
+    case "artists":
+      return `/artist/${id}`;
+    case "playlists":
+      return `/playlist/${id}`;
+    case "songs":
+    case "stations":
+    case "library-songs":
+    case "music-videos":
+      return "";
+    default:
+      return "";
+  }
 };
 
 export const setupEvents = () => {

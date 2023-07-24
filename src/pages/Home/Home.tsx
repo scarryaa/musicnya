@@ -1,10 +1,7 @@
 import styles from "./Home.module.scss";
 import { For, Show, createResource } from "solid-js";
 import { fetchRecommendations } from "../../api/home";
-import { MediaTile } from "../../components/MediaTile/MediaTile";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { MediaShelf } from "../../components/MediaShelf/MediaShelf";
-import { replaceSrc, splitArtists } from "../../util/utils";
 import { MediaSelector } from "../../components/MediaSelector/MediaSelector";
 
 export function Home() {
@@ -42,6 +39,7 @@ export function Home() {
           >
             {(item) => (
               <MediaSelector
+                artistId={item?.attributes?.artistId}
                 links={item?.attributes?.links}
                 displayKind={item?.attributes?.display.kind}
                 title={item?.attributes?.title?.stringForDisplay}

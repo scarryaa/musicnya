@@ -2,20 +2,26 @@ import { For, Show } from "solid-js";
 import { IoPlay, IoEllipsisVertical } from "solid-icons/io";
 import styles from "./MediaTile.module.scss";
 import { setQueue } from "../../api/musickit";
+import { A } from "@solidjs/router";
+import { constructLink } from "../../util/utils";
 
 export type MediaTileProps = {
   mediaArt: MusicKit.Artwork;
   title: string;
-  artist: string[];
+  artists: string[];
   type: MusicKit.MediaItemType;
   id: string;
+  artistIds: string[];
 };
 
 export function MediaTile(props: MediaTileProps) {
   return (
     <div class={styles.mediaTile}>
       <div class={styles.mediaTile__overlay}>
-        <div class={styles.mediaTile__overlay__inner}>
+        <A
+          href={constructLink(props.type, props.id)}
+          class={styles.mediaTile__overlay__inner}
+        >
           <IoPlay
             size={40}
             class={styles.mediaTile__overlay__inner__button}
@@ -33,7 +39,7 @@ export function MediaTile(props: MediaTileProps) {
             size={26}
             class={styles.mediaTile__overlay__inner__button__more}
           />
-        </div>
+        </A>
         <img
           loading="lazy"
           decoding="async"
@@ -45,23 +51,31 @@ export function MediaTile(props: MediaTileProps) {
         />
       </div>
       <div class={styles.mediaTile__mediaInfo}>
-        <div class={styles.mediaTile__mediaInfo__title}>{props.title}</div>
+        <A
+          href={constructLink(props.type, props.id)}
+          class={styles.mediaTile__mediaInfo__title}
+        >
+          {props.title}
+        </A>
         <div class={styles.mediaTile__mediaInfo__artist}>
-          <For each={props.artist}>
-            {(artist) => (
-              <span class={styles.mediaTile__mediaInfo__artist__name}>
+          <For each={props.artists}>
+            {(artist, i) => (
+              <A
+                href={constructLink("artists", props.artistIds?.[i()])}
+                class={styles.mediaTile__mediaInfo__artist__name}
+              >
                 {artist}
                 <Show
                   when={
-                    props.artist.length > 1 &&
-                    artist !== props.artist[props.artist.length - 1]
+                    props.artists.length > 1 &&
+                    artist !== props.artists[props.artists.length - 1]
                   }
                 >
                   <span class={styles.mediaTile__mediaInfo__artist__separator}>
                     ,{" "}
                   </span>
                 </Show>
-              </span>
+              </A>
             )}
           </For>
         </div>

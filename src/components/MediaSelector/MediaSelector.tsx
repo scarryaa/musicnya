@@ -1,6 +1,6 @@
 import { For, JSX, Match, Switch } from "solid-js";
 import { MediaTile } from "../MediaTile/MediaTile";
-import { replaceSrc, splitArtists } from "../../util/utils";
+import { replaceSrc } from "../../util/utils";
 import { MediaShelf } from "../MediaShelf/MediaShelf";
 import { MediaTileLarge } from "../MediaTileLarge/MediaTileLarge";
 import { MediaTileGlass } from "../MediaTileGlass/MediaTileGlass";
@@ -19,6 +19,7 @@ export type MediaSelectorProps = {
     title: string;
     url: string;
   }[];
+  artistId: string;
 };
 
 interface ComponentProps {
@@ -26,8 +27,9 @@ interface ComponentProps {
   mediaArt: MusicKit.Artwork;
   type: MusicKit.MediaItemType;
   title: string;
-  artist: string[];
+  artists: string[];
   children?: JSX.Element[];
+  artistIds: string[];
 }
 
 interface ExtraData {
@@ -97,6 +99,9 @@ const MediaComponentFactory = (
         <For each={props.children}>
           {(item) => (
             <ComponentType
+              artistIds={item.relationships?.artists?.data?.map(
+                (artist: any) => artist.id,
+              )}
               id={item?.id}
               mediaArt={{
                 ...(item.attributes.artwork ||
@@ -119,8 +124,8 @@ const MediaComponentFactory = (
               }}
               type={item?.type}
               title={item?.attributes?.name || item?.attributes?.designTag}
-              artist={splitArtists(
-                item?.attributes?.artistName || item?.attributes?.curatorName,
+              artists={item.relationships?.artists?.data?.map(
+                (artist: any) => artist.attributes.name,
               )}
             />
           )}

@@ -42,6 +42,7 @@ export function Radio() {
           >
             {(item) => (
               <MediaSelector
+                artistId={item?.attributes?.artistId}
                 displayKind={item?.attributes?.display?.kind}
                 title={
                   item?.attributes?.title?.stringForDisplay ||

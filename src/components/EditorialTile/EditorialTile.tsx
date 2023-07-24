@@ -5,7 +5,7 @@ import { IoEllipsisVertical, IoPlay } from "solid-icons/io";
 export type EditorialTileProps = {
   mediaArt: MusicKit.Artwork;
   title: string;
-  artist: string[];
+  artists: string[];
   type: MusicKit.MediaItemType;
   id: string;
 };
