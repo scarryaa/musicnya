@@ -191,12 +191,18 @@ const MediaComponents: Record<MediaComponentType, any> = {
       mediaArt={{
         ...props.children[0]?.attributes?.artwork,
         url: replaceSrc(
-          props.children[0]?.attributes?.artwork?.url ||
+          props.children[0]?.attributes?.plainEditorialCard?.[
+            props.children[0]?.meta?.editorialCard
+          ]?.editorialArtwork?.superHeroWide?.url ||
             props.children[0]?.attributes?.editorialArtwork?.subscriptionHero
-              .url,
-          props.children[0]?.attributes?.artwork?.height ||
+              .url ||
+            props.children[0]?.attributes?.artwork?.url,
+          props.children[0]?.attributes?.plainEditorialCard?.[
+            props.children[0]?.meta?.editorialCard
+          ]?.editorialArtwork?.superHeroWide?.height ||
             props.children[0]?.attributes?.editorialArtwork?.subscriptionHero
-              .height,
+              .height ||
+            props.children[0]?.attributes?.artwork?.height,
         ),
       }}
     />

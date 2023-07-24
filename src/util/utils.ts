@@ -10,12 +10,13 @@ import {
 
 export const replaceSrc = (
   src: string | undefined,
-  size: number,
+  width: number,
+  height: number = width,
   format = "webp",
 ) => {
   if (src === undefined) return;
   return src
-    .replace("{w}x{h}", `${size}x${size}`)
+    .replace("{w}x{h}", `${width}x${height}`)
     .replace("{f}", format)
     .replace("{c}", "");
 };

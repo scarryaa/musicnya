@@ -23,6 +23,7 @@ export function MediaTileLarge(props: MediaTileLargeProps) {
           />
         </div>
         <img
+          style={{ "background-color": `#${props.mediaArt.bgColor}` }}
           loading="lazy"
           decoding="async"
           class={styles.mediaTileLarge__image}

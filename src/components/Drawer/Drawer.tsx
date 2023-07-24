@@ -1,5 +1,12 @@
 import { BiSolidHome, BiSolidPlaylist, BiSolidAlbum } from "solid-icons/bi";
-import { IoGrid, IoRadio, IoSettings, IoAlbums } from "solid-icons/io";
+import {
+  IoGrid,
+  IoRadio,
+  IoSettings,
+  IoAlbums,
+  IoChevronBack,
+  IoChevronForward,
+} from "solid-icons/io";
 import { BsMusicNote, BsPeopleFill } from "solid-icons/bs";
 import { CircleIcon } from "../CircleIcon/CircleIcon";
 import styles from "./Drawer.module.scss";
@@ -13,6 +20,28 @@ export function Drawer() {
     <div class={styles.drawer}>
       <div class={styles.drawer__top}>
         <CircleIcon style="margin-top: 10px;" />
+        <div class={styles.drawer__top__nav_arrows}>
+          <IoChevronBack
+            size={25}
+            fill={lightTheme ? "#aaa" : "#757575"}
+            color={lightTheme ? "#aaa" : "#757575"}
+            class={styles.drawer__top__nav_arrows__back}
+            onclick={(e) => {
+              e.preventDefault();
+              window.history.back();
+            }}
+          />
+          <IoChevronForward
+            size={25}
+            fill={lightTheme ? "#aaa" : "#757575"}
+            color={lightTheme ? "#aaa" : "#757575"}
+            class={styles.drawer__top__nav_arrows__forward}
+            onclick={(e) => {
+              e.preventDefault();
+              window.history.forward();
+            }}
+          />
+        </div>
       </div>
       <div class={styles.drawer__middle}>
         <A title="home" href="/home" activeClass="active-route">

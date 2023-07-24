@@ -1,8 +1,8 @@
 :root {
   --media_tile_large-max-width: 40rem;
-  --media_tile_large-max-height: 20rem;
+  --media_tile_large-max-height: 30rem;
   --media_tile_large-min-width: 40rem;
-  --media_tile_large-min-height: 20rem;
+  --media_tile_large-min-height: 30rem;
 }
 
 .mediaTileLarge {
@@ -25,7 +25,7 @@
     max-height: var(--media_tile_large-max-height);
     width: var(--media_tile_large-min-width);
     height: var(--media_tile_large-min-height);
-    object-fit: cover;
+    object-fit: contain;
   }
 
   &__overlay {
