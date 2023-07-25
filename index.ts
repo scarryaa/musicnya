@@ -1,5 +1,6 @@
-const { app, BrowserWindow, components } = require("electron");
+const { app, BrowserWindow, components, ipcMain } = require("electron");
 const { processImport } = require("process");
+const path = require('path');
 
 // Listen on a specific host via the HOST environment variable
 const host = "0.0.0.0";
@@ -37,10 +38,24 @@ const createWindow = () => {
     height: 700,
     minWidth: 1100,
     minHeight: 700,
-    webPreferences: { nodeIntegration: true, contextIsolation: true },
+    webPreferences: { 
+      nodeIntegration: true, 
+      contextIsolation: true, 
+      preload: path.join(__dirname, 'preload.cjs'),
+  },
     autoHideMenuBar: true,
     frame: false,
   });
+
+  ipcMain.on('minimize-window', () => {
+    win.minimize()  
+  })
+  ipcMain.on('maximize-window', () => {
+    win.maximize() 
+  })
+  ipcMain.on('close-window', () => {
+    win.close() 
+  })
 
   win.removeMenu();
 
