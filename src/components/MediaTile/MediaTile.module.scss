@@ -89,6 +89,7 @@
       margin-top: 0.1rem;
       font-weight: 500;
       color: var(--text);
+      max-width: max-content;
       transition:
         transform 0.2s ease-in-out,
         opacity 0.2s ease-in-out;
@@ -102,6 +103,8 @@
       font-size: 1rem;
       font-weight: 400;
       color: var(--text-muted);
+      max-width: max-content;
+      padding-bottom: 0.1rem;
 
       &__name:not(&__seperator) {
         &:hover {
