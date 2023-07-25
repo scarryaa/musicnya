@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "vite",
-    "dev": "vite & steam-run electron .",
+    "dev": "vite & ${IN_NIX_SHELL:+steam-run} electron .",
     "build": "vite build",
     "serve": "vite preview"
   },
