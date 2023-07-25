@@ -9,6 +9,7 @@ import { EditorialTile } from "../EditorialTile/EditorialTile";
 import { VideoTile } from "../VideoTile/VideoTile";
 import { CuratorTile } from "../CuratorTile/CuratorTile";
 import { EditorialTileLarge } from "../EditorialTileLarge/EditorialTileLarge";
+import { SongTile } from "../SongTile/SongTile";
 
 export type MediaSelectorProps = {
   children: any;
@@ -239,7 +240,7 @@ const MediaComponents: Record<MediaComponentType, any> = {
   albums: MediaComponentFactory(MediaTile),
   "library-albums": MediaComponentFactory(MediaTile),
   playlists: MediaComponentFactory(MediaTile),
-  songs: MediaComponentFactory(MediaTile),
+  songs: MediaComponentFactory(SongTile),
   "music-videos": MediaComponentFactory(VideoTile),
   "uploaded-videos": MediaComponentFactory(VideoTile),
   artists: MediaComponentFactory(MediaTile),
@@ -252,7 +253,6 @@ const sameComponentTypes: MediaComponentType[] = [
   "albums",
   "library-albums",
   "playlists",
-  "songs",
   "artists",
   "stations",
   "library-playlists",

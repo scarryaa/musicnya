@@ -44,7 +44,8 @@ export function Artist() {
               src={replaceSrc(
                 data()?.data[0].attributes?.editorialArtwork?.subscriptionHero
                   ?.url || data()?.data[0].attributes?.artwork?.url,
-                200,
+                data()?.data[0].attributes?.editorialArtwork?.subscriptionHero
+                  ?.height || data()?.data[0].attributes?.artwork?.height,
               )}
               alt="Album Art"
               width={100}
