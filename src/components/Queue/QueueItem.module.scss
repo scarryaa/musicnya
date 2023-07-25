@@ -1,0 +1,76 @@
+.queueItem {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border-radius: var(--border-radius);
+  padding: 0.2rem;
+
+  &:hover {
+    background-color: var(--autoplay-on);
+  }
+
+  &__image {
+    border-radius: var(--border-radius);
+    object-fit: cover;
+    image-rendering: optimizeSpeed;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  &__info {
+    width: 100%;
+    margin-left: 0.5rem;
+    align-self: center;
+
+    &__title {
+      font-size: var(--font-tiny);
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      max-width: max-content;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      color: var(--text);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &__artist {
+      font-size: var(--font-micro);
+      color: var(--text-muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      max-width: max-content;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      color: var(--text-muted);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__duration {
+    padding-left: 0.2rem;
+    font-size: var(--font-micro);
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    max-width: max-content;
+    align-self: center;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    color: var(--text-muted);
+  }
+}

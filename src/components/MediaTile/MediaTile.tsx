@@ -33,8 +33,10 @@ export function MediaTile(props: MediaTileProps) {
                   .substring(0, props.type.length - 1)
                   .replace("library-", ""),
                 props.id,
-                true,
-              );
+                false,
+              ).then(() => {
+                MusicKit.getInstance().play();
+              });
             }}
           />
           <IoEllipsisVertical

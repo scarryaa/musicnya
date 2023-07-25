@@ -263,7 +263,7 @@ declare module MusicKit {
      * This could result in an error if the user has not interacted with the player yet, as most browsers prevent audio playback without user interaction.
      * @param descriptor A {@link MediaItem} instance or the {@link id} of a specific item in the {@link Queue}.
      * @returns a void Promise.*/
-    changeToMediaItem(descriptor: MediaItem | string): Promise<void>;
+    changeToMediaItem(descriptor: MediaItem | string | number): Promise<void>;
 
     /**Changes the user's storefront.
      * @param storefrontId The id of the storefront to use as the {{storefrontId}} value in the path parameter of the

@@ -1,7 +1,3 @@
-:root {
-  --panel-offset: 4rem;
-}
-
 .main {
   height: calc(100% - var(--content-offset) * 2 - var(--titlebar-height));
   position: fixed;

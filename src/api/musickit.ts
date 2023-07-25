@@ -6,6 +6,14 @@ export const togglePlayPause = () => {
   }
 };
 
+export const setAutoplay = (on: boolean) => {
+  MusicKit.getInstance().autoplay = on;
+};
+
+export const getQueueItems = () => {
+  return MusicKit.getInstance().queue.items;
+};
+
 export const play = () => {
   MusicKit.getInstance().play();
 };
@@ -18,13 +26,13 @@ export const pause = () => {
   MusicKit.getInstance().pause();
 };
 
-export const setQueue = (
+export const setQueue = async (
   type: string,
   id: string | string[],
   startPlaying: boolean = false,
   startWith: number = 0,
 ) => {
-  MusicKit.getInstance().setQueue({
+  await MusicKit.getInstance().setQueue({
     [type]: id,
     startPlaying,
     startWith: startWith,

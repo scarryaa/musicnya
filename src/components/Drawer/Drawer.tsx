@@ -96,9 +96,9 @@ export function Drawer() {
               "--panel-offset",
               rightPanelOpen.value
                 ? rightPanelContent.value === "queue"
-                  ? "16rem"
+                  ? "18rem"
                   : "4rem"
-                : "16rem",
+                : "18rem",
             );
 
             rightPanelOpen.value === true &&
@@ -117,9 +117,9 @@ export function Drawer() {
               "--panel-offset",
               rightPanelOpen.value
                 ? rightPanelContent.value === "lyrics"
-                  ? "16rem"
+                  ? "18rem"
                   : "4rem"
-                : "16rem",
+                : "18rem",
             );
 
             rightPanelOpen.value === true && rightPanelContent.value === "queue"

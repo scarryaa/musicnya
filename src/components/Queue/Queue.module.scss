@@ -1,12 +1,58 @@
+:root {
+  --autoplay-on: rgba(255, 255, 255, 0.2);
+}
+
+:root[theme="light"] {
+  --autoplay-on: rgba(0, 0, 0, 0.2);
+}
+
 .queue {
   height: 100%;
   position: absolute;
   right: 0;
   top: 0;
   bottom: 0;
-  width: 11rem;
+  width: 13rem;
   padding-top: 2rem;
+  padding-right: 1rem;
   padding-left: 2rem;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding-left: 0.5rem;
+  }
+
+  &__autoplay {
+    margin-top: 0.3rem;
+    padding: 0.1rem;
+    border-radius: var(--border-radius);
+
+    &__active {
+      background-color: var(--autoplay-on);
+    }
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-inline: 0.5rem;
+    padding-left: 0.2rem;
+    margin-top: 0.5rem;
+
+    &:last-child {
+      padding-bottom: 3rem;
+    }
+  }
 }
