@@ -19,7 +19,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200px;
+    height: 300px;
     background-color: rgba(0, 0, 0, 0.7);
     margin-top: -1rem;
     margin-left: -1rem;
@@ -34,6 +34,32 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+      }
+    }
+
+    &__info {
+      margin-left: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 0.5rem;
+
+      &__title {
+        font-size: var(--font-large);
+        font-weight: 600;
+      }
+
+      &__subtitle {
+        font-size: var(--font-small);
+        color: var(--text-muted);
+      }
+
+      &__actions {
+        display: flex;
+        flex-direction: row;
+        margin-top: 0.5rem;
+        gap: 0.5rem;
       }
     }
   }
