@@ -76,6 +76,7 @@
     height: var(--media_tile-min-height);
     object-fit: cover;
     image-rendering: optimizeSpeed;
+    background-color: rgba(0, 0, 0, 0.1);
   }
 
   &__mediaInfo {

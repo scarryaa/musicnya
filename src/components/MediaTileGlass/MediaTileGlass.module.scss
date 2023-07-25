@@ -77,6 +77,7 @@
     max-height: var(--media_tile_glass-max-height);
     width: var(--media_tile_glass-min-width);
     height: var(--media_tile_glass-min-height);
+    background-color: rgba(0, 0, 0, 0.1);
   }
 
   &__backdrop {

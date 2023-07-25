@@ -29,5 +29,6 @@
     height: var(--media_tile_no_controls-min-height);
     object-fit: cover;
     image-rendering: optimizeSpeed;
+    background-color: rgba(0, 0, 0, 0.1);
   }
 }

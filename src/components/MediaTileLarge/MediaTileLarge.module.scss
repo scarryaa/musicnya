@@ -26,6 +26,7 @@
     width: var(--media_tile_large-min-width);
     height: var(--media_tile_large-min-height);
     object-fit: contain;
+    background-color: rgba(0, 0, 0, 0.1);
   }
 
   &__overlay {
