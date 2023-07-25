@@ -47,15 +47,13 @@ export enum ArtistCategoryTitle {
 }
 
 export function ArtistViewSelector(props: ArtistViewSelectorProps) {
-  console.log(props.data);
+  console.log(props.data());
 
   return (
     <div class={styles.artistViewSelector}>
       <For each={Object.values(ArtistCategory)}>
         {(category) => {
-          const data = props.data?.[0]?.views?.[category];
-
-          if (!data?.data?.length) {
+          if (!props.data()?.data?.[0]?.views?.[category]?.data?.length) {
             return null;
           }
 
@@ -63,11 +61,11 @@ export function ArtistViewSelector(props: ArtistViewSelectorProps) {
             <div class={styles.artistViewSelector__section}>
               <MediaSelector
                 title={ArtistCategoryTitle[category]}
-                children={data?.data}
+                children={props.data()?.data?.[0]?.views?.[category]?.data}
                 displayKind="list"
                 artistId={props?.artist?.id}
-                links={data?.links}
-                type={data?.data[0]?.type}
+                links={props.data()?.data?.[0]?.views?.[category]?.links}
+                type={props.data()?.data?.[0]?.views?.[category]?.data[0]?.type}
               />
             </div>
           );

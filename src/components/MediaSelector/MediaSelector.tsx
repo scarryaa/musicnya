@@ -10,6 +10,7 @@ import { VideoTile } from "../VideoTile/VideoTile";
 import { CuratorTile } from "../CuratorTile/CuratorTile";
 import { EditorialTileLarge } from "../EditorialTileLarge/EditorialTileLarge";
 import { SongTile } from "../SongTile/SongTile";
+import { ArtistTile } from "../ArtistTile/ArtistTile";
 
 export type MediaSelectorProps = {
   children: any;
@@ -158,7 +159,7 @@ const MediaComponentFactory = (
                     .url,
                 item.relationships?.contents?.data?.[0]?.attributes
                   ?.editorialArtwork?.subscriptionHero?.height ||
-                  item?.attributes?.artwork?.height ||
+                  Math.floor(item?.attributes?.artwork?.height / 1.5) ||
                   item.relationships?.contents?.data?.[0]?.attributes?.artwork
                     .height / 2 ||
                   300,
@@ -243,7 +244,7 @@ const MediaComponents: Record<MediaComponentType, any> = {
   songs: MediaComponentFactory(SongTile),
   "music-videos": MediaComponentFactory(VideoTile),
   "uploaded-videos": MediaComponentFactory(VideoTile),
-  artists: MediaComponentFactory(MediaTile),
+  artists: MediaComponentFactory(ArtistTile),
   stations: MediaComponentFactory(MediaTile),
   "apple-curators": MediaComponentFactory(CuratorTile),
   "library-playlists": MediaComponentFactory(MediaTile),
@@ -253,7 +254,6 @@ const sameComponentTypes: MediaComponentType[] = [
   "albums",
   "library-albums",
   "playlists",
-  "artists",
   "stations",
   "library-playlists",
 ];

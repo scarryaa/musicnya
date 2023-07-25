@@ -1,6 +1,6 @@
 import { useParams } from "@solidjs/router";
 import styles from "./Artist.module.scss";
-import { Show, createResource } from "solid-js";
+import { Show, createEffect, createSignal } from "solid-js";
 import { fetchArtist } from "../../api/artist";
 import { replaceSrc } from "../../util/utils";
 import { IoPlay } from "solid-icons/io";
@@ -12,29 +12,23 @@ import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 
 export function Artist() {
   const params = useParams<{ id: string }>();
-  const [data] = createResource<
-    any,
-    {
-      devToken: string;
-      musicUserToken: string;
-      id: string;
-    },
-    string
-  >(
-    {
+  const [data, setData] = createSignal(null);
+  createEffect(() => {
+    artistPage.scrollTop = 0;
+    fetchArtist({
       devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
       musicUserToken: MusicKit.getInstance()?.musicUserToken,
       id: params.id,
-    },
-    fetchArtist,
-  );
+    }).then((res) => setData({ ...res }));
+  });
+
+  let artistPage: HTMLDivElement = undefined as unknown as HTMLDivElement;
 
   return (
-    <div class={styles.artist}>
-      <Show when={data.loading}>
+    <div class={styles.artist} ref={artistPage}>
+      <Show when={!data()}>
         <LoadingSpinner />
       </Show>
-      <Show when={data.error}>Error: {data.error.message}</Show>
       <Show when={data()}>
         <div class={styles.artist__header}>
           <div class={styles.artist__header__image}>
@@ -73,7 +67,7 @@ export function Artist() {
           </div>
         </div>
         <div class={styles.artist__body}>
-          <ArtistViewSelector artist={data().data[0]} data={data()?.data} />
+          <ArtistViewSelector artist={data} data={data} />
         </div>
       </Show>
     </div>
