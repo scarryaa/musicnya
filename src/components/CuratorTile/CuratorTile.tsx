@@ -1,7 +1,6 @@
 import { For, Show } from "solid-js";
-import { IoPlay, IoEllipsisVertical, IoLink } from "solid-icons/io";
+import { IoEllipsisVertical, IoLink } from "solid-icons/io";
 import styles from "./CuratorTile.module.scss";
-import { setQueue } from "../../api/musickit";
 import { A } from "@solidjs/router";
 import { constructLink } from "../../util/utils";
 
@@ -25,11 +24,6 @@ export function CuratorTile(props: CuratorTileProps) {
           <IoLink
             size={40}
             class={styles.curatorTile__overlay__inner__button}
-            onclick={async (e) => {
-              e.preventDefault();
-              console.log(props.id);
-              console.log(props.type);
-            }}
           />
           <IoEllipsisVertical
             size={26}

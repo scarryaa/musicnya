@@ -10,6 +10,10 @@ export const play = () => {
   MusicKit.getInstance().play();
 };
 
+export const stop = () => {
+  MusicKit.getInstance().stop();
+};
+
 export const pause = () => {
   MusicKit.getInstance().pause();
 };

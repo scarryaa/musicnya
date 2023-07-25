@@ -4,6 +4,7 @@ import {
   BsRepeat,
   BsRepeat1,
   BsShuffle,
+  BsStopCircleFill,
   BsVolumeDownFill,
   BsVolumeMuteFill,
   BsVolumeUpFill,
@@ -18,6 +19,7 @@ import {
   oldVolume,
   playbackDuration,
   playbackTime,
+  setCurrentMediaItem,
   setIsRepeat,
   setIsShuffle,
   setOldVolume,
@@ -35,8 +37,211 @@ import {
   togglePlayPause,
 } from "../../api/musickit";
 import { A } from "@solidjs/router";
+import { JSX, Show, createSignal } from "solid-js";
 
 export function Player() {
+  const ButtonStyle = {
+    fill: "var(--text)",
+    size: 40,
+    sizeSmall: 20,
+    sizeVolume: 28,
+    marginTop: "-0.25rem",
+    marginLeft: "-0.1rem",
+  };
+
+  const getPlayButtonType = () => {
+    if (currentMediaItem?.attributes?.kind === "streaming") {
+      if (isPlaying.value) {
+        return "stop";
+      } else {
+        return "play";
+      }
+    } else if (isPlaying.value) {
+      return "pause";
+    } else {
+      return "play";
+    }
+  };
+
+  const playButton = () => {
+    switch (getPlayButtonType()) {
+      case "stop":
+        return (
+          <BsStopCircleFill
+            fill={ButtonStyle.fill}
+            size={ButtonStyle.size}
+            onclick={async () => {
+              await MusicKit.getInstance().stop();
+              setCurrentMediaItem({});
+            }}
+          />
+        );
+      case "pause":
+        return (
+          <BsPauseCircleFill
+            fill={ButtonStyle.fill}
+            size={ButtonStyle.size}
+            onclick={() => togglePlayPause()}
+          />
+        );
+      case "play":
+        return (
+          <BsPlayCircleFill
+            fill={ButtonStyle.fill}
+            size={ButtonStyle.size}
+            onclick={() => togglePlayPause()}
+          />
+        );
+    }
+  };
+
+  const getRepeatButtonType = () => {
+    if (isRepeat.value === 0) {
+      return "repeat";
+    } else if (isRepeat.value === 1) {
+      return "repeat1";
+    } else {
+      return "repeat";
+    }
+  };
+
+  const repeatButton = () => {
+    switch (getRepeatButtonType()) {
+      case "repeat":
+        return (
+          <BsRepeat
+            fill={ButtonStyle.fill}
+            style={{
+              fill:
+                isRepeat.value === 1 || isRepeat.value === 2
+                  ? "var(--accent)"
+                  : "white",
+            }}
+            size={20}
+            onclick={() => {
+              setIsRepeat({
+                value: isRepeat.value === 0 ? 1 : isRepeat.value === 1 ? 2 : 0,
+              });
+              setRepeatMode(
+                MusicKit.getInstance().repeatMode === (0 as any)
+                  ? (1 as any)
+                  : MusicKit.getInstance().repeatMode === (1 as any)
+                  ? (2 as any)
+                  : (0 as any),
+              );
+            }}
+          />
+        );
+      case "repeat1":
+        return (
+          <BsRepeat1
+            fill={ButtonStyle.fill}
+            style={{
+              fill:
+                isRepeat.value === 1 || isRepeat.value === 2
+                  ? "var(--accent)"
+                  : "white",
+            }}
+            size={20}
+            onclick={() => {
+              setIsRepeat({
+                value: isRepeat.value === 0 ? 1 : isRepeat.value === 1 ? 2 : 0,
+              });
+              setRepeatMode(
+                MusicKit.getInstance().repeatMode === (0 as any)
+                  ? (1 as any)
+                  : MusicKit.getInstance().repeatMode === (1 as any)
+                  ? (2 as any)
+                  : (0 as any),
+              );
+            }}
+          />
+        );
+    }
+  };
+
+  const getShuffleButtonType = () => {
+    return "shuffle";
+  };
+
+  const shuffleButton = () => {
+    switch (getShuffleButtonType()) {
+      case "shuffle":
+        return (
+          <BsShuffle
+            fill={ButtonStyle.fill}
+            size={20}
+            style={{
+              fill: isShuffle.value === 1 ? "var(--accent)" : "white",
+            }}
+            onclick={() => {
+              setIsShuffle({
+                value: isShuffle.value === 1 ? 0 : 1,
+              });
+              setShuffleMode(MusicKit.getInstance().shuffleMode === 1 ? 0 : 1);
+              console.log(MusicKit.getInstance().queue.items);
+            }}
+          />
+        );
+    }
+  };
+
+  const getVolumeButtonType = () => {
+    if (volume.value > 0.5) {
+      return "volumeUp";
+    } else if (volume.value > 0) {
+      return "volumeDown";
+    } else {
+      return "volumeMute";
+    }
+  };
+
+  const volumeButton = () => {
+    switch (getVolumeButtonType()) {
+      case "volumeUp":
+        return (
+          <BsVolumeUpFill
+            fill={ButtonStyle.fill}
+            size={28}
+            style={{ "margin-top": "-0.25rem", "margin-left": "-0.1rem" }}
+            onclick={() => {
+              setOldVolume({ value: volume.value });
+              setVolume({ value: 0 });
+              adjustVolume(0);
+            }}
+          />
+        );
+      case "volumeDown":
+        return (
+          <BsVolumeDownFill
+            fill={ButtonStyle.fill}
+            size={28}
+            style={{ "margin-top": "-0.25rem", "margin-left": "-0.1rem" }}
+            onclick={() => {
+              setOldVolume({ value: volume.value });
+              setVolume({ value: 0 });
+              adjustVolume(0);
+            }}
+          />
+        );
+      case "volumeMute":
+        return (
+          <BsVolumeMuteFill
+            fill={ButtonStyle.fill}
+            size={28}
+            style={{ "margin-top": "-0.25rem", "margin-left": "-0.1rem" }}
+            onclick={() => {
+              setVolume({ value: oldVolume.value });
+              adjustVolume(oldVolume.value);
+              setOldVolume({ value: volume.value });
+            }}
+          />
+        );
+    }
+  };
+  const formattedPlaybackTime = () => formatTime(playbackTime.value);
+  const formattedPlaybackDuration = () => formatTime(playbackDuration.value);
+
   return (
     <div class={styles.player}>
       <div class={styles.player__left}>
@@ -70,38 +275,28 @@ export function Player() {
         <div class={styles.player__middle__controls}>
           <button class={styles.player__left__controls__button}>
             <BiRegularSkipPrevious
-              fill="var(--text)"
+              fill={ButtonStyle.fill}
               size={40}
               onclick={() => skipToPreviousItem()}
             />
           </button>
           <button class={styles.player__left__controls__button}>
-            {isPlaying.value ? (
-              <BsPauseCircleFill
-                fill="var(--text)"
-                size={40}
-                onclick={() => togglePlayPause()}
-              />
-            ) : (
-              <BsPlayCircleFill
-                fill="var(--text)"
-                size={40}
-                onclick={() => togglePlayPause()}
-              />
-            )}
+            {playButton()}
           </button>
           <button class={styles.player__left__controls__button}>
             <BiRegularSkipNext
-              fill="var(--text)"
+              fill={ButtonStyle.fill}
               size={40}
               onclick={() => skipToNextItem()}
             />
           </button>
         </div>
         <div class={styles.player__middle__progress}>
-          <div class={styles.player__middle__progress__time}>
-            {formatTime(playbackTime.value)}
-          </div>
+          <Show when={currentMediaItem?.attributes?.kind !== "streaming"}>
+            <div class={styles.player__middle__progress__time}>
+              {formattedPlaybackTime()}
+            </div>
+          </Show>
           <input
             type="range"
             min="0"
@@ -110,116 +305,17 @@ export function Player() {
             class={styles.player__middle__progress__bar}
             onchange={(e) => seekToTime(e.target.valueAsNumber)}
           />
-          <div class={styles.player__middle__progress__time}>
-            {formatTime(playbackDuration.value)}
-          </div>
+          <Show when={currentMediaItem?.attributes?.kind !== "streaming"}>
+            <div class={styles.player__middle__progress__time}>
+              {formattedPlaybackDuration()}
+            </div>
+          </Show>
         </div>
       </div>
       <div class={styles.player__right}>
-        <button class={styles.player__button}>
-          <BsShuffle
-            fill="var(--text)"
-            size={20}
-            style={{
-              fill: isShuffle.value === 1 ? "var(--accent)" : "white",
-            }}
-            onclick={() => {
-              setIsShuffle({
-                value: isShuffle.value === 1 ? 0 : 1,
-              });
-              setShuffleMode(MusicKit.getInstance().shuffleMode === 1 ? 0 : 1);
-              console.log(MusicKit.getInstance().queue.items);
-            }}
-          />
-        </button>
-        <button class={styles.player__button}>
-          {isRepeat.value === 1 ? (
-            <BsRepeat1
-              fill="var(--text)"
-              style={{
-                fill:
-                  isRepeat.value === 1 || isRepeat.value === 2
-                    ? "var(--accent)"
-                    : "white",
-              }}
-              size={20}
-              onclick={() => {
-                setIsRepeat({
-                  value:
-                    isRepeat.value === 0 ? 1 : isRepeat.value === 1 ? 2 : 0,
-                });
-                setRepeatMode(
-                  MusicKit.getInstance().repeatMode === (0 as any)
-                    ? (1 as any)
-                    : MusicKit.getInstance().repeatMode === (1 as any)
-                    ? (2 as any)
-                    : (0 as any),
-                );
-              }}
-            />
-          ) : (
-            <BsRepeat
-              fill="var(--text)"
-              style={{
-                fill:
-                  isRepeat.value === 1 || isRepeat.value === 2
-                    ? "var(--accent)"
-                    : "white",
-              }}
-              size={20}
-              onclick={() => {
-                setIsRepeat({
-                  value:
-                    isRepeat.value === 0 ? 1 : isRepeat.value === 1 ? 2 : 0,
-                });
-                setRepeatMode(
-                  MusicKit.getInstance().repeatMode === (0 as any)
-                    ? (1 as any)
-                    : MusicKit.getInstance().repeatMode === (1 as any)
-                    ? (2 as any)
-                    : (0 as any),
-                );
-              }}
-            />
-          )}
-        </button>
-        {volume.value > 0.5 ? (
-          <BsVolumeUpFill
-            class={styles.player__button}
-            fill="var(--text)"
-            size={28}
-            style={{ "margin-top": "-0.25rem", "margin-left": "-0.1rem" }}
-            onclick={() => {
-              setOldVolume({ value: volume.value });
-              setVolume({ value: 0 });
-              adjustVolume(0);
-            }}
-          />
-        ) : volume.value > 0 ? (
-          <BsVolumeDownFill
-            class={styles.player__button}
-            fill="var(--text)"
-            size={28}
-            style={{ "margin-top": "-0.25rem", "margin-left": "-0.1rem" }}
-            onclick={() => {
-              setOldVolume({ value: volume.value });
-              setVolume({ value: 0 });
-              adjustVolume(0);
-            }}
-          />
-        ) : (
-          <BsVolumeMuteFill
-            class={styles.player__button}
-            fill="var(--text)"
-            size={28}
-            style={{ "margin-top": "-0.25rem", "margin-left": "-0.1rem" }}
-            onclick={() => {
-              setVolume({ value: oldVolume.value });
-              adjustVolume(oldVolume.value);
-              setOldVolume({ value: volume.value });
-            }}
-          />
-        )}
+        <button class={styles.player__button}>{shuffleButton()}</button>
+        <button class={styles.player__button}>{repeatButton()}</button>
+        <button class={styles.player__button}>{volumeButton()}</button>
         <div class={styles.player__right__volume}>
           <input
             type="range"

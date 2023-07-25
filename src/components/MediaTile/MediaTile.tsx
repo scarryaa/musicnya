@@ -1,7 +1,7 @@
 import { For, Show } from "solid-js";
 import { IoPlay, IoEllipsisVertical } from "solid-icons/io";
 import styles from "./MediaTile.module.scss";
-import { setQueue } from "../../api/musickit";
+import { setQueue, stop } from "../../api/musickit";
 import { A } from "@solidjs/router";
 import { constructLink } from "../../util/utils";
 
@@ -27,6 +27,7 @@ export function MediaTile(props: MediaTileProps) {
             class={styles.mediaTile__overlay__inner__button}
             onclick={async (e) => {
               e.preventDefault();
+              stop();
               setQueue(
                 props.type
                   .substring(0, props.type.length - 1)

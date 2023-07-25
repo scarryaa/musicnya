@@ -41,14 +41,6 @@
         border-radius: 50%;
         fill: white;
 
-        &:hover {
-          transform: translate(-50%, -50%) scale(1.1);
-        }
-
-        &:active {
-          transform: translate(-50%, -50%) scale(0.99);
-        }
-
         &__more {
           position: absolute;
           filter: drop-shadow(var(--media-tile-drop-shadow));

@@ -8,6 +8,7 @@ import { LinkSet } from "../LinkSet/LinkSet";
 import { EditorialTile } from "../EditorialTile/EditorialTile";
 import { VideoTile } from "../VideoTile/VideoTile";
 import { CuratorTile } from "../CuratorTile/CuratorTile";
+import { EditorialTileLarge } from "../EditorialTileLarge/EditorialTileLarge";
 
 export type MediaSelectorProps = {
   children: any;
@@ -52,6 +53,8 @@ type MediaComponentType =
 
 interface ComponentProps {
   id: string;
+  badge: string;
+  subtitle: string;
   mediaArt: MusicKit.Artwork;
   type: MusicKit.MediaItemType;
   title: string;
@@ -60,18 +63,22 @@ interface ComponentProps {
   artistIds: string[];
 }
 
-const LinkFactory = createMemo(() => {
+const LinkFactory = () => {
   return (props: MediaSelectorProps) => {
-    return (
-      <LinkSet
-        links={props?.links?.map((item: any) => ({
-          label: item?.label,
-          url: item?.url,
-        }))}
-      />
-    );
+    const LinkSetComputation = createMemo(() => {
+      return (
+        <LinkSet
+          links={props?.links?.map((item: any) => ({
+            label: item?.label,
+            url: item?.url,
+          }))}
+        />
+      );
+    });
+
+    return LinkSetComputation();
   };
-});
+};
 
 const renderComponentSwitch = (props: MediaSelectorProps) => {
   const childType = props?.children?.[0].type;
@@ -134,8 +141,8 @@ const MediaComponentFactory = (
               (artist: any) => artist.attributes.name,
             );
             const title =
-              item?.attributes?.name ||
               item?.attributes?.designTag ||
+              item?.attributes?.name ||
               item.relationships?.contents?.data?.[0]?.attributes?.name;
             const mediaArt = {
               ...(item.attributes.artwork ||
@@ -159,6 +166,13 @@ const MediaComponentFactory = (
 
             return (
               <ComponentType
+                badge={item?.attributes?.designBadge}
+                subtitle={
+                  item.relationships?.contents?.data?.[0]?.attributes
+                    ?.curatorName ||
+                  item.relationships?.contents?.data?.[0]?.attributes
+                    ?.artistName
+                }
                 artistIds={artistIds}
                 id={item?.id}
                 mediaArt={mediaArt}
@@ -207,7 +221,7 @@ const MediaComponents: Record<MediaComponentType, any> = {
       }}
     />
   ),
-  316: MediaComponentFactory(EditorialTile),
+  316: MediaComponentFactory(EditorialTileLarge),
   322: LinkFactory(),
   326: (props: MediaSelectorProps) => renderComponentSwitch(props),
   327: MediaComponentFactory(MediaTile),

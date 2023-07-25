@@ -1,6 +1,5 @@
 import { FastAverageColor } from "fast-average-color";
 import {
-  currentMediaItem,
   isPlaying,
   setCurrentMediaItem,
   setIsPlaying,
@@ -76,7 +75,6 @@ export const setupEvents = () => {
     MusicKit.Events.playbackStateDidChange,
     () => {
       setIsPlaying({ value: MusicKit.getInstance().isPlaying });
-      console.log(isPlaying);
     },
   );
 
