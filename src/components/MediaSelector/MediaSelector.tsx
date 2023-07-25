@@ -145,7 +145,7 @@ const MediaComponentFactory = (
               item?.attributes?.name ||
               item.relationships?.contents?.data?.[0]?.attributes?.name;
             const mediaArt = {
-              ...(item.attributes.artwork ||
+              ...(item.attributes?.artwork ||
                 item.relationships?.contents?.data?.[0]?.attributes?.artwork),
               url: replaceSrc(
                 item.relationships?.contents?.data?.[0]?.relationships?.events
