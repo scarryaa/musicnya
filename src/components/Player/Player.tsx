@@ -1,16 +1,23 @@
 import {
+  BsList,
   BsPauseCircleFill,
   BsPlayCircleFill,
   BsRepeat,
   BsRepeat1,
   BsShuffle,
+  BsSpeaker,
+  BsSpeakerFill,
   BsStopCircleFill,
   BsVolumeDownFill,
   BsVolumeMuteFill,
   BsVolumeUpFill,
 } from "solid-icons/bs";
 import styles from "./Player.module.scss";
-import { BiRegularSkipNext, BiRegularSkipPrevious } from "solid-icons/bi";
+import {
+  BiRegularSkipNext,
+  BiRegularSkipPrevious,
+  BiSolidMessage,
+} from "solid-icons/bi";
 import {
   currentMediaItem,
   isPlaying,
@@ -196,6 +203,30 @@ export function Player() {
     }
   };
 
+  const lyricsButton = () => {
+    return (
+      <button class={styles.player__button}>
+        <BiSolidMessage
+          fill={ButtonStyle.fill}
+          size={18}
+          style={{ "margin-top": "-0.25rem", "margin-left": "-0.1rem" }}
+        />
+      </button>
+    );
+  };
+
+  const queueButton = () => {
+    return (
+      <button class={styles.player__button}>
+        <BsList
+          fill={ButtonStyle.fill}
+          size={22}
+          style={{ "margin-top": "-0.25rem", "margin-left": "-0.1rem" }}
+        />
+      </button>
+    );
+  };
+
   const volumeButton = () => {
     switch (getVolumeButtonType()) {
       case "volumeUp":
@@ -203,7 +234,7 @@ export function Player() {
           <BsVolumeUpFill
             fill={ButtonStyle.fill}
             size={28}
-            style={{ "margin-top": "-0.25rem", "margin-left": "-0.1rem" }}
+            style={{ "margin-top": "-0.1rem", "margin-left": "-0.3rem" }}
             onclick={() => {
               setOldVolume({ value: volume.value });
               setVolume({ value: 0 });
@@ -216,7 +247,7 @@ export function Player() {
           <BsVolumeDownFill
             fill={ButtonStyle.fill}
             size={28}
-            style={{ "margin-top": "-0.25rem", "margin-left": "-0.1rem" }}
+            style={{ "margin-top": "-0.1rem", "margin-left": "-0.3rem" }}
             onclick={() => {
               setOldVolume({ value: volume.value });
               setVolume({ value: 0 });
@@ -229,7 +260,7 @@ export function Player() {
           <BsVolumeMuteFill
             fill={ButtonStyle.fill}
             size={28}
-            style={{ "margin-top": "-0.25rem", "margin-left": "-0.1rem" }}
+            style={{ "margin-top": "-0.1rem", "margin-left": "-0.3rem" }}
             onclick={() => {
               setVolume({ value: oldVolume.value });
               adjustVolume(oldVolume.value);

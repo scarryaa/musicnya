@@ -1,9 +1,12 @@
-import type { Component } from "solid-js";
+import { Show, type Component } from "solid-js";
 
 import { Drawer } from "./components/Drawer/Drawer";
 import { Titlebar } from "./components/Titlebar/Titlebar";
 import { Main } from "./components/Main/Main";
 import { setupEvents } from "./util/utils";
+import { Lyrics } from "./components/Lyrics/Lyrics";
+import { rightPanelContent } from "./stores/store";
+import { Queue } from "./components/Queue/Queue";
 
 const App: Component = () => {
   // Check if user is logged in
@@ -33,6 +36,12 @@ const App: Component = () => {
     <div>
       <Titlebar />
       <Drawer />
+      <Show when={rightPanelContent.value === "lyrics"}>
+        <Lyrics />
+      </Show>
+      <Show when={rightPanelContent.value === "queue"}>
+        <Queue />
+      </Show>
       <Main />
     </div>
   );

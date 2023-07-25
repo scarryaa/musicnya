@@ -33,10 +33,10 @@ cors_proxy
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    width: 850,
-    height: 600,
-    minWidth: 850,
-    minHeight: 600,
+    width: 1100,
+    height: 700,
+    minWidth: 1100,
+    minHeight: 700,
     webPreferences: { nodeIntegration: true, contextIsolation: true },
     autoHideMenuBar: true,
     frame: false,

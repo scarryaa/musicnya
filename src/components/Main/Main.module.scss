@@ -1,9 +1,17 @@
+:root {
+  --panel-offset: 4rem;
+}
+
 .main {
   height: calc(100% - var(--content-offset) * 2 - var(--titlebar-height));
   position: fixed;
   top: calc(var(--content-offset) + var(--titlebar-height) / 2);
-  right: var(--content-offset);
-  width: calc(100% - var(--drawer-width) - var(--content-offset));
+  left: var(--drawer-width);
+  right: var(--panel-offset);
+  width: calc(
+    100% - var(--drawer-width) - var(--content-offset) - var(--panel-offset) +
+      4rem
+  );
   z-index: 100;
   border-radius: var(--app-border-radius);
   background-color: var(--main-background);

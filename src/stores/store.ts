@@ -16,3 +16,9 @@ export const [playbackTime, setPlaybackTime] = createStore({
   value: 0,
 });
 export const [volume, setVolume] = createStore({ value: 0.2 });
+export const [rightPanelOpen, setRightPanelOpen] = createStore({
+  value: false,
+});
+export const [rightPanelContent, setRightPanelContent] = createStore({
+  value: "",
+});
