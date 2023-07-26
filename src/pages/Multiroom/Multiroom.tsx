@@ -8,7 +8,8 @@ import { fetchMultiroom } from "../../api/multiroom";
 
 export function Multiroom() {
   const params = useParams<{ id: string }>();
-  const [data, setData] = createSignal(null);
+  const [data, setData] = createSignal<any>(null);
+
   createEffect(() => {
     multiRoom.scrollTop = 0;
     setData(null);

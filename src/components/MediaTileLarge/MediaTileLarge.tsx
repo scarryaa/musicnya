@@ -10,6 +10,7 @@ export type MediaTileLargeProps = {
 };
 
 export function MediaTileLarge(props: MediaTileLargeProps) {
+  console.log(props.type);
   return (
     <div class={styles.mediaTileLarge}>
       <div class={styles.mediaTileLarge__mediaInfo}>

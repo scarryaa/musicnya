@@ -4,7 +4,7 @@ import { fetchMultiplex } from "../../api/multiplex";
 
 export function Multiplex() {
   const params = useParams<{ id: string }>();
-  const [data, setData] = createSignal(null);
+  const [data, setData] = createSignal<any>(null);
 
   createEffect(async () => {
     setData(null);

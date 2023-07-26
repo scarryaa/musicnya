@@ -8,7 +8,7 @@ import { MediaSelector } from "../../components/MediaSelector/MediaSelector";
 
 export function Curator() {
   const params = useParams<{ id: string }>();
-  const [data, setData] = createSignal(null);
+  const [data, setData] = createSignal<any>(null);
   createEffect(() => {
     curatorPage.scrollTop = 0;
     setData(null);
