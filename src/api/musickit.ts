@@ -63,3 +63,30 @@ export const setRepeatMode = (mode: MusicKit.PlayerRepeatMode) => {
 export const setShuffleMode = (mode: MusicKit.PlayerShuffleMode) => {
   MusicKit.getInstance().shuffleMode = mode;
 };
+
+export const getLyrics = async () => {
+  const instance: MusicKit.MusicKitInstance = MusicKit.getInstance()
+  let songID: string | undefined;
+  if (!instance) return;
+  else {  
+    songID = instance.nowPlayingItem?.id; 
+    if (songID?.startsWith("i.")) {
+      return "Lyrics not available for this song."
+    }
+  }
+  console.log(songID)
+  const response: MusicKit.APIResponseObject = await MusicKit.getInstance().api.v3.music(`v1/catalog/${instance.storefrontId}/songs/${songID}/lyrics`)
+  const ttml: string = response.data?.data[0].attributes["ttml"];
+  return parseTTML(ttml);
+};
+
+const parseTTML = (ttml: string) => {
+  const parser = new DOMParser();
+  const xmlDoc = parser.parseFromString(ttml, "text/xml");
+  const lines = xmlDoc.getElementsByTagName("p");
+  let lyrics = "";
+  for (let i = 0; i < lines.length; i++) {
+    lyrics += lines[i].innerHTML + "\n";
+  }
+  return lyrics;
+}
