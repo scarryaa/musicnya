@@ -26,8 +26,6 @@ export function MediaTileGlass(props: MediaTileProps) {
             class={styles.mediaTileGlass__overlay__inner__button}
             onclick={async (e) => {
               e.preventDefault();
-              console.log(props.id);
-              console.log(props.type);
               await MusicKit.getInstance().setQueue({
                 [props.type.substring(0, props.type.length - 1)]: props.id,
                 startPlaying: true,

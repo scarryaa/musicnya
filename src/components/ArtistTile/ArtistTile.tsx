@@ -19,8 +19,6 @@ export function ArtistTile(props: ArtistTileProps) {
             size={40}
             class={styles.artistTile__overlay__inner__button}
             onclick={async () => {
-              console.log(props.id);
-              console.log(props.type);
               await MusicKit.getInstance().setQueue({
                 [props.type.substring(0, props.type.length - 1)]: props.id,
                 startPlaying: true,

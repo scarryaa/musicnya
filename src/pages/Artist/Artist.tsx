@@ -14,6 +14,7 @@ export function Artist() {
   const params = useParams<{ id: string }>();
   const [data, setData] = createSignal(null);
   createEffect(() => {
+    setData(null);
     artistPage.scrollTop = 0;
     fetchArtist({
       devToken: import.meta.env.VITE_MUSICKIT_TOKEN,

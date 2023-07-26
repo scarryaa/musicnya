@@ -18,8 +18,6 @@ export function SongTile(props: SongTileProps) {
             size={30}
             class={styles.songTile__overlay__inner__button}
             onclick={async () => {
-              console.log(props.id);
-              console.log(props.type);
               await MusicKit.getInstance().setQueue({
                 [props.type.substring(0, props.type.length - 1)]: props.id,
                 startPlaying: true,
@@ -39,7 +37,9 @@ export function SongTile(props: SongTileProps) {
       </div>
       <div class={styles.songTile__mediaInfo}>
         <div class={styles.songTile__mediaInfo__title}>{props.title}</div>
-        <div class={styles.songTile__mediaInfo__artist}>{props.artists[0]}</div>
+        <div class={styles.songTile__mediaInfo__artist}>
+          {props.artists?.[0]}
+        </div>
       </div>
     </div>
   );

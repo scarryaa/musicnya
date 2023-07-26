@@ -1,6 +1,7 @@
 import { JSX } from "solid-js";
 import styles from "./EditorialTile.module.scss";
 import { IoEllipsisVertical, IoPlay } from "solid-icons/io";
+import { A } from "@solidjs/router";
 
 export type EditorialTileProps = {
   mediaArt: MusicKit.Artwork;
@@ -8,17 +9,57 @@ export type EditorialTileProps = {
   artists: string[];
   type: MusicKit.MediaItemType;
   id: string;
+  link: string;
+  editorialElementKind: string;
 };
+
 export function EditorialTile(props: EditorialTileProps) {
+  const constructLink = (link: string, id: string) => {
+    const newId =
+      link
+        ?.toLowerCase()
+        ?.split("/")
+        ?.pop()
+        ?.split("id=")
+        .pop()
+        ?.replace("?pp=", "")
+        ?.replace("&mt=1", "") || id;
+
+    if (link && link.includes("viewMultiRoom")) {
+      return `/multiroom/${newId}`;
+    } else if (link && link.includes("pp=")) {
+      return `/curator/${newId}`;
+    } else if (link) {
+      const newId =
+        link
+          ?.toLowerCase()
+          ?.split("/")
+          ?.pop()
+          ?.split("id=")
+          .pop()
+          ?.replace("?pp=", "")
+          ?.replace("&mt=1", "") || id;
+
+      return `/multiplex/${newId}`;
+    } else {
+      return "#";
+    }
+  };
+
+  console.log(props.link);
+  console.log(props.editorialElementKind);
   return (
     <div class={styles.editorialTile}>
       <div class={styles.editorialTile__overlay}>
-        <div class={styles.editorialTile__overlay__inner}>
+        <A
+          class={styles.editorialTile__overlay__inner}
+          href={constructLink(props.link, props.id)}
+        >
           <IoEllipsisVertical
             size={26}
             class={styles.editorialTile__overlay__inner__button__more}
           />
-        </div>
+        </A>
         <img
           loading="lazy"
           decoding="async"

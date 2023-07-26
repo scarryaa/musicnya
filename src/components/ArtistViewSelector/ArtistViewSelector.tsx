@@ -47,8 +47,6 @@ export enum ArtistCategoryTitle {
 }
 
 export function ArtistViewSelector(props: ArtistViewSelectorProps) {
-  console.log(props.data());
-
   return (
     <div class={styles.artistViewSelector}>
       <For each={Object.values(ArtistCategory)}>

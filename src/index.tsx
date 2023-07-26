@@ -18,6 +18,8 @@ import { Artist } from "./pages/Artist/Artist";
 import { Album } from "./pages/Album/Album";
 import { Playlist } from "./pages/Playlist/Playlist";
 import { Curator } from "./pages/Curator/Curator";
+import { Multiroom } from "./pages/Multiroom/Multiroom";
+import { Multiplex } from "./pages/Multiplex/Multiplex";
 
 const root = document.getElementById("root");
 
@@ -47,6 +49,8 @@ render(
           <Route path="/album/:id" component={Album} />
           <Route path="/playlist/:id" component={Playlist} />
           <Route path="/curator/:id" component={Curator} />
+          <Route path="/multiroom/:id" component={Multiroom} />
+          <Route path="/multiplex/:id" component={Multiplex} />
           <Route path="*" component={NotFound} />
         </Route>
       </Routes>

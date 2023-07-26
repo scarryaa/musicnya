@@ -17,8 +17,6 @@ export function VideoTile(props: VideoTileProps) {
             size={40}
             class={styles.videoTile__overlay__inner__button}
             onclick={async () => {
-              console.log(props.id);
-              console.log(props.type);
               await MusicKit.getInstance().setQueue({
                 [props.type.substring(0, props.type.length - 1)]: props.id,
                 startPlaying: true,

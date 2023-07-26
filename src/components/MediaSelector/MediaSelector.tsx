@@ -63,6 +63,8 @@ interface ComponentProps {
   artists: string[];
   children?: JSX.Element[];
   artistIds: string[];
+  editorialElementKind: string;
+  link: string;
 }
 
 const LinkFactory = () => {
@@ -84,8 +86,6 @@ const LinkFactory = () => {
 
 const renderComponentSwitch = (props: MediaSelectorProps) => {
   const childType = props?.children?.[0]?.type;
-  console.log(childType);
-  console.log(props);
 
   return (
     <Switch fallback={<div>Something went wrong.</div>}>
@@ -182,6 +182,8 @@ const MediaComponentFactory = (
                 type={item?.type}
                 title={title}
                 artists={artistNames}
+                link={item.attributes?.link?.url}
+                editorialElementKind={item.attributes?.editorialElementKind}
               />
             );
           }}

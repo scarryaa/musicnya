@@ -1,8 +1,6 @@
 import { useParams } from "@solidjs/router";
 import styles from "./Album.module.scss";
 import { Show, createResource } from "solid-js";
-import { fetchPlaylist } from "../../api/playlist";
-import { fetchLibraryPlaylist } from "../../api/library-playlist";
 import { replaceSrc } from "../../util/utils";
 import { MediaDetail } from "../../components/MediaView/MediaDetail";
 import { MediaTable } from "../../components/MediaView/MediaTable";

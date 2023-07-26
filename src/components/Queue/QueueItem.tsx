@@ -16,8 +16,6 @@ export type QueueItemProps = {
 };
 
 export function QueueItem(props: QueueItemProps) {
-  console.log(props);
-
   return (
     <div
       class={styles.queueItem}
