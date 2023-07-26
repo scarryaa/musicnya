@@ -7,12 +7,13 @@ import { MediaDetail } from "../../components/MediaView/MediaDetail";
 import { MediaTable } from "../../components/MediaView/MediaTable";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { Error } from "../../components/Error/Error";
-import { createAlbumStore } from "../../api/store";
+import { createAlbumStore } from "../../stores/api-store";
 
 const ARTWORK_RESOLUTION = 300;
 
 export const Album = () => {
   const params = useParams<{ id: string }>();
+
   const albumStore = createAlbumStore();
   const albumData = albumStore(params);
 
@@ -38,9 +39,7 @@ export const Album = () => {
           <LoadingSpinner />
         </Match>
         <Match when={albumData.state === "errored"}>
-          <Show when={albumData.error} fallback={Error(albumData.error)}>
-            <div>{albumData.error.message}</div>
-          </Show>
+          <Error error={albumData.error} />
         </Match>
         <Match when={albumData.state === "ready"}>
           <Show when={album}>

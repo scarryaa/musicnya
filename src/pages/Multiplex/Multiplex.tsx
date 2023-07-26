@@ -1,32 +1,43 @@
 import { Navigate, useParams } from "@solidjs/router";
-import { Show, createEffect, createSignal } from "solid-js";
-import { fetchMultiplex } from "../../api/multiplex";
+import { Match, Show, Switch, createSignal } from "solid-js";
+import { createMultiplexStore } from "../../stores/api-store";
+import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
+import { Error } from "../../components/Error/Error";
 
 export function Multiplex() {
   const params = useParams<{ id: string }>();
-  const [data, setData] = createSignal<any>(null);
 
-  createEffect(async () => {
-    setData(null);
-    await fetchMultiplex({
-      devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
-      musicUserToken: MusicKit.getInstance()?.musicUserToken,
-      id: params.id,
-    }).then((res) => setData({ ...res }));
-  });
+  const multiplexStore = createMultiplexStore();
+  const multiplexData = multiplexStore(params);
 
-  console.log(data());
+  const multiplex = createSignal(multiplexData()?.target);
 
   return (
-    <Show when={data()}>
-      <Navigate
-        href={`/${data()
-          ?.results?.target?.type?.substring(
-            0,
-            data()?.results?.target?.type?.length - 1,
-          )
-          .replace("apple-", "")}/${data()?.results?.target?.id}`}
-      />
-    </Show>
+    <Switch fallback={<div>Not found</div>}>
+      <Match
+        when={
+          multiplexData.state === "pending" ||
+          multiplexData.state === "unresolved" ||
+          multiplexData.state === "refreshing"
+        }
+      >
+        <LoadingSpinner />
+      </Match>
+      <Match when={multiplexData.state === "errored"}>
+        <Error error={multiplexData.error} />
+      </Match>
+      <Match when={multiplexData.state === "ready"}>
+        <Show when={multiplex}>
+          <Navigate
+            href={`/${multiplexData()
+              ?.results?.target?.type?.substring(
+                0,
+                multiplexData()?.results?.target?.type?.length - 1,
+              )
+              .replace("apple-", "")}/${multiplexData()?.results?.target?.id}`}
+          />
+        </Show>
+      </Match>
+    </Switch>
   );
 }

@@ -2,60 +2,64 @@ import styles from "./Station.module.scss";
 
 import { useParams } from "@solidjs/router";
 import { fetchStation } from "../../api/station";
-import { Show, createResource } from "solid-js";
+import { Match, Show, Switch, createResource } from "solid-js";
 import { MediaDetail } from "../../components/MediaView/MediaDetail";
 import { replaceSrc } from "../../util/utils";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
+import { createStationStore } from "../../stores/api-store";
+import { Error } from "../../components/Error/Error";
 
 export function Station() {
   const params = useParams<{ id: string }>();
-  const [data] = createResource<
-    any,
-    {
-      devToken: string;
-      musicUserToken: string;
-      id: string;
-    },
-    string
-  >(
-    {
-      devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
-      musicUserToken: MusicKit.getInstance()?.musicUserToken,
-      id: params.id,
-    },
-    fetchStation,
-  );
+
+  const stationStore = createStationStore();
+  const stationData = stationStore(params);
 
   return (
     <div class={styles.station}>
-      <Show when={data.loading}>
-        <LoadingSpinner />
-      </Show>
-      <Show when={data.error}>Error: {data.error.message}</Show>
-      <Show when={data()}>
-        <MediaDetail
-          type="stations"
-          title={data()?.data[0].attributes?.name}
-          mediaArt={
-            data()?.data[0].attributes?.artwork && {
-              url:
-                replaceSrc(data()?.data[0].attributes?.artwork?.url, 300) || "",
+      <Switch fallback={<div>Not found</div>}>
+        <Match
+          when={
+            stationData.state === "pending" ||
+            stationData.state === "unresolved" ||
+            stationData.state === "refreshing"
+          }
+        >
+          <LoadingSpinner />
+        </Match>
+        <Match when={stationData.state === "errored"}>
+          <Error error={stationData.error} />
+        </Match>
+        <Match when={stationData.state === "ready"}>
+          <MediaDetail
+            type="stations"
+            title={stationData()?.data[0].attributes?.name}
+            mediaArt={
+              stationData()?.data[0].attributes?.artwork && {
+                url:
+                  replaceSrc(
+                    stationData()?.data[0].attributes?.artwork?.url,
+                    300,
+                  ) || "",
+              }
             }
-          }
-          subtitle={
-            data()?.data[0].relationships?.catalog?.data?.[0]?.attributes
-              ?.curatorName
-          }
-          description={data()?.data[0].attributes?.description?.standard}
-          id={data().data?.[0]?.id}
-          artistIds={data()?.data?.[0]?.relationships?.artists?.data?.map(
-            (artist: any) => artist.id,
-          )}
-          artists={data()?.data?.[0]?.relationships?.artists?.data?.map(
-            (artist: any) => artist.attributes?.name,
-          )}
-        />
-      </Show>
+            subtitle={
+              stationData()?.data[0].relationships?.catalog?.data?.[0]
+                ?.attributes?.curatorName
+            }
+            description={
+              stationData()?.data[0].attributes?.description?.standard
+            }
+            id={stationData().data?.[0]?.id}
+            artistIds={stationData()?.data?.[0]?.relationships?.artists?.data?.map(
+              (artist: any) => artist.id,
+            )}
+            artists={stationData()?.data?.[0]?.relationships?.artists?.data?.map(
+              (artist: any) => artist.attributes?.name,
+            )}
+          />
+        </Match>
+      </Switch>
     </div>
   );
 }

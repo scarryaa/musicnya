@@ -1,6 +1,6 @@
 import styles from "./Error.module.scss";
 
-export const Error = (error: Error) => {
+export const Error = (error: any) => {
   return (
     <div class={styles.error}>
       <h1>Something went wrong.</h1>
