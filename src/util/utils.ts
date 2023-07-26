@@ -141,42 +141,42 @@ export const getAlbumIdFromUrl = (url: string) => {
 
 export const setupEvents = () => {
   MusicKit.getInstance().addEventListener(
-    MusicKit.Events.playbackStateDidChange,
+    MusicKit.Events.playbackStateDidChange as unknown as string,
     () => {
       setIsPlaying({ value: MusicKit.getInstance().isPlaying });
     },
   );
 
   MusicKit.getInstance().addEventListener(
-    MusicKit.Events.nowPlayingItemDidChange,
+    MusicKit.Events.nowPlayingItemDidChange as unknown as string,
     () => {
       setCurrentMediaItem(MusicKit.getInstance().nowPlayingItem || {});
     },
   );
 
   MusicKit.getInstance().addEventListener(
-    MusicKit.Events.queueItemsDidChange,
+    MusicKit.Events.queueItemsDidChange as string,
     () => {
       console.log("queueItemsDidChange");
     },
   );
 
   MusicKit.getInstance().addEventListener(
-    MusicKit.Events.queuePositionDidChange,
+    MusicKit.Events.queuePositionDidChange as string,
     () => {
       console.log("queuePositionDidChange");
     },
   );
 
   MusicKit.getInstance().addEventListener(
-    MusicKit.Events.mediaItemStateDidChange,
+    MusicKit.Events.mediaItemStateDidChange as string,
     () => {
       console.log("mediaItemStateDidChange");
     },
   );
 
   MusicKit.getInstance().addEventListener(
-    MusicKit.Events.playbackDurationDidChange,
+    MusicKit.Events.playbackDurationDidChange as string,
     () => {
       setPlaybackDuration({
         value: MusicKit.getInstance().currentPlaybackDuration,
@@ -185,7 +185,7 @@ export const setupEvents = () => {
   );
 
   MusicKit.getInstance().addEventListener(
-    MusicKit.Events.playbackTimeDidChange,
+    MusicKit.Events.playbackTimeDidChange as string,
     () => {
       setPlaybackTime({
         value: MusicKit.getInstance().currentPlaybackTime,
