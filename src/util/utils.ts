@@ -6,6 +6,7 @@ import {
   setPlaybackDuration,
   setPlaybackTime,
 } from "../stores/store";
+import { fetchLyrics } from "../components/Lyrics/Lyrics";
 
 export const replaceSrc = (
   src: string | undefined,
@@ -144,6 +145,7 @@ export const setupEvents = () => {
     MusicKit.Events.playbackStateDidChange as unknown as string,
     () => {
       setIsPlaying({ value: MusicKit.getInstance().isPlaying });
+      fetchLyrics();
     },
   );
 
@@ -151,6 +153,7 @@ export const setupEvents = () => {
     MusicKit.Events.nowPlayingItemDidChange as unknown as string,
     () => {
       setCurrentMediaItem(MusicKit.getInstance().nowPlayingItem || {});
+      fetchLyrics();
     },
   );
 
@@ -158,6 +161,7 @@ export const setupEvents = () => {
     MusicKit.Events.queueItemsDidChange as string,
     () => {
       console.log("queueItemsDidChange");
+      fetchLyrics();
     },
   );
 
