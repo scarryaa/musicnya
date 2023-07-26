@@ -20,6 +20,7 @@ import { Playlist } from "./pages/Playlist/Playlist";
 import { Curator } from "./pages/Curator/Curator";
 import { Multiroom } from "./pages/Multiroom/Multiroom";
 import { Multiplex } from "./pages/Multiplex/Multiplex";
+import { Station } from "./pages/Station/Station";
 
 const root = document.getElementById("root");
 
@@ -51,6 +52,7 @@ render(
           <Route path="/curator/:id" component={Curator} />
           <Route path="/multiroom/:id" component={Multiroom} />
           <Route path="/multiplex/:id" component={Multiplex} />
+          <Route path="/station/:id" component={Station} />
           <Route path="*" component={NotFound} />
         </Route>
       </Routes>
