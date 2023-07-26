@@ -9,20 +9,19 @@
   padding-left: 2rem;
   display: flex;
   flex-direction: column;
+  padding-bottom: 2rem;
 }
-/* make button black with white text and square corners */
-.lyrics button {
-  background-color: black;
-  color: white;
-  border-radius: 0;
-}
-/* make pre legible */
+
 .lyrics pre {
   color: white;
   font-size: 1rem;
   line-height: 1.5;
   white-space: pre-wrap;
   word-wrap: break-word;
-  overflow: scroll;
-  font-family: 'Roboto', sans-serif;
+  overflow-y: overlay;
+  font-family: "Roboto", sans-serif;
+
+  &:last-child {
+    padding-bottom: 2rem;
+  }
 }
