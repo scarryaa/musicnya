@@ -1,6 +1,6 @@
 import { useParams } from "@solidjs/router";
 import styles from "./Artist.module.scss";
-import { Match, Switch, createEffect, createResource } from "solid-js";
+import { Match, Show, Switch, createEffect, createResource } from "solid-js";
 import { fetchArtist } from "../../api/artist";
 import { replaceSrc } from "../../util/utils";
 import { IoPlay } from "solid-icons/io";
@@ -40,6 +40,11 @@ export function Artist() {
         <Match when={data.state === "refreshing"}>
           <LoadingSpinner />
         </Match>
+        <Match when={data.state === "errored"}>
+          <Show when={data.error} fallback={<div>Not found</div>}>
+            <div>{data.error.message}</div>
+          </Show>
+        </Match>
         <Match when={data.state === "ready"}>
           <div class={styles.artist__header}>
             <div class={styles.artist__header__image}>
@@ -50,11 +55,9 @@ export function Artist() {
                   data()?.data[0].attributes?.editorialArtwork?.subscriptionHero
                     ?.url || data()?.data[0].attributes?.artwork?.url,
                   data()?.data[0].attributes?.editorialArtwork?.subscriptionHero
-                    ?.height || data()?.data[0].attributes?.artwork?.height,
+                    ?.height || data()?.data[0].attributes?.artwork?.height / 4,
                 )}
                 alt="Album Art"
-                width={100}
-                height={100}
                 class={styles.artist__header__image__img}
               />
             </div>
@@ -78,7 +81,7 @@ export function Artist() {
             </div>
           </div>
           <div class={styles.artist__body}>
-            <ArtistViewSelector artist={data} data={data} />
+            <ArtistViewSelector artist={data()?.data[0]} data={data} />
           </div>
         </Match>
       </Switch>

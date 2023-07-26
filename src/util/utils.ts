@@ -15,7 +15,7 @@ export const replaceSrc = (
 ) => {
   if (src === undefined) return;
   return src
-    .replace("{w}x{h}", `${width}x${height}`)
+    .replace("{w}x{h}", `${Math.floor(width)}x${Math.floor(height)}`)
     .replace("{f}", format)
     .replace("{c}", "");
 };

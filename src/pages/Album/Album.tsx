@@ -1,69 +1,86 @@
-import { useParams } from "@solidjs/router";
 import styles from "./Album.module.scss";
-import { Show, createResource } from "solid-js";
+
+import { useParams } from "@solidjs/router";
+import { Match, Show, Switch, createEffect, createSignal } from "solid-js";
 import { replaceSrc } from "../../util/utils";
 import { MediaDetail } from "../../components/MediaView/MediaDetail";
 import { MediaTable } from "../../components/MediaView/MediaTable";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { fetchAlbum } from "../../api/album";
-import { fetchLibraryAlbum } from "../../api/library-album";
+import { Error } from "../../components/Error/Error";
+import { createAlbumStore } from "../../api/store";
 
-export function Album() {
+const ARTWORK_RESOLUTION = 300;
+
+export const Album = () => {
   const params = useParams<{ id: string }>();
-  const [data] = createResource<
-    any,
-    {
-      devToken: string;
-      musicUserToken: string;
-      id: string;
-    },
-    string
-  >(
-    {
-      devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
-      musicUserToken: MusicKit.getInstance()?.musicUserToken,
-      id: params.id,
-    },
-    params.id.substring(0, 2) !== "l." ? fetchAlbum : fetchLibraryAlbum,
-  );
+  const albumStore = createAlbumStore();
+  const albumData = albumStore(params);
+
+  const album = createSignal(albumData()?.data[0]);
+
+  // scroll to top on params change
+  createEffect(() => {
+    (albumPage.scrollTop = 0), params.id;
+  });
+
+  let albumPage: HTMLDivElement = undefined as unknown as HTMLDivElement;
 
   return (
-    <div class={styles.album}>
-      <Show when={data.loading}>
-        <LoadingSpinner />
-      </Show>
-      <Show when={data.error}>Error: {data.error.message}</Show>
-      <Show when={data()}>
-        <MediaDetail
-          type="albums"
-          title={data()?.data[0].attributes?.name}
-          mediaArt={
-            data()?.data[0].attributes?.artwork && {
-              url:
-                replaceSrc(data()?.data[0].attributes?.artwork?.url, 300) || "",
-            }
+    <div class={styles.album} ref={albumPage}>
+      <Switch fallback={<div>Not found</div>}>
+        <Match
+          when={
+            albumData.state === "pending" ||
+            albumData.state === "unresolved" ||
+            albumData.state === "refreshing"
           }
-          subtitle={
-            data()?.data[0].relationships?.catalog?.data?.[0]?.attributes
-              ?.curatorName
-          }
-          description={data()?.data[0].attributes?.description?.standard}
-          id={data().data?.[0]?.id}
-          artistIds={data()?.data?.[0]?.relationships?.artists?.data?.map(
-            (artist: any) => artist.id,
-          )}
-          artists={data()?.data?.[0]?.relationships?.artists?.data?.map(
-            (artist: any) => artist.attributes?.name,
-          )}
-        />
-        <MediaTable
-          type="albums"
-          id={data().data?.[0]?.id}
-          showArt={false}
-          items={data()?.data[0].relationships?.tracks?.data}
-          class={styles.album__table}
-        />
-      </Show>
+        >
+          <LoadingSpinner />
+        </Match>
+        <Match when={albumData.state === "errored"}>
+          <Show when={albumData.error} fallback={Error(albumData.error)}>
+            <div>{albumData.error.message}</div>
+          </Show>
+        </Match>
+        <Match when={albumData.state === "ready"}>
+          <Show when={album}>
+            <MediaDetail
+              type="albums"
+              title={albumData()?.data[0].attributes?.name}
+              mediaArt={
+                albumData()?.data[0].attributes?.artwork && {
+                  url:
+                    replaceSrc(
+                      albumData()?.data[0].attributes?.artwork?.url,
+                      ARTWORK_RESOLUTION,
+                    ) || "",
+                }
+              }
+              subtitle={
+                albumData()?.data[0].relationships?.catalog?.data?.[0]
+                  ?.attributes?.curatorName
+              }
+              description={
+                albumData()?.data[0].attributes?.description?.standard
+              }
+              id={albumData().data?.[0]?.id}
+              artistIds={albumData()?.data?.[0]?.relationships?.artists?.data?.map(
+                (artist: any) => artist.id,
+              )}
+              artists={albumData()?.data?.[0]?.relationships?.artists?.data?.map(
+                (artist: any) => artist.attributes?.name,
+              )}
+            />
+            <MediaTable
+              type="albums"
+              id={albumData().data?.[0]?.id}
+              showArt={false}
+              items={albumData()?.data[0].relationships?.tracks?.data}
+              class={styles.album__table}
+            />
+          </Show>
+        </Match>
+      </Switch>
     </div>
   );
-}
+};
