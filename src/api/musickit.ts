@@ -65,18 +65,28 @@ export const setShuffleMode = (mode: MusicKit.PlayerShuffleMode) => {
 };
 
 export const getLyrics = async () => {
-  const instance: MusicKit.MusicKitInstance = MusicKit.getInstance()
+  const instance: MusicKit.MusicKitInstance = MusicKit.getInstance();
   let songID: string | undefined;
   if (!instance) return;
-  else {  
-    songID = instance.nowPlayingItem?.id; 
+  else {
+    songID = instance.nowPlayingItem?.id;
     if (songID?.startsWith("i.")) {
-      return "Lyrics not available for this song."
+      return "Lyrics not available for this song.";
     }
   }
-  console.log(songID)
-  const response: MusicKit.APIResponseObject = await MusicKit.getInstance().api.v3.music(`v1/catalog/${instance.storefrontId}/songs/${songID}/lyrics`)
-  const ttml: string = response.data?.data[0].attributes["ttml"];
+  console.log(songID);
+  const response: MusicKit.APIResponseObject = await fetch(
+    `https://amp-api.music.apple.com/v1/catalog/${instance.storefrontId}/songs/${songID}/lyrics`,
+    {
+      headers: {
+        authorization: `Bearer ${instance.developerToken}`,
+        "music-user-token": instance.musicUserToken,
+      },
+    },
+  ).then((response) => {
+    return response.json() as Promise<MusicKit.APIResponseObject>;
+  });
+  const ttml: string = response.data[0].attributes["ttml"];
   return parseTTML(ttml);
 };
 
@@ -89,4 +99,4 @@ const parseTTML = (ttml: string) => {
     lyrics += lines[i].innerHTML + "\n";
   }
   return lyrics;
-}
+};

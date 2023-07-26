@@ -145,7 +145,6 @@ export const setupEvents = () => {
     MusicKit.Events.playbackStateDidChange as unknown as string,
     () => {
       setIsPlaying({ value: MusicKit.getInstance().isPlaying });
-      fetchLyrics();
     },
   );
 
