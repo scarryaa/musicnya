@@ -17,6 +17,7 @@ import { Artists } from "./pages/Library/Artists/Artists";
 import { Artist } from "./pages/Artist/Artist";
 import { Album } from "./pages/Album/Album";
 import { Playlist } from "./pages/Playlist/Playlist";
+import { Curator } from "./pages/Curator/Curator";
 
 const root = document.getElementById("root");
 
@@ -45,6 +46,7 @@ render(
           <Route path="/artist/:id" component={Artist} />
           <Route path="/album/:id" component={Album} />
           <Route path="/playlist/:id" component={Playlist} />
+          <Route path="/curator/:id" component={Curator} />
           <Route path="*" component={NotFound} />
         </Route>
       </Routes>

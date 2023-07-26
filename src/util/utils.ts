@@ -49,6 +49,8 @@ export const constructLink = (type: string, id: string) => {
       return `/library/playlist/${id}`;
     case "albums":
       return `/album/${id}`;
+    case "apple-curators":
+      return `/curator/${id}`;
     case "artists":
       return `/artist/${id}`;
     case "playlists":

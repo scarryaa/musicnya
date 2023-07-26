@@ -1,12 +1,24 @@
 import { IoInfinite } from "solid-icons/io";
 import styles from "./Queue.module.scss";
 import { getQueueItems, setAutoplay } from "../../api/musickit";
-import { For, createSignal } from "solid-js";
+import { For, createEffect, createSignal } from "solid-js";
 import { replaceSrc } from "../../util/utils";
 import { QueueItem } from "./QueueItem";
 
 export function Queue() {
   const [autoplay, _setAutoplay] = createSignal(true);
+
+  createEffect(() => {
+    if (autoplay()) {
+      document.querySelectorAll(`.${styles.queue__autoplay}`).forEach((el) => {
+        el.classList.add(styles.queue__autoplay__active);
+      });
+    } else {
+      document.querySelectorAll(`.${styles.queue__autoplay}`).forEach((el) => {
+        el.classList.remove(styles.queue__autoplay__active);
+      });
+    }
+  });
 
   return (
     <div class={styles.queue}>
@@ -15,11 +27,10 @@ export function Queue() {
         <IoInfinite
           size={30}
           color={"var(--text)"}
-          class={styles.queue__autoplay + " " + styles.queue__autoplay__active}
+          class={styles.queue__autoplay}
           onclick={async () => {
             await setAutoplay(autoplay());
             _setAutoplay(!autoplay());
-            // active class
 
             if (autoplay()) {
               document
@@ -53,6 +64,7 @@ export function Queue() {
               artist={item.artistName}
               duration={item.playbackDuration}
               album={item.albumName}
+              albumId={item._container.id}
             />
           )}
         </For>

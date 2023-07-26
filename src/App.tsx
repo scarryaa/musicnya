@@ -27,6 +27,8 @@ const App: Component = () => {
 
       setupEvents();
       music.volume = 0.2;
+      music.autoplayEnabled = true;
+      music._autoplayEnabled = true;
     })
     .catch((err) => {
       console.log(err);

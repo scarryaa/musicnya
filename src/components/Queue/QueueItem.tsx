@@ -1,3 +1,4 @@
+import { A } from "@solidjs/router";
 import { formatTime } from "../../util/utils";
 import styles from "./QueueItem.module.scss";
 
@@ -11,6 +12,7 @@ export type QueueItemProps = {
   duration?: number;
   index: number;
   isCurrentItem: boolean;
+  albumId?: string;
 };
 
 export function QueueItem(props: QueueItemProps) {
@@ -34,9 +36,13 @@ export function QueueItem(props: QueueItemProps) {
         />
       </div>
       <div class={styles.queueItem__info}>
-        <div class={styles.queueItem__info__title} title={props.title}>
+        <A
+          class={styles.queueItem__info__title}
+          title={props.title}
+          href={"/album/" + props.albumId}
+        >
           {props.title}
-        </div>
+        </A>
         <div class={styles.queueItem__info__artist} title={props.artist}>
           {props.artist}
         </div>

@@ -83,8 +83,9 @@ const LinkFactory = () => {
 };
 
 const renderComponentSwitch = (props: MediaSelectorProps) => {
-  const childType = props?.children?.[0].type;
+  const childType = props?.children?.[0]?.type;
   console.log(childType);
+  console.log(props);
 
   return (
     <Switch fallback={<div>Something went wrong.</div>}>
@@ -269,8 +270,6 @@ const isMediaComponentsKey = (
 };
 
 export function MediaSelector(props: MediaSelectorProps) {
-  console.log(props);
-
   return (
     <Switch fallback={<div>Something went wrong.</div>}>
       {Object.keys(MediaComponents).map((key) => {

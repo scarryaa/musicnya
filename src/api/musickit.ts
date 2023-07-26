@@ -7,7 +7,8 @@ export const togglePlayPause = () => {
 };
 
 export const setAutoplay = (on: boolean) => {
-  MusicKit.getInstance().autoplay = on;
+  MusicKit.getInstance().autoplayEnabled = on;
+  MusicKit.getInstance()._autoplayEnabled = on;
 };
 
 export const getQueueItems = () => {
