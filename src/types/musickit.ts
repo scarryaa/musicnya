@@ -227,6 +227,8 @@ declare module MusicKit {
 
     musicUserToken: string;
     developerToken: string;
+    autoplayEnabled: boolean;
+    _autoplayEnabled: boolean;
 
     // Methods
 

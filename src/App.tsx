@@ -5,7 +5,7 @@ import { Titlebar } from "./components/Titlebar/Titlebar";
 import { Main } from "./components/Main/Main";
 import { setupEvents } from "./util/utils";
 import { Lyrics } from "./components/Lyrics/Lyrics";
-import { rightPanelContent } from "./stores/store";
+import { rightPanelContent, rightPanelOpen } from "./stores/store";
 import { Queue } from "./components/Queue/Queue";
 
 const App: Component = () => {
@@ -38,10 +38,10 @@ const App: Component = () => {
     <div>
       <Titlebar />
       <Drawer />
-      <Show when={rightPanelContent.value === "lyrics"}>
+      <Show when={rightPanelContent.value === "lyrics" && rightPanelOpen}>
         <Lyrics />
       </Show>
-      <Show when={rightPanelContent.value === "queue"}>
+      <Show when={rightPanelContent.value === "queue" && rightPanelOpen}>
         <Queue />
       </Show>
       <Main />

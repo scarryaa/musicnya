@@ -67,14 +67,15 @@ export const setShuffleMode = (mode: MusicKit.PlayerShuffleMode) => {
 export const getLyrics = async () => {
   const instance: MusicKit.MusicKitInstance = MusicKit.getInstance();
   let songID: string | undefined;
+
   if (!instance) return;
   else {
-    songID = instance.nowPlayingItem?.id;
+    songID = instance.nowPlayingItem?._songId;
     if (songID?.startsWith("i.")) {
       return "Lyrics not available for this song.";
     }
   }
-  console.log(songID);
+
   const response: MusicKit.APIResponseObject = await fetch(
     `https://amp-api.music.apple.com/v1/catalog/${instance.storefrontId}/songs/${songID}/lyrics`,
     {
@@ -86,6 +87,7 @@ export const getLyrics = async () => {
   ).then((response) => {
     return response.json() as Promise<MusicKit.APIResponseObject>;
   });
+
   const ttml: string = response.data[0].attributes["ttml"];
   return parseTTML(ttml);
 };

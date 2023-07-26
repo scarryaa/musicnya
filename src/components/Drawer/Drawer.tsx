@@ -22,6 +22,7 @@ import {
   setRightPanelContent,
   setRightPanelOpen,
 } from "../../stores/store";
+import { fetchLyrics } from "../Lyrics/Lyrics";
 
 const lightTheme = false;
 //matchMedia("(prefers-color-scheme: light)").matches;
@@ -107,6 +108,9 @@ export function Drawer() {
               : setRightPanelOpen({ value: true });
 
             setRightPanelContent({ value: "lyrics" });
+            if (rightPanelOpen.value) {
+              fetchLyrics();
+            }
           }}
         />
         <BsList
