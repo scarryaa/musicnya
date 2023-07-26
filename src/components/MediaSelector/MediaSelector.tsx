@@ -182,7 +182,10 @@ const MediaComponentFactory = (
                 type={item?.type}
                 title={title}
                 artists={artistNames}
-                link={item.attributes?.link?.url}
+                link={
+                  item.attributes?.link?.url ||
+                  item.relationships?.contents?.data?.[0]?.attributes?.url
+                }
                 editorialElementKind={item.attributes?.editorialElementKind}
               />
             );

@@ -27,7 +27,7 @@ export function EditorialTile(props: EditorialTileProps) {
 
     if (link && link.includes("viewMultiRoom")) {
       return `/multiroom/${newId}`;
-    } else if (link && link.includes("pp=")) {
+    } else if ((link && link.includes("pp=")) || link.includes("curator")) {
       return `/curator/${newId}`;
     } else if (link) {
       const newId =
