@@ -1,7 +1,13 @@
 import { useParams } from "@solidjs/router";
 import styles from "./Artist.module.scss";
 import { Match, Show, Switch, createEffect, createSignal } from "solid-js";
-import { replaceSrc } from "../../util/utils";
+import {
+  getNestedArtwork,
+  getNestedAttributes,
+  getNestedData,
+  getNestedEditorialArtwork,
+  replaceSrc,
+} from "../../util/utils";
 import { IoPlay } from "solid-icons/io";
 import { ButtonPrimary } from "../../components/ButtonPrimary/ButtonPrimary";
 import { setQueue } from "../../api/musickit";
@@ -49,12 +55,10 @@ export function Artist() {
                   loading="lazy"
                   decoding="async"
                   src={replaceSrc(
-                    artistData()?.data[0].attributes?.editorialArtwork
-                      ?.subscriptionHero?.url ||
-                      artistData()?.data[0].attributes?.artwork?.url,
-                    artistData()?.data[0].attributes?.editorialArtwork
-                      ?.subscriptionHero?.height ||
-                      artistData()?.data[0].attributes?.artwork?.height / 4,
+                    getNestedEditorialArtwork(artistData())?.subscriptionHero
+                      ?.url || getNestedAttributes(artistData())?.artwork?.url,
+                    getNestedEditorialArtwork(artistData())?.subscriptionHero
+                      ?.height || getNestedArtwork(artistData())?.height / 4,
                   )}
                   alt="Album Art"
                   class={styles.artist__header__image__img}
@@ -62,10 +66,10 @@ export function Artist() {
               </div>
               <div class={styles.artist__header__info}>
                 <div class={styles.artist__header__info__title}>
-                  {artistData()?.data[0].attributes?.name}
+                  {getNestedAttributes(artistData())?.name}
                 </div>
                 <div class={styles.artist__header__info__subtitle}>
-                  {artistData()?.data[0].attributes?.genreNames?.[0]}
+                  {getNestedAttributes(artistData())?.genreNames?.[0]}
                 </div>
                 <div class={styles.artist__header__info__actions}>
                   <ButtonPrimary
@@ -73,7 +77,7 @@ export function Artist() {
                     icon={IoPlay}
                     onClick={() => {
                       setIsShuffle({ value: 0 });
-                      setQueue("artist", artistData()?.data[0].id, true);
+                      setQueue("artist", getNestedData(artistData()).id, true);
                     }}
                   />
                 </div>

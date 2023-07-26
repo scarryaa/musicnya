@@ -65,6 +65,73 @@ export const constructLink = (type: string, id: string) => {
   }
 };
 
+// data functions
+
+export const getNestedData = (data: any) => {
+  // data?.data[0]
+  return data?.data[0];
+};
+
+export const getNestedAttributes = (data: any) => {
+  // data?.data[0]?.attributes
+  return getNestedData(data)?.attributes;
+};
+
+export const getNestedRelationships = (data: any) => {
+  // data?.data[0]?.relationships
+  return getNestedData(data)?.relationships;
+};
+
+export const getNestedArtwork = (data: any) => {
+  // data?.data[0]?.attributes?.artwork
+  return getNestedAttributes(data)?.artwork;
+};
+
+export const getNestedEditorialArtwork = (data: any) => {
+  // data?.data[0]?.attributes?.editorialArtwork
+  return getNestedAttributes(data)?.editorialArtwork;
+};
+
+export const getNestedPlainEditorialNotes = (data: any) => {
+  // data?.data[0]?.attributes?.plainEditorialNotes
+  return getNestedAttributes(data)?.plainEditorialNotes;
+};
+
+export const getNestedTabsData = (data: any) => {
+  // data?.data[0]?.relationships?.tabs?.data
+  return getNestedRelationships(data)?.tabs?.data[0];
+};
+
+export const getNestedTabsRelationshipsData = (data: any) => {
+  // data?.data[0]?.relationships?.tabs?.data[0]?.relationships?.children?.data
+  return getNestedTabsData(data)?.relationships.children?.data;
+};
+
+export const getNestedGroupingData = (data: any) => {
+  // data?.data[0]?.relationships?.grouping?.data
+  return getNestedRelationships(data)?.grouping?.data;
+};
+
+export const getNestedGroupingRelationshipsData = (data: any) => {
+  // data?.data[0]?.relationships?.groupings?.data[0]?.relationships?.contents?.data
+  return getNestedGroupingData(data)?.relationships.contents?.data;
+};
+
+export const getItemAttributes = (item: any) => {
+  // item?.attributes
+  return item?.attributes;
+};
+
+export const getItemRelationships = (item: any) => {
+  // item?.relationships
+  return item?.relationships;
+};
+
+export const getMultiplexTarget = (data: any) => {
+  // data?.results?.target
+  return data?.results?.target;
+};
+
 export const getAlbumIdFromUrl = (url: string) => {
   if (url === undefined) return "";
 

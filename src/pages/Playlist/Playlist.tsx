@@ -1,7 +1,13 @@
 import { useParams } from "@solidjs/router";
 import styles from "./Playlist.module.scss";
 import { Match, Show, Switch, createEffect, createSignal } from "solid-js";
-import { replaceSrc } from "../../util/utils";
+import {
+  getNestedArtwork,
+  getNestedAttributes,
+  getNestedData,
+  getNestedRelationships,
+  replaceSrc,
+} from "../../util/utils";
 import { MediaDetail } from "../../components/MediaView/MediaDetail";
 import { MediaTable } from "../../components/MediaView/MediaTable";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
@@ -42,32 +48,30 @@ export function Playlist() {
           <Show when={playlist}>
             <MediaDetail
               type="playlists"
-              title={playlistData()?.data[0].attributes?.name}
+              title={getNestedAttributes(playlistData())?.name}
               mediaArt={
-                playlistData()?.data[0].attributes?.artwork && {
+                getNestedArtwork(playlistData()) && {
                   url:
-                    replaceSrc(
-                      playlistData()?.data[0].attributes?.artwork?.url,
-                      300,
-                    ) || "",
+                    replaceSrc(getNestedArtwork(playlistData())?.url, 300) ||
+                    "",
                 }
               }
               subtitle={
-                playlistData()?.data[0].relationships?.catalog?.data?.[0]
+                getNestedRelationships(playlistData())?.catalog?.data?.[0]
                   ?.attributes?.curatorName
               }
               description={
-                playlistData()?.data[0].attributes?.description?.standard
+                getNestedAttributes(playlistData())?.description?.standard
               }
-              id={playlistData().data?.[0]?.id}
-              artistIds={playlistData()?.attributes?.curatorName}
-              artists={playlistData()?.attributes?.curatorName}
+              id={getNestedData(playlistData()).id}
+              artistIds={getNestedAttributes(playlistData())?.curatorName}
+              artists={getNestedAttributes(playlistData())?.curatorName}
             />
             <MediaTable
               type="playlists"
-              id={playlistData().data?.[0]?.id}
+              id={getNestedData(playlistData())?.id}
               showArt={true}
-              items={playlistData()?.data[0].relationships?.tracks?.data}
+              items={getNestedRelationships(playlistData())?.tracks?.data}
               class={styles.playlist__table}
             />
           </Show>

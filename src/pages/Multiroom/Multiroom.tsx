@@ -2,7 +2,13 @@ import { useParams } from "@solidjs/router";
 import styles from "./Multiroom.module.scss";
 import { For, Match, Show, Switch, createEffect } from "solid-js";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { replaceSrc } from "../../util/utils";
+import {
+  getItemAttributes,
+  getItemRelationships,
+  getNestedAttributes,
+  getNestedRelationships,
+  replaceSrc,
+} from "../../util/utils";
 import { MediaSelector } from "../../components/MediaSelector/MediaSelector";
 import { createMultiroomStore } from "../../stores/api-store";
 import { Error } from "../../components/Error/Error";
@@ -41,7 +47,7 @@ export function Multiroom() {
               <div
                 class={styles.multiroom__header__image}
                 style={{
-                  "background-color": `#${multiroomData()?.data?.[0].attributes
+                  "background-color": `#${getNestedAttributes(multiroomData())
                     ?.uber?.masterArt?.bgColor}`,
                 }}
               >
@@ -49,9 +55,9 @@ export function Multiroom() {
                   loading="lazy"
                   decoding="async"
                   src={replaceSrc(
-                    multiroomData()?.data?.[0].attributes?.uber?.masterArt?.url,
+                    getNestedAttributes(multiroomData())?.uber?.masterArt?.url,
                     Math.floor(
-                      multiroomData()?.data?.[0].attributes?.uber?.masterArt
+                      getNestedAttributes(multiroomData())?.uber?.masterArt
                         ?.width / 2,
                     ),
                   )}
@@ -61,27 +67,29 @@ export function Multiroom() {
               </div>
             </div>
             <h1 class={styles.multiroom__title}>
-              {multiroomData()?.data[0].attributes?.title}
+              {getNestedAttributes(multiroomData())?.title}
             </h1>
             <div class={styles.multiroom__content}>
               <div class={styles.multiroom__content__description}>
                 {
-                  multiroomData()?.data[0].attributes?.plainEditorialNotes
+                  getNestedAttributes(multiroomData())?.plainEditorialNotes
                     ?.standard
                 }
               </div>
               <For
-                each={multiroomData()?.data[0].relationships?.children?.data}
+                each={getNestedRelationships(multiroomData())?.children?.data}
               >
                 {(item) => (
                   <MediaSelector
-                    type={item.relationships?.contents?.data?.[0]?.type}
-                    children={item.relationships?.contents?.data}
-                    editorialElementKind={item.attributes?.editorialElementKind}
-                    links={item.attributes?.links}
+                    type={getItemRelationships(item)?.contents?.data?.[0]?.type}
+                    children={getItemRelationships(item)?.contents?.data}
+                    editorialElementKind={
+                      getItemAttributes(item)?.editorialElementKind
+                    }
+                    links={getItemAttributes(item)?.links}
                     displayKind="list"
-                    artistId={item.attributes?.artistId}
-                    title={item.attributes?.title}
+                    artistId={getItemAttributes(item)?.artistId}
+                    title={getItemAttributes(item)?.title}
                   />
                 )}
               </For>
