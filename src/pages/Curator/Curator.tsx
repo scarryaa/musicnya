@@ -2,7 +2,16 @@ import { useParams } from "@solidjs/router";
 import styles from "./Curator.module.scss";
 import { For, Match, Show, Switch } from "solid-js";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { replaceSrc } from "../../util/utils";
+import {
+  getItemAttributes,
+  getItemRelationships,
+  getNestedArtwork,
+  getNestedAttributes,
+  getNestedEditorialArtwork,
+  getNestedGroupingData,
+  getNestedPlainEditorialNotes,
+  replaceSrc,
+} from "../../util/utils";
 import { MediaSelector } from "../../components/MediaSelector/MediaSelector";
 import { createCuratorStore } from "../../stores/api-store";
 import { Error } from "../../components/Error/Error";
@@ -36,29 +45,29 @@ export function Curator() {
               <div
                 class={styles.curator__header__image}
                 style={{
-                  "background-color": `#${curatorData()?.data[0].attributes
-                    ?.editorialArtwork?.storeFlowcase?.bgColor}`,
+                  "background-color": `#${getNestedEditorialArtwork(
+                    curatorData(),
+                  )?.storeFlowcase?.bgColor}`,
                 }}
               >
                 <img
                   loading="lazy"
                   decoding="async"
                   src={replaceSrc(
-                    curatorData()?.data[0].attributes?.editorialArtwork
-                      ?.superHero?.url ||
-                      curatorData()?.data[0].attributes?.editorialArtwork
-                        ?.storeFlowcase?.url ||
-                      curatorData()?.data[0].attributes?.editorialArtwork
-                        ?.superHeroWide?.url ||
-                      curatorData()?.data[0].attributes?.artwork?.url,
+                    getNestedEditorialArtwork(curatorData())?.superHero?.url ||
+                      getNestedEditorialArtwork(curatorData())?.storeFlowcase
+                        ?.url ||
+                      getNestedEditorialArtwork(curatorData())?.superHeroWide
+                        ?.url ||
+                      getNestedArtwork(curatorData()).url,
                     Math.floor(
-                      curatorData()?.data[0].attributes?.editorialArtwork
-                        ?.superHero?.width / 2 ||
-                        curatorData()?.data[0].attributes?.editorialArtwork
-                          ?.storeFlowcase?.width / 2 ||
-                        curatorData()?.data[0].attributes?.editorialArtwork
-                          ?.superHeroWide?.width / 2 ||
-                        curatorData()?.data[0].attributes?.artwork?.width / 2,
+                      getNestedEditorialArtwork(curatorData())?.superHero
+                        ?.width / 2 ||
+                        getNestedEditorialArtwork(curatorData())?.storeFlowcase
+                          ?.width / 2 ||
+                        getNestedEditorialArtwork(curatorData())?.superHeroWide
+                          ?.width / 2 ||
+                        getNestedArtwork(curatorData())?.width / 2,
                     ),
                   )}
                   alt="Album Art"
@@ -67,36 +76,33 @@ export function Curator() {
               </div>
             </div>
             <h1 class={styles.curator__title}>
-              {curatorData()?.data[0].attributes?.name}
+              {getNestedAttributes(curatorData())?.name}
             </h1>
             <div class={styles.curator__content}>
               <div class={styles.curator__content__description}>
-                {
-                  curatorData()?.data[0].attributes?.plainEditorialNotes
-                    ?.standard
-                }
+                {getNestedPlainEditorialNotes(curatorData())?.standard}
               </div>
               <For
                 each={
-                  curatorData()?.data[0].relationships?.grouping?.data?.[0]
-                    .relationships?.tabs?.data
+                  getNestedGroupingData(curatorData())?.[0].relationships?.tabs
+                    ?.data
                 }
               >
                 {(item) => (
-                  <For each={item.relationships?.children?.data}>
+                  <For each={getItemRelationships(item)?.children?.data}>
                     {(item) => (
                       <MediaSelector
                         type="curators"
-                        children={item.relationships?.contents?.data}
+                        children={getItemRelationships(item)?.contents?.data}
                         editorialElementKind={
-                          item.attributes?.editorialElementKind
+                          getItemAttributes(item)?.editorialElementKind
                         }
-                        links={item.attributes?.links}
+                        links={getItemAttributes(item)?.links}
                         displayKind="list"
-                        artistId={item.attributes?.artistId}
+                        artistId={getItemAttributes(item)?.artistId}
                         title={
-                          item.attributes?.title?.stringForDisplay ||
-                          item.attributes?.name
+                          getItemAttributes(item)?.title?.stringForDisplay ||
+                          getItemAttributes(item)?.name
                         }
                       />
                     )}

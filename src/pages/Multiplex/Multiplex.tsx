@@ -3,6 +3,7 @@ import { Match, Show, Switch, createSignal } from "solid-js";
 import { createMultiplexStore } from "../../stores/api-store";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { Error } from "../../components/Error/Error";
+import { getMultiplexTarget } from "../../util/utils";
 
 export function Multiplex() {
   const params = useParams<{ id: string }>();
@@ -29,12 +30,13 @@ export function Multiplex() {
       <Match when={multiplexData.state === "ready"}>
         <Show when={multiplex}>
           <Navigate
-            href={`/${multiplexData()
-              ?.results?.target?.type?.substring(
+            href={`/${getMultiplexTarget(multiplexData())
+              ?.type?.substring(
                 0,
-                multiplexData()?.results?.target?.type?.length - 1,
+                getMultiplexTarget(multiplexData())?.type?.length - 1,
               )
-              .replace("apple-", "")}/${multiplexData()?.results?.target?.id}`}
+              .replace("apple-", "")}/${getMultiplexTarget(multiplexData())
+              ?.id}`}
           />
         </Show>
       </Match>

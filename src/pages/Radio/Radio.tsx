@@ -4,6 +4,11 @@ import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { MediaSelector } from "../../components/MediaSelector/MediaSelector";
 import { createRadioStore } from "../../stores/api-store";
 import { Error } from "../../components/Error/Error";
+import {
+  getItemAttributes,
+  getItemRelationships,
+  getNestedTabsRelationshipsData,
+} from "../../util/utils";
 
 export function Radio() {
   const radioStore = createRadioStore();
@@ -28,10 +33,7 @@ export function Radio() {
           <h1 class={styles.radio__title}>radio</h1>
           <div class={styles.radio__content}>
             <For
-              each={
-                radioData()?.data[0].relationships.tabs.data[0].relationships
-                  .children.data
-              }
+              each={getNestedTabsRelationshipsData(radioData())}
               fallback={
                 <div>
                   <p>An error occured.</p>
@@ -40,19 +42,21 @@ export function Radio() {
             >
               {(item) => (
                 <MediaSelector
-                  artistId={item?.attributes?.artistId}
-                  displayKind={item?.attributes?.display?.kind}
+                  artistId={getItemAttributes(item).artistId}
+                  displayKind={getItemAttributes(item)?.display?.kind}
                   title={
-                    item?.attributes?.title?.stringForDisplay ||
-                    item?.attributes?.name
+                    getItemAttributes(item)?.title?.stringForDisplay ||
+                    getItemAttributes(item)?.name
                   }
                   type={item?.type}
                   children={
-                    item.relationships?.children?.data ||
-                    item.relationships?.contents?.data
+                    getItemRelationships(item)?.children?.data ||
+                    getItemRelationships(item)?.contents?.data
                   }
-                  links={item?.attributes?.links}
-                  editorialElementKind={item?.attributes?.editorialElementKind}
+                  links={getItemAttributes(item)?.links}
+                  editorialElementKind={
+                    getItemAttributes(item)?.editorialElementKind
+                  }
                 ></MediaSelector>
               )}
             </For>

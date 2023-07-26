@@ -1,9 +1,10 @@
 import styles from "./Home.module.scss";
-import { For, Match, Show, Switch, createResource } from "solid-js";
+import { For, Match, Switch } from "solid-js";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { MediaSelector } from "../../components/MediaSelector/MediaSelector";
 import { Error } from "../../components/Error/Error";
 import { createHomeStore } from "../../stores/api-store";
+import { getItemAttributes, getItemRelationships } from "../../util/utils";
 
 export function Home() {
   const homeStore = createHomeStore();
@@ -37,12 +38,12 @@ export function Home() {
             >
               {(item) => (
                 <MediaSelector
-                  artistId={item?.attributes?.artistId}
-                  links={item?.attributes?.links}
-                  displayKind={item?.attributes?.display.kind}
-                  title={item?.attributes?.title?.stringForDisplay}
+                  artistId={getItemAttributes(item)?.artistId}
+                  links={getItemAttributes(item)?.links}
+                  displayKind={getItemAttributes(item)?.display.kind}
+                  title={getItemAttributes(item)?.title?.stringForDisplay}
                   type={item?.type}
-                  children={item.relationships.contents.data}
+                  children={getItemRelationships(item)?.contents.data}
                 ></MediaSelector>
               )}
             </For>

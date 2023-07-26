@@ -4,6 +4,11 @@ import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { MediaSelector } from "../../components/MediaSelector/MediaSelector";
 import { createBrowseStore } from "../../stores/api-store";
 import { Error } from "../../components/Error/Error";
+import {
+  getItemAttributes,
+  getItemRelationships,
+  getNestedTabsRelationshipsData,
+} from "../../util/utils";
 
 export function Browse() {
   const browseStore = createBrowseStore();
@@ -31,10 +36,7 @@ export function Browse() {
             <h1 class={styles.browse__title}>browse</h1>
             <div class={styles.browse__content}>
               <For
-                each={
-                  browseData()?.data[0].relationships.tabs.data[0].relationships
-                    .children.data
-                }
+                each={getNestedTabsRelationshipsData(browseData())}
                 fallback={
                   <div>
                     <p>An error occured.</p>
@@ -43,20 +45,20 @@ export function Browse() {
               >
                 {(item) => (
                   <MediaSelector
-                    artistId={item?.attributes?.artistId}
-                    links={item?.attributes?.links}
-                    displayKind={item?.attributes?.display?.kind}
+                    artistId={getItemAttributes(item)?.artistId}
+                    links={getItemAttributes(item)?.links}
+                    displayKind={getItemAttributes(item)?.display?.kind}
                     title={
-                      item?.attributes?.title?.stringForDisplay ||
-                      item?.attributes?.name
+                      getItemAttributes(item)?.title?.stringForDisplay ||
+                      getItemAttributes(item)?.name
                     }
                     type={item?.type}
                     children={
-                      item.relationships?.children?.data ||
-                      item.relationships?.contents?.data
+                      getItemRelationships(item)?.children?.data ||
+                      getItemRelationships(item)?.contents?.data
                     }
                     editorialElementKind={
-                      item?.attributes?.editorialElementKind
+                      getItemAttributes(item)?.editorialElementKind
                     }
                   ></MediaSelector>
                 )}

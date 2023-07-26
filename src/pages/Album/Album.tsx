@@ -2,7 +2,13 @@ import styles from "./Album.module.scss";
 
 import { useParams } from "@solidjs/router";
 import { Match, Show, Switch, createEffect, createSignal } from "solid-js";
-import { replaceSrc } from "../../util/utils";
+import {
+  getNestedArtwork,
+  getNestedAttributes,
+  getNestedData,
+  getNestedRelationships,
+  replaceSrc,
+} from "../../util/utils";
 import { MediaDetail } from "../../components/MediaView/MediaDetail";
 import { MediaTable } from "../../components/MediaView/MediaTable";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
@@ -45,28 +51,28 @@ export const Album = () => {
           <Show when={album}>
             <MediaDetail
               type="albums"
-              title={albumData()?.data[0].attributes?.name}
+              title={getNestedAttributes(albumData())?.name}
               mediaArt={
-                albumData()?.data[0].attributes?.artwork && {
+                getNestedArtwork(albumData()) && {
                   url:
                     replaceSrc(
-                      albumData()?.data[0].attributes?.artwork?.url,
+                      getNestedArtwork(albumData())?.url,
                       ARTWORK_RESOLUTION,
                     ) || "",
                 }
               }
               subtitle={
-                albumData()?.data[0].relationships?.catalog?.data?.[0]
+                getNestedRelationships(albumData())?.catalog?.data?.[0]
                   ?.attributes?.curatorName
               }
               description={
-                albumData()?.data[0].attributes?.description?.standard
+                getNestedAttributes(albumData())?.description?.standard
               }
-              id={albumData().data?.[0]?.id}
-              artistIds={albumData()?.data?.[0]?.relationships?.artists?.data?.map(
-                (artist: any) => artist.id,
-              )}
-              artists={albumData()?.data?.[0]?.relationships?.artists?.data?.map(
+              id={getNestedData(albumData())?.id}
+              artistIds={getNestedRelationships(
+                albumData(),
+              )?.artists?.data?.map((artist: any) => artist.id)}
+              artists={getNestedRelationships(albumData())?.artists?.data?.map(
                 (artist: any) => artist.attributes?.name,
               )}
             />
@@ -74,7 +80,7 @@ export const Album = () => {
               type="albums"
               id={albumData().data?.[0]?.id}
               showArt={false}
-              items={albumData()?.data[0].relationships?.tracks?.data}
+              items={getNestedRelationships(albumData())?.tracks?.data}
               class={styles.album__table}
             />
           </Show>
