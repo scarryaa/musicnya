@@ -31,6 +31,43 @@ import { Tooltip } from "../Tooltip/Tooltip";
 const lightTheme = false;
 //matchMedia("(prefers-color-scheme: light)").matches;
 
+const handleQueueClick = () => {
+  document.body.style.setProperty(
+    "--panel-offset",
+    rightPanelOpen.value
+      ? rightPanelContent.value === "lyrics"
+        ? "18rem"
+        : "4rem"
+      : "18rem",
+  );
+
+  rightPanelOpen.value === true && rightPanelContent.value === "queue"
+    ? setRightPanelOpen({ value: false })
+    : setRightPanelOpen({ value: true });
+
+  setRightPanelContent({ value: "queue" });
+};
+
+const handleLyricsClick = () => {
+  document.body.style.setProperty(
+    "--panel-offset",
+    rightPanelOpen.value
+      ? rightPanelContent.value === "queue"
+        ? "18rem"
+        : "4rem"
+      : "18rem",
+  );
+
+  rightPanelOpen.value === true && rightPanelContent.value === "lyrics"
+    ? setRightPanelOpen({ value: false })
+    : setRightPanelOpen({ value: true });
+
+  setRightPanelContent({ value: "lyrics" });
+  if (rightPanelOpen.value) {
+    fetchLyrics();
+  }
+};
+
 export function Drawer() {
   return (
     <div class={styles.drawer}>
@@ -93,54 +130,38 @@ export function Drawer() {
           </A>
         </Tooltip>
         <Tooltip text="lyrics" position="right" style={"margin-top: 2rem;"}>
-          <BiSolidMessage
-            size={25}
-            class={styles.drawer__bottom__lyrics}
-            fill={lightTheme ? "#aaa" : "#757575"}
-            onclick={(e) => {
-              document.body.style.setProperty(
-                "--panel-offset",
-                rightPanelOpen.value
-                  ? rightPanelContent.value === "queue"
-                    ? "18rem"
-                    : "4rem"
-                  : "18rem",
-              );
-
-              rightPanelOpen.value === true &&
-              rightPanelContent.value === "lyrics"
-                ? setRightPanelOpen({ value: false })
-                : setRightPanelOpen({ value: true });
-
-              setRightPanelContent({ value: "lyrics" });
-              if (rightPanelOpen.value) {
-                fetchLyrics();
+          <div
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                handleLyricsClick();
               }
             }}
-          />
+            onclick={() => {
+              handleLyricsClick();
+            }}
+          >
+            <BiSolidMessage
+              size={25}
+              class={styles.drawer__bottom__lyrics}
+              fill={lightTheme ? "#aaa" : "#757575"}
+            />
+          </div>
         </Tooltip>
         <Tooltip text="queue" position="right">
-          <BsList
-            size={25}
-            fill={lightTheme ? "#aaa" : "#757575"}
-            onclick={() => {
-              document.body.style.setProperty(
-                "--panel-offset",
-                rightPanelOpen.value
-                  ? rightPanelContent.value === "lyrics"
-                    ? "18rem"
-                    : "4rem"
-                  : "18rem",
-              );
-
-              rightPanelOpen.value === true &&
-              rightPanelContent.value === "queue"
-                ? setRightPanelOpen({ value: false })
-                : setRightPanelOpen({ value: true });
-
-              setRightPanelContent({ value: "queue" });
+          <div
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                handleQueueClick();
+              }
             }}
-          />
+            onclick={() => {
+              handleQueueClick();
+            }}
+          >
+            <BsList size={25} fill={lightTheme ? "#aaa" : "#757575"} />
+          </div>
         </Tooltip>
       </div>
       <div class={styles.drawer__bottom}>

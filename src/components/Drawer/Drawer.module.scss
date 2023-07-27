@@ -75,8 +75,9 @@
   }
 
   &__bottom {
-    margin-top: 7rem;
+    bottom: -1rem;
     margin-bottom: 2.5rem;
+    position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
