@@ -3,12 +3,7 @@ import styles from "./MediaTable.module.scss";
 import { formatTime, getAlbumIdFromUrl, replaceSrc } from "../../util/utils";
 import { A } from "@solidjs/router";
 import { IoEllipsisHorizontal, IoPause, IoPlay } from "solid-icons/io";
-import {
-  currentMediaItem,
-  isPlaying,
-  isShuffle,
-  setIsShuffle,
-} from "../../stores/store";
+import { currentMediaItem, isPlaying, setIsShuffle } from "../../stores/store";
 import { pause, play, setQueue, setShuffleMode } from "../../api/musickit";
 
 export type MediaTableProps = {
@@ -18,6 +13,9 @@ export type MediaTableProps = {
   id: string;
   type: MusicKit.MediaItemType;
 };
+
+const idEqualsCurrentMediaItem = (id: string) =>
+  currentMediaItem.id === id && isPlaying.value;
 
 export function MediaTable(props: MediaTableProps) {
   return (
@@ -42,14 +40,14 @@ export function MediaTable(props: MediaTableProps) {
                 <td class={styles.mediaTable__number}>{i() + 1}</td>
                 {currentMediaItem.id === item.id && isPlaying.value ? (
                   <IoPause
+                    role="button"
                     size={24}
                     class={styles.mediaTable__play}
                     fill="var(--text)"
                     style={{
-                      fill:
-                        currentMediaItem.id === item.id
-                          ? "var(--accent)"
-                          : "var(--text)",
+                      fill: idEqualsCurrentMediaItem(item.id)
+                        ? "var(--accent)"
+                        : "var(--text)",
                     }}
                     onclick={async (e) => {
                       e.preventDefault();
@@ -58,23 +56,22 @@ export function MediaTable(props: MediaTableProps) {
                   />
                 ) : (
                   <IoPlay
+                    role="button"
                     size={24}
                     class={styles.mediaTable__play}
                     fill="var(--text)"
                     style={{
-                      fill:
-                        currentMediaItem.id === item.id
-                          ? "var(--accent)"
-                          : "var(--text)",
+                      fill: idEqualsCurrentMediaItem(item.id)
+                        ? "var(--accent)"
+                        : "var(--text)",
                     }}
                     onclick={async (e) => {
                       e.preventDefault();
-                      const oldShuffleMode = isShuffle.value;
                       setShuffleMode(0);
                       setIsShuffle({ value: 0 });
 
-                      currentMediaItem.id === item.id && !isPlaying.value
-                        ? play()
+                      idEqualsCurrentMediaItem(item.id)
+                        ? await play().catch((e) => console.log(e))
                         : setQueue(
                             props.type
                               .substring(0, props.type.length - 1)
@@ -143,6 +140,7 @@ export function MediaTable(props: MediaTableProps) {
                 <td class={styles.mediaTable__duration}>
                   {formatTime(item.attributes?.durationInMillis / 1000)}
                   <IoEllipsisHorizontal
+                    role="button"
                     size={24}
                     class={styles.mediaTable__more}
                     fill="var(--text)"

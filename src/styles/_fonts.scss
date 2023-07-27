@@ -7,9 +7,11 @@
 
   --text: white;
   --text-muted: #999;
+  --text-inverse: black;
 }
 
 :root[theme="light"] {
   --text: black;
   --text-muted: #666;
+  --text-inverse: white;
 }

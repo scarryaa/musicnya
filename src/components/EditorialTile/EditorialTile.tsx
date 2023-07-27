@@ -48,8 +48,6 @@ export function EditorialTile(props: EditorialTileProps) {
     }
   };
 
-  console.log(props.link);
-  console.log(props.editorialElementKind);
   return (
     <div class={styles.editorialTile}>
       <div class={styles.editorialTile__overlay}>

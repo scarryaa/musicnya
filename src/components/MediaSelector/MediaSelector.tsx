@@ -65,6 +65,7 @@ interface ComponentProps {
   artistIds: string[];
   editorialElementKind: string;
   link: string;
+  contentType: string;
 }
 
 const LinkFactory = () => {
@@ -182,6 +183,7 @@ const MediaComponentFactory = (
                 type={item?.type}
                 title={title}
                 artists={artistNames}
+                contentType={item.relationships?.contents?.data?.[0]?.type}
                 link={
                   item.attributes?.link?.url ||
                   item.relationships?.contents?.data?.[0]?.attributes?.url

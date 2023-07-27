@@ -7,6 +7,7 @@ import { setupEvents } from "./util/utils";
 import { Lyrics } from "./components/Lyrics/Lyrics";
 import { rightPanelContent, rightPanelOpen } from "./stores/store";
 import { Queue } from "./components/Queue/Queue";
+import { Navigate } from "@solidjs/router";
 
 const App: Component = () => {
   // Check if user is logged in

@@ -15,12 +15,12 @@ export const getQueueItems = () => {
   return MusicKit.getInstance().queue.items;
 };
 
-export const play = () => {
-  MusicKit.getInstance().play();
+export const play = async () => {
+  await MusicKit.getInstance().play();
 };
 
-export const stop = () => {
-  MusicKit.getInstance().stop();
+export const stop = async () => {
+  await MusicKit.getInstance().stop();
 };
 
 export const pause = () => {

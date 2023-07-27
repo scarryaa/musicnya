@@ -70,7 +70,7 @@ export const constructLink = (type: string, id: string) => {
 
 export const getNestedData = (data: any) => {
   // data?.data[0]
-  return data?.data[0];
+  return data?.data?.[0];
 };
 
 export const getNestedAttributes = (data: any) => {

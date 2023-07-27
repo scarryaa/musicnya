@@ -1,5 +1,6 @@
 .videoTile {
   height: max-content;
+  max-width: 18rem;
 
   &:hover {
     .videoTile__overlay__inner {

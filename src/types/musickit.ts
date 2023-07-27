@@ -637,6 +637,7 @@ declare module MusicKit {
     releaseDate?: Date | undefined;
     /**The name of the media item. */
     title?: string;
+    _songId?: string;
     /**The number of the media item in the album's track list. */
     trackNumber?: number;
     /**The number of the media item in the album's track list. */

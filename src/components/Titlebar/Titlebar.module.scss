@@ -32,7 +32,8 @@
     --webkit-app-region: no-drag;
     app-region: no-drag;
 
-    &:hover {
+    &:hover,
+    &:focus {
       background-color: var(--titlebar-button-hover);
     }
 
