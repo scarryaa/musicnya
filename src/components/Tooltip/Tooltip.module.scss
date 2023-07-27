@@ -1,0 +1,28 @@
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+  z-index: 999;
+  overflow: visible;
+
+  &__text {
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid #fff;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity 0.3s;
+    font-family: "Roboto", sans-serif;
+    font-size: 1rem;
+  }
+
+  &:hover .tooltip__text {
+    opacity: 1;
+  }
+}

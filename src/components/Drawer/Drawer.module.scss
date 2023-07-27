@@ -10,14 +10,13 @@
 
 .drawer {
   height: 100%;
-  position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: calc(var(--content-offset) + var(--titlebar-height) / 2);
+  margin-top: calc(var(--content-offset) + var(--titlebar-height) / 2);
   left: 0;
   width: 4rem;
-  z-index: 99;
+  z-index: 1;
   border-top-right-radius: var(--app-border-radius);
   border-bottom-right-radius: var(--app-border-radius);
 
@@ -76,6 +75,7 @@
   }
 
   &__bottom {
+    margin-top: 5rem;
     margin-bottom: 2.5rem;
     display: flex;
     flex-direction: column;

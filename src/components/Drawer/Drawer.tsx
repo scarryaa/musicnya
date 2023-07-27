@@ -23,6 +23,7 @@ import {
   setRightPanelOpen,
 } from "../../stores/store";
 import { fetchLyrics } from "../Lyrics/Lyrics";
+import { Tooltip } from "../Tooltip/Tooltip";
 
 const lightTheme = false;
 //matchMedia("(prefers-color-scheme: light)").matches;
@@ -33,109 +34,129 @@ export function Drawer() {
       <div class={styles.drawer__top}>
         <CircleIcon style="margin-top: 10px;" />
         <div class={styles.drawer__top__nav_arrows}>
-          <IoChevronBack
-            size={25}
-            fill={lightTheme ? "#aaa" : "#757575"}
-            color={lightTheme ? "#aaa" : "#757575"}
-            class={styles.drawer__top__nav_arrows__back}
-            onclick={(e) => {
-              e.preventDefault();
-              window.history.back();
-            }}
-          />
-          <IoChevronForward
-            size={25}
-            fill={lightTheme ? "#aaa" : "#757575"}
-            color={lightTheme ? "#aaa" : "#757575"}
-            class={styles.drawer__top__nav_arrows__forward}
-            onclick={(e) => {
-              e.preventDefault();
-              window.history.forward();
-            }}
-          />
+          <Tooltip text="back" position="right">
+            <IoChevronBack
+              size={25}
+              fill={lightTheme ? "#aaa" : "#757575"}
+              color={lightTheme ? "#aaa" : "#757575"}
+              class={styles.drawer__top__nav_arrows__back}
+              onclick={(e) => {
+                e.preventDefault();
+                window.history.back();
+              }}
+            />
+          </Tooltip>
+          <Tooltip text="forward" position="right">
+            <IoChevronForward
+              size={25}
+              fill={lightTheme ? "#aaa" : "#757575"}
+              color={lightTheme ? "#aaa" : "#757575"}
+              class={styles.drawer__top__nav_arrows__forward}
+              onclick={(e) => {
+                e.preventDefault();
+                window.history.forward();
+              }}
+            />
+          </Tooltip>
         </div>
       </div>
       <div class={styles.drawer__middle}>
-        <A title="home" href="/home" activeClass="active-route">
-          <BiSolidHome size={25} fill={lightTheme ? "#aaa" : "#757575"} />
-        </A>
-        <A title="browse" href="/browse" activeClass="active-route">
-          <IoGrid size={25} fill={lightTheme ? "#aaa" : "#757575"} />
-        </A>
-        <A title="radio" href="/radio" activeClass="active-route">
-          <IoRadio size={25} fill={lightTheme ? "#aaa" : "#757575"} />
-        </A>
-        <A
-          title="songs"
-          href="/library/songs"
-          style={"margin-top: 2rem;"}
-          activeClass="active-route"
-        >
-          <BsMusicNote size={25} fill={lightTheme ? "#aaa" : "#757575"} />
-        </A>
-        <A
-          title="playlists"
-          href="/library/playlists"
-          activeClass="active-route"
-        >
-          <BiSolidPlaylist size={25} fill={lightTheme ? "#aaa" : "#757575"} />
-        </A>
-        <A title="albums" href="/library/albums" activeClass="active-route">
-          <BiSolidAlbum size={25} fill={lightTheme ? "#aaa" : "#757575"} />
-        </A>{" "}
-        <A title="artists" href="/library/artists" activeClass="active-route">
-          <BsPeopleFill size={25} fill={lightTheme ? "#aaa" : "#757575"} />
-        </A>
+        <Tooltip text="home" position="right">
+          <A href="/home" activeClass="active-route">
+            <BiSolidHome size={25} fill={lightTheme ? "#aaa" : "#757575"} />
+          </A>
+        </Tooltip>
+        <Tooltip text="browse" position="right">
+          <A href="/browse" activeClass="active-route">
+            <IoGrid size={25} fill={lightTheme ? "#aaa" : "#757575"} />
+          </A>
+        </Tooltip>
+        <Tooltip text="radio" position="right">
+          <A href="/radio" activeClass="active-route">
+            <IoRadio size={25} fill={lightTheme ? "#aaa" : "#757575"} />
+          </A>
+        </Tooltip>
+        <Tooltip text="songs" position="right">
+          <A
+            href="/library/songs"
+            style={"margin-top: 2rem;"}
+            activeClass="active-route"
+          >
+            <BsMusicNote size={25} fill={lightTheme ? "#aaa" : "#757575"} />
+          </A>
+        </Tooltip>
+        <Tooltip text="playlists" position="right">
+          <A href="/library/playlists" activeClass="active-route">
+            <BiSolidPlaylist size={25} fill={lightTheme ? "#aaa" : "#757575"} />
+          </A>
+        </Tooltip>
+        <Tooltip text="albums" position="right">
+          <A href="/library/albums" activeClass="active-route">
+            <BiSolidAlbum size={25} fill={lightTheme ? "#aaa" : "#757575"} />
+          </A>
+        </Tooltip>
+        <Tooltip text="artists" position="right">
+          <A href="/library/artists" activeClass="active-route">
+            <BsPeopleFill size={25} fill={lightTheme ? "#aaa" : "#757575"} />
+          </A>
+        </Tooltip>
       </div>
       <div class={styles.drawer__bottom}>
-        <BiSolidMessage
-          size={25}
-          class={styles.drawer__bottom__lyrics}
-          fill={lightTheme ? "#aaa" : "#757575"}
-          onclick={(e) => {
-            document.body.style.setProperty(
-              "--panel-offset",
-              rightPanelOpen.value
-                ? rightPanelContent.value === "queue"
-                  ? "18rem"
-                  : "4rem"
-                : "18rem",
-            );
+        <Tooltip text="lyrics" position="right">
+          <BiSolidMessage
+            size={25}
+            class={styles.drawer__bottom__lyrics}
+            fill={lightTheme ? "#aaa" : "#757575"}
+            onclick={(e) => {
+              document.body.style.setProperty(
+                "--panel-offset",
+                rightPanelOpen.value
+                  ? rightPanelContent.value === "queue"
+                    ? "18rem"
+                    : "4rem"
+                  : "18rem",
+              );
 
-            rightPanelOpen.value === true &&
-            rightPanelContent.value === "lyrics"
-              ? setRightPanelOpen({ value: false })
-              : setRightPanelOpen({ value: true });
+              rightPanelOpen.value === true &&
+              rightPanelContent.value === "lyrics"
+                ? setRightPanelOpen({ value: false })
+                : setRightPanelOpen({ value: true });
 
-            setRightPanelContent({ value: "lyrics" });
-            if (rightPanelOpen.value) {
-              fetchLyrics();
-            }
-          }}
-        />
-        <BsList
-          size={25}
-          fill={lightTheme ? "#aaa" : "#757575"}
-          onclick={() => {
-            document.body.style.setProperty(
-              "--panel-offset",
-              rightPanelOpen.value
-                ? rightPanelContent.value === "lyrics"
-                  ? "18rem"
-                  : "4rem"
-                : "18rem",
-            );
+              setRightPanelContent({ value: "lyrics" });
+              if (rightPanelOpen.value) {
+                fetchLyrics();
+              }
+            }}
+          />
+        </Tooltip>
+        <Tooltip text="queue" position="right">
+          <BsList
+            size={25}
+            fill={lightTheme ? "#aaa" : "#757575"}
+            onclick={() => {
+              document.body.style.setProperty(
+                "--panel-offset",
+                rightPanelOpen.value
+                  ? rightPanelContent.value === "lyrics"
+                    ? "18rem"
+                    : "4rem"
+                  : "18rem",
+              );
 
-            rightPanelOpen.value === true && rightPanelContent.value === "queue"
-              ? setRightPanelOpen({ value: false })
-              : setRightPanelOpen({ value: true });
+              rightPanelOpen.value === true &&
+              rightPanelContent.value === "queue"
+                ? setRightPanelOpen({ value: false })
+                : setRightPanelOpen({ value: true });
 
-            setRightPanelContent({ value: "queue" });
-          }}
-        />
-        <A title="settings" href="/settings" activeClass="active-route">
-          <IoSettings size={25} fill={lightTheme ? "#aaa" : "#757575"} />
-        </A>
+              setRightPanelContent({ value: "queue" });
+            }}
+          />
+        </Tooltip>
+        <Tooltip text="settings" position="right">
+          <A href="/settings" activeClass="active-route">
+            <IoSettings size={25} fill={lightTheme ? "#aaa" : "#757575"} />
+          </A>
+        </Tooltip>
       </div>
     </div>
   );

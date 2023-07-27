@@ -45,6 +45,7 @@ import {
 } from "../../api/musickit";
 import { A } from "@solidjs/router";
 import { JSX, Show, createSignal } from "solid-js";
+import { Tooltip } from "../Tooltip/Tooltip";
 
 export function Player() {
   const ButtonStyle = {
@@ -74,14 +75,16 @@ export function Player() {
     switch (getPlayButtonType()) {
       case "stop":
         return (
-          <BsStopCircleFill
-            fill={ButtonStyle.fill}
-            size={ButtonStyle.size}
-            onclick={async () => {
-              await MusicKit.getInstance().stop();
-              setCurrentMediaItem({});
-            }}
-          />
+          <Tooltip text="stop" position="top">
+            <BsStopCircleFill
+              fill={ButtonStyle.fill}
+              size={ButtonStyle.size}
+              onclick={async () => {
+                await MusicKit.getInstance().stop();
+                setCurrentMediaItem({});
+              }}
+            />
+          </Tooltip>
         );
       case "pause":
         return (
@@ -93,11 +96,13 @@ export function Player() {
         );
       case "play":
         return (
-          <BsPlayCircleFill
-            fill={ButtonStyle.fill}
-            size={ButtonStyle.size}
-            onclick={() => togglePlayPause()}
-          />
+          <Tooltip text="play" position="top">
+            <BsPlayCircleFill
+              fill={ButtonStyle.fill}
+              size={ButtonStyle.size}
+              onclick={() => togglePlayPause()}
+            />
+          </Tooltip>
         );
     }
   };
@@ -116,53 +121,62 @@ export function Player() {
     switch (getRepeatButtonType()) {
       case "repeat":
         return (
-          <BsRepeat
-            fill={ButtonStyle.fill}
-            style={{
-              fill:
-                isRepeat.value === 1 || isRepeat.value === 2
-                  ? "var(--accent)"
-                  : "white",
-            }}
-            size={20}
-            onclick={() => {
-              setIsRepeat({
-                value: isRepeat.value === 0 ? 1 : isRepeat.value === 1 ? 2 : 0,
-              });
-              setRepeatMode(
-                MusicKit.getInstance().repeatMode === (0 as any)
-                  ? (1 as any)
-                  : MusicKit.getInstance().repeatMode === (1 as any)
-                  ? (2 as any)
-                  : (0 as any),
-              );
-            }}
-          />
+          <Tooltip
+            text={isRepeat.value === 2 ? "repeat off" : "repeat one"}
+            position="top"
+          >
+            <BsRepeat
+              fill={ButtonStyle.fill}
+              style={{
+                fill:
+                  isRepeat.value === 1 || isRepeat.value === 2
+                    ? "var(--accent)"
+                    : "white",
+              }}
+              size={20}
+              onclick={() => {
+                setIsRepeat({
+                  value:
+                    isRepeat.value === 0 ? 1 : isRepeat.value === 1 ? 2 : 0,
+                });
+                setRepeatMode(
+                  MusicKit.getInstance().repeatMode === (0 as any)
+                    ? (1 as any)
+                    : MusicKit.getInstance().repeatMode === (1 as any)
+                    ? (2 as any)
+                    : (0 as any),
+                );
+              }}
+            />
+          </Tooltip>
         );
       case "repeat1":
         return (
-          <BsRepeat1
-            fill={ButtonStyle.fill}
-            style={{
-              fill:
-                isRepeat.value === 1 || isRepeat.value === 2
-                  ? "var(--accent)"
-                  : "white",
-            }}
-            size={20}
-            onclick={() => {
-              setIsRepeat({
-                value: isRepeat.value === 0 ? 1 : isRepeat.value === 1 ? 2 : 0,
-              });
-              setRepeatMode(
-                MusicKit.getInstance().repeatMode === (0 as any)
-                  ? (1 as any)
-                  : MusicKit.getInstance().repeatMode === (1 as any)
-                  ? (2 as any)
-                  : (0 as any),
-              );
-            }}
-          />
+          <Tooltip text="repeat all" position="top">
+            <BsRepeat1
+              fill={ButtonStyle.fill}
+              style={{
+                fill:
+                  isRepeat.value === 1 || isRepeat.value === 2
+                    ? "var(--accent)"
+                    : "white",
+              }}
+              size={20}
+              onclick={() => {
+                setIsRepeat({
+                  value:
+                    isRepeat.value === 0 ? 1 : isRepeat.value === 1 ? 2 : 0,
+                });
+                setRepeatMode(
+                  MusicKit.getInstance().repeatMode === (0 as any)
+                    ? (1 as any)
+                    : MusicKit.getInstance().repeatMode === (1 as any)
+                    ? (2 as any)
+                    : (0 as any),
+                );
+              }}
+            />
+          </Tooltip>
         );
     }
   };
@@ -175,20 +189,24 @@ export function Player() {
     switch (getShuffleButtonType()) {
       case "shuffle":
         return (
-          <BsShuffle
-            fill={ButtonStyle.fill}
-            size={20}
-            style={{
-              fill: isShuffle.value === 1 ? "var(--accent)" : "white",
-            }}
-            onclick={() => {
-              setIsShuffle({
-                value: isShuffle.value === 1 ? 0 : 1,
-              });
-              setShuffleMode(MusicKit.getInstance().shuffleMode === 1 ? 0 : 1);
-              console.log(MusicKit.getInstance().queue.items);
-            }}
-          />
+          <Tooltip text="shuffle" position="top">
+            <BsShuffle
+              fill={ButtonStyle.fill}
+              size={20}
+              style={{
+                fill: isShuffle.value === 1 ? "var(--accent)" : "white",
+              }}
+              onclick={() => {
+                setIsShuffle({
+                  value: isShuffle.value === 1 ? 0 : 1,
+                });
+                setShuffleMode(
+                  MusicKit.getInstance().shuffleMode === 1 ? 0 : 1,
+                );
+                console.log(MusicKit.getInstance().queue.items);
+              }}
+            />
+          </Tooltip>
         );
     }
   };
@@ -203,70 +221,52 @@ export function Player() {
     }
   };
 
-  const lyricsButton = () => {
-    return (
-      <button class={styles.player__button}>
-        <BiSolidMessage
-          fill={ButtonStyle.fill}
-          size={18}
-          style={{ "margin-top": "-0.25rem", "margin-left": "-0.1rem" }}
-        />
-      </button>
-    );
-  };
-
-  const queueButton = () => {
-    return (
-      <button class={styles.player__button}>
-        <BsList
-          fill={ButtonStyle.fill}
-          size={22}
-          style={{ "margin-top": "-0.25rem", "margin-left": "-0.1rem" }}
-        />
-      </button>
-    );
-  };
-
   const volumeButton = () => {
     switch (getVolumeButtonType()) {
       case "volumeUp":
         return (
-          <BsVolumeUpFill
-            fill={ButtonStyle.fill}
-            size={28}
-            style={{ "margin-top": "-0.1rem", "margin-left": "-0.3rem" }}
-            onclick={() => {
-              setOldVolume({ value: volume.value });
-              setVolume({ value: 0 });
-              adjustVolume(0);
-            }}
-          />
+          <Tooltip text="mute" position="top">
+            <BsVolumeUpFill
+              fill={ButtonStyle.fill}
+              size={28}
+              style={{ "margin-top": "-0.1rem", "margin-left": "-0.3rem" }}
+              onclick={() => {
+                setOldVolume({ value: volume.value });
+                setVolume({ value: 0 });
+                adjustVolume(0);
+              }}
+            />
+          </Tooltip>
         );
       case "volumeDown":
         return (
-          <BsVolumeDownFill
-            fill={ButtonStyle.fill}
-            size={28}
-            style={{ "margin-top": "-0.1rem", "margin-left": "-0.3rem" }}
-            onclick={() => {
-              setOldVolume({ value: volume.value });
-              setVolume({ value: 0 });
-              adjustVolume(0);
-            }}
-          />
+          <Tooltip text="mute" position="top">
+            <BsVolumeDownFill
+              fill={ButtonStyle.fill}
+              size={28}
+              style={{ "margin-top": "-0.1rem", "margin-left": "-0.3rem" }}
+              onclick={() => {
+                setOldVolume({ value: volume.value });
+                setVolume({ value: 0 });
+                adjustVolume(0);
+              }}
+            />
+          </Tooltip>
         );
       case "volumeMute":
         return (
-          <BsVolumeMuteFill
-            fill={ButtonStyle.fill}
-            size={28}
-            style={{ "margin-top": "-0.1rem", "margin-left": "-0.3rem" }}
-            onclick={() => {
-              setVolume({ value: oldVolume.value });
-              adjustVolume(oldVolume.value);
-              setOldVolume({ value: volume.value });
-            }}
-          />
+          <Tooltip text="unmute" position="top">
+            <BsVolumeMuteFill
+              fill={ButtonStyle.fill}
+              size={28}
+              style={{ "margin-top": "-0.1rem", "margin-left": "-0.3rem" }}
+              onclick={() => {
+                setVolume({ value: oldVolume.value });
+                adjustVolume(oldVolume.value);
+                setOldVolume({ value: volume.value });
+              }}
+            />
+          </Tooltip>
         );
     }
   };
@@ -305,21 +305,25 @@ export function Player() {
       <div class={styles.player__middle}>
         <div class={styles.player__middle__controls}>
           <button class={styles.player__left__controls__button}>
-            <BiRegularSkipPrevious
-              fill={ButtonStyle.fill}
-              size={40}
-              onclick={() => skipToPreviousItem()}
-            />
+            <Tooltip text="previous" position="top">
+              <BiRegularSkipPrevious
+                fill={ButtonStyle.fill}
+                size={40}
+                onclick={() => skipToPreviousItem()}
+              />
+            </Tooltip>
           </button>
           <button class={styles.player__left__controls__button}>
             {playButton()}
           </button>
           <button class={styles.player__left__controls__button}>
-            <BiRegularSkipNext
-              fill={ButtonStyle.fill}
-              size={40}
-              onclick={() => skipToNextItem()}
-            />
+            <Tooltip text="next" position="top">
+              <BiRegularSkipNext
+                fill={ButtonStyle.fill}
+                size={40}
+                onclick={() => skipToNextItem()}
+              />
+            </Tooltip>
           </button>
         </div>
         <div class={styles.player__middle__progress}>

@@ -76,6 +76,7 @@ export const getLyrics = async () => {
     }
   }
 
+  if (!songID) return "";
   const response: MusicKit.APIResponseObject = await fetch(
     `https://amp-api.music.apple.com/v1/catalog/${instance.storefrontId}/songs/${songID}/lyrics`,
     {
@@ -88,7 +89,7 @@ export const getLyrics = async () => {
     return response.json() as Promise<MusicKit.APIResponseObject>;
   });
 
-  const ttml: string = response.data[0].attributes["ttml"];
+  const ttml: string = (response.data as any)?.[0]?.attributes["ttml"];
   return parseTTML(ttml);
 };
 

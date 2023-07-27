@@ -1,23 +1,22 @@
 import styles from "./Lyrics.module.scss";
 import { getLyrics } from "../../api/musickit";
 
-let lyrics: any = undefined;
 let lyricsPane: HTMLPreElement = undefined as unknown as HTMLPreElement;
 
 export const fetchLyrics = async () => {
-  lyrics = await getLyrics();
-  updateLyrics();
+  const lyrics = await getLyrics();
+  updateLyrics(lyrics);
 };
 
-const updateLyrics = () => {
+const updateLyrics = (lyrics: any) => {
   const pre = document.getElementById("lyrics");
   if (!pre) return;
-  pre.innerHTML = lyrics;
+  pre.innerHTML = lyrics || "Start playing something!";
 
   // scroll to top
   setTimeout(() => {
     pre.scrollTop = 0;
-  }, 5000);
+  }, 0);
 };
 
 export function Lyrics() {
