@@ -205,6 +205,7 @@ const MediaComponents: Record<MediaComponentType, any> = {
   MusicNotesHeroShelf: MediaComponentFactory(MediaTileGlass),
   MusicSuperHeroShelf: (props: MediaSelectorProps) => (
     <MediaTileLarge
+      childType={props?.children?.[0]?.type}
       {...props}
       id={props.children[0]?.id}
       title={
