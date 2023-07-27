@@ -3,6 +3,9 @@ import {
   BiSolidPlaylist,
   BiSolidAlbum,
   BiSolidMessage,
+  BiSolidSearch,
+  BiRegularSearch,
+  BiRegularLibrary,
 } from "solid-icons/bi";
 import {
   IoGrid,
@@ -61,6 +64,11 @@ export function Drawer() {
         </div>
       </div>
       <div class={styles.drawer__middle}>
+        <Tooltip text="search" position="right">
+          <A href="/search" activeClass="active-route">
+            <BiRegularSearch size={25} fill={lightTheme ? "#aaa" : "#757575"} />
+          </A>
+        </Tooltip>
         <Tooltip text="home" position="right">
           <A href="/home" activeClass="active-route">
             <BiSolidHome size={25} fill={lightTheme ? "#aaa" : "#757575"} />
@@ -76,33 +84,15 @@ export function Drawer() {
             <IoRadio size={25} fill={lightTheme ? "#aaa" : "#757575"} />
           </A>
         </Tooltip>
-        <Tooltip text="songs" position="right">
-          <A
-            href="/library/songs"
-            style={"margin-top: 2rem;"}
-            activeClass="active-route"
-          >
-            <BsMusicNote size={25} fill={lightTheme ? "#aaa" : "#757575"} />
+        <Tooltip text="library" position="right" style={"margin-top: 2rem;"}>
+          <A href="/library" activeClass="active-route">
+            <BiRegularLibrary
+              size={25}
+              fill={lightTheme ? "#aaa" : "#757575"}
+            />
           </A>
         </Tooltip>
-        <Tooltip text="playlists" position="right">
-          <A href="/library/playlists" activeClass="active-route">
-            <BiSolidPlaylist size={25} fill={lightTheme ? "#aaa" : "#757575"} />
-          </A>
-        </Tooltip>
-        <Tooltip text="albums" position="right">
-          <A href="/library/albums" activeClass="active-route">
-            <BiSolidAlbum size={25} fill={lightTheme ? "#aaa" : "#757575"} />
-          </A>
-        </Tooltip>
-        <Tooltip text="artists" position="right">
-          <A href="/library/artists" activeClass="active-route">
-            <BsPeopleFill size={25} fill={lightTheme ? "#aaa" : "#757575"} />
-          </A>
-        </Tooltip>
-      </div>
-      <div class={styles.drawer__bottom}>
-        <Tooltip text="lyrics" position="right">
+        <Tooltip text="lyrics" position="right" style={"margin-top: 2rem;"}>
           <BiSolidMessage
             size={25}
             class={styles.drawer__bottom__lyrics}
@@ -152,6 +142,8 @@ export function Drawer() {
             }}
           />
         </Tooltip>
+      </div>
+      <div class={styles.drawer__bottom}>
         <Tooltip text="settings" position="right">
           <A href="/settings" activeClass="active-route">
             <IoSettings size={25} fill={lightTheme ? "#aaa" : "#757575"} />

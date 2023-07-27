@@ -1,23 +1,16 @@
 import {
-  BsList,
   BsPauseCircleFill,
   BsPlayCircleFill,
   BsRepeat,
   BsRepeat1,
   BsShuffle,
-  BsSpeaker,
-  BsSpeakerFill,
   BsStopCircleFill,
   BsVolumeDownFill,
   BsVolumeMuteFill,
   BsVolumeUpFill,
 } from "solid-icons/bs";
 import styles from "./Player.module.scss";
-import {
-  BiRegularSkipNext,
-  BiRegularSkipPrevious,
-  BiSolidMessage,
-} from "solid-icons/bi";
+import { BiRegularSkipNext, BiRegularSkipPrevious } from "solid-icons/bi";
 import {
   currentMediaItem,
   isPlaying,
@@ -44,7 +37,7 @@ import {
   togglePlayPause,
 } from "../../api/musickit";
 import { A } from "@solidjs/router";
-import { JSX, Show, createSignal } from "solid-js";
+import { Show } from "solid-js";
 import { Tooltip } from "../Tooltip/Tooltip";
 
 export function Player() {
@@ -88,11 +81,13 @@ export function Player() {
         );
       case "pause":
         return (
-          <BsPauseCircleFill
-            fill={ButtonStyle.fill}
-            size={ButtonStyle.size}
-            onclick={() => togglePlayPause()}
-          />
+          <Tooltip text="pause" position="top">
+            <BsPauseCircleFill
+              fill={ButtonStyle.fill}
+              size={ButtonStyle.size}
+              onclick={() => togglePlayPause()}
+            />
+          </Tooltip>
         );
       case "play":
         return (

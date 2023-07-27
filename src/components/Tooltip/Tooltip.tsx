@@ -11,6 +11,7 @@ export const Tooltip = (props: {
   position?: Position;
   delay?: number;
   offset?: number;
+  style?: string;
 }) => {
   const [showTooltip, setShowTooltip] = createSignal(false);
   let timeoutId: any;
@@ -87,7 +88,7 @@ export const Tooltip = (props: {
   };
 
   return (
-    <div class={styles.tooltip}>
+    <div class={styles.tooltip} style={props.style}>
       <div
         onMouseEnter={showTooltipWithDelay}
         onMouseLeave={() => {

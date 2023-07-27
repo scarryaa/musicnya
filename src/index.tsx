@@ -21,6 +21,8 @@ import { Curator } from "./pages/Curator/Curator";
 import { Multiroom } from "./pages/Multiroom/Multiroom";
 import { Multiplex } from "./pages/Multiplex/Multiplex";
 import { Station } from "./pages/Station/Station";
+import { Search } from "./pages/Search/Search";
+import { Library } from "./pages/Library/Library";
 
 const root = document.getElementById("root");
 
@@ -38,7 +40,9 @@ render(
           <Route path="/home" component={Home} />
           <Route path="/browse" component={Browse} />
           <Route path="/radio" component={Radio} />
+          <Route path="/search" component={Search} />
           <Route path="/settings" component={Settings} />
+          <Route path="/library" component={Library} />
           <Route path="/library/songs" component={Songs} />
           <Route path="/library/playlists" component={Playlists} />
           <Route path="/library/albums" component={Albums} />
