@@ -140,6 +140,19 @@ export const getAlbumIdFromUrl = (url: string) => {
   return splitUrl[splitUrl.length - 1];
 };
 
+export const extractTileId = (link: string, id: string) => {
+  return (
+    link
+      ?.toLowerCase()
+      ?.split("/")
+      ?.pop()
+      ?.split("id=")
+      ?.pop()
+      ?.replace("?pp=", "")
+      ?.replace("&mt=1", "") || id
+  );
+};
+
 export const setupEvents = () => {
   MusicKit.getInstance().addEventListener(
     MusicKit.Events.playbackStateDidChange as unknown as string,

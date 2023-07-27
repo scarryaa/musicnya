@@ -2,6 +2,8 @@ import { JSX } from "solid-js";
 import styles from "./EditorialTile.module.scss";
 import { IoEllipsisVertical, IoPlay } from "solid-icons/io";
 import { A } from "@solidjs/router";
+import { createMemo } from "solid-js";
+import { extractTileId } from "../../util/utils";
 
 export type EditorialTileProps = {
   mediaArt: MusicKit.Artwork;
@@ -14,47 +16,29 @@ export type EditorialTileProps = {
 };
 
 export function EditorialTile(props: EditorialTileProps) {
-  const constructLink = (link: string, id: string) => {
-    const newId =
-      link
-        ?.toLowerCase()
-        ?.split("/")
-        ?.pop()
-        ?.split("id=")
-        .pop()
-        ?.replace("?pp=", "")
-        ?.replace("&mt=1", "") || id;
+  const constructLink = createMemo(() => {
+    const newId = extractTileId(props.link, props.id);
 
-    if (link && link.includes("viewMultiRoom")) {
+    if (props.link && props.link.includes("viewMultiRoom")) {
       return `/multiroom/${newId}`;
-    } else if ((link && link.includes("pp=")) || link.includes("curator")) {
+    } else if (
+      (props.link && props.link.includes("pp=")) ||
+      props.link.includes("curator")
+    ) {
       return `/curator/${newId}`;
-    } else if (link && link.includes("station")) {
+    } else if (props.link && props.link.includes("station")) {
       return `/station/${newId}`;
-    } else if (link) {
-      const newId =
-        link
-          ?.toLowerCase()
-          ?.split("/")
-          ?.pop()
-          ?.split("id=")
-          .pop()
-          ?.replace("?pp=", "")
-          ?.replace("&mt=1", "") || id;
-
+    } else if (props.link) {
       return `/multiplex/${newId}`;
     } else {
       return "#";
     }
-  };
+  });
 
   return (
     <div class={styles.editorialTile}>
       <div class={styles.editorialTile__overlay}>
-        <A
-          class={styles.editorialTile__overlay__inner}
-          href={constructLink(props.link, props.id)}
-        >
+        <A class={styles.editorialTile__overlay__inner} href={constructLink()}>
           <IoEllipsisVertical
             size={26}
             class={styles.editorialTile__overlay__inner__button__more}

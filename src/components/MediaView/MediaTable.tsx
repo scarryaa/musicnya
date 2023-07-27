@@ -1,6 +1,12 @@
 import { For, Show } from "solid-js";
 import styles from "./MediaTable.module.scss";
-import { formatTime, getAlbumIdFromUrl, replaceSrc } from "../../util/utils";
+import {
+  formatTime,
+  getAlbumIdFromUrl,
+  getItemAttributes,
+  getItemRelationships,
+  replaceSrc,
+} from "../../util/utils";
 import { A } from "@solidjs/router";
 import { IoEllipsisHorizontal, IoPause, IoPlay } from "solid-icons/io";
 import { currentMediaItem, isPlaying, setIsShuffle } from "../../stores/store";
@@ -18,6 +24,7 @@ const idEqualsCurrentMediaItem = (id: string) =>
   currentMediaItem.id === id && isPlaying.value;
 
 export function MediaTable(props: MediaTableProps) {
+  console.log(props.items);
   return (
     <div class={styles.mediaTable + " " + props.class}>
       <table>
@@ -89,7 +96,7 @@ export function MediaTable(props: MediaTableProps) {
                       loading="lazy"
                       decoding="async"
                       class={styles.mediaTable__title__container__image}
-                      src={replaceSrc(item.attributes?.artwork?.url, 40)}
+                      src={replaceSrc(getItemAttributes(item).artwork?.url, 40)}
                       alt="Album Art"
                       width={40}
                       height={40}
@@ -98,7 +105,7 @@ export function MediaTable(props: MediaTableProps) {
                   <div class={styles.mediaTable__title__container__info}>
                     <div
                       class={styles.mediaTable__title__container__info__title}
-                      title={item.attributes?.name}
+                      title={getItemAttributes(item)?.name}
                       style={{
                         color:
                           currentMediaItem.id === item.id
@@ -106,20 +113,21 @@ export function MediaTable(props: MediaTableProps) {
                             : "var(--text)",
                       }}
                     >
-                      {item.attributes?.name}
+                      {getItemAttributes(item)?.name}
                     </div>
                     <div
                       class={styles.mediaTable__title__container__info__artist}
                     >
-                      <For each={item.relationships?.artists?.data}>
+                      <For each={getItemRelationships(item)?.artists?.data}>
                         {(relationship, i) => (
                           <A
-                            title={relationship.attributes?.name}
-                            href={`/artist/${item.id}`}
+                            title={getItemRelationships(relationship)?.name}
+                            href={`/artist/${relationship.id}`}
                           >
-                            {relationship.attributes?.name}
+                            {getItemAttributes(relationship)?.name}
                             {i() + 1 !==
-                              item.relationships?.artists?.data.length && ", "}
+                              getItemRelationships(item)?.artists?.data
+                                .length && ", "}
                           </A>
                         )}
                       </For>
@@ -129,16 +137,16 @@ export function MediaTable(props: MediaTableProps) {
                 <Show when={props.showArt}>
                   <td>
                     <A
-                      title={item.attributes?.albumName}
+                      title={getItemAttributes(item)?.albumName}
                       class={styles.mediaTable__album}
                       href={`/album/${getAlbumIdFromUrl(item.attributes?.url)}`}
                     >
-                      {item.attributes?.albumName}
+                      {getItemAttributes(item)?.albumName}
                     </A>
                   </td>
                 </Show>
                 <td class={styles.mediaTable__duration}>
-                  {formatTime(item.attributes?.durationInMillis / 1000)}
+                  {formatTime(getItemAttributes(item)?.durationInMillis / 1000)}
                   <IoEllipsisHorizontal
                     role="button"
                     size={24}

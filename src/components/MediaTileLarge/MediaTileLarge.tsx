@@ -1,6 +1,8 @@
-import { IoEllipsisVertical, IoPlay } from "solid-icons/io";
+import { IoEllipsisVertical } from "solid-icons/io";
 import styles from "./MediaTileLarge.module.scss";
 import { A } from "@solidjs/router";
+import { createMemo } from "solid-js";
+import { extractTileId } from "../../util/utils";
 
 export type MediaTileLargeProps = {
   class?: string;
@@ -13,34 +15,19 @@ export type MediaTileLargeProps = {
 };
 
 export function MediaTileLarge(props: MediaTileLargeProps) {
-  const constructLink = (link: string, id: string) => {
-    const newId =
-      link
-        ?.toLowerCase()
-        ?.split("/")
-        ?.pop()
-        ?.split("id=")
-        .pop()
-        ?.replace("?pp=", "")
-        ?.replace("&mt=1", "") || id;
+  const constructLink = createMemo(() => {
+    const newId = extractTileId(props.link || "", props.id);
 
-    if (link && link.includes("viewMultiRoom")) {
+    if (props.link && props.link.includes("viewMultiRoom")) {
       return `/multiroom/${newId}`;
-    } else if ((link && link.includes("pp=")) || link.includes("curator")) {
+    } else if (
+      (props.link && props.link.includes("pp=")) ||
+      props.link?.includes("curator")
+    ) {
       return `/curator/${newId}`;
-    } else if (link && link.includes("station")) {
+    } else if (props.link && props.link.includes("station")) {
       return `/station/${newId}`;
-    } else if (link) {
-      const newId =
-        link
-          ?.toLowerCase()
-          ?.split("/")
-          ?.pop()
-          ?.split("id=")
-          .pop()
-          ?.replace("?pp=", "")
-          ?.replace("&mt=1", "") || id;
-
+    } else if (props.link) {
       if (props.childType) {
         return `/${props.childType?.substring(
           0,
@@ -50,22 +37,23 @@ export function MediaTileLarge(props: MediaTileLargeProps) {
         return `/multiplex/${newId}`;
       }
     } else {
-      return `/${props.childType?.substring(
-        0,
-        props.childType.length - 1,
-      )}/${id}`;
+      if (props.childType) {
+        return `/${props.childType?.substring(0, props.childType.length - 1)}/${
+          props.id
+        }`;
+      } else {
+        return `/multiplex/${props.id}`;
+      }
     }
-  };
+  });
+
   return (
     <div class={styles.mediaTileLarge}>
       <div class={styles.mediaTileLarge__mediaInfo}>
         <h2 class={styles.mediaTileLarge__mediaInfo__title}>{props.title}</h2>
       </div>
       <div class={styles.mediaTileLarge__overlay}>
-        <A
-          class={styles.mediaTileLarge__overlay__inner}
-          href={constructLink(props.link || "", props.id)}
-        >
+        <A class={styles.mediaTileLarge__overlay__inner} href={constructLink()}>
           <IoEllipsisVertical
             size={26}
             class={styles.mediaTileLarge__overlay__inner__button__more}

@@ -1,5 +1,7 @@
 import { A } from "@solidjs/router";
 import styles from "./EditorialTileLarge.module.scss";
+import { createMemo } from "solid-js";
+import { extractTileId } from "../../util/utils";
 
 export type EditorialTileLargeProps = {
   mediaArt: MusicKit.Artwork;
@@ -13,34 +15,19 @@ export type EditorialTileLargeProps = {
 };
 
 export function EditorialTileLarge(props: EditorialTileLargeProps) {
-  const constructLink = (link: string, id: string) => {
-    const newId =
-      link
-        ?.toLowerCase()
-        ?.split("/")
-        ?.pop()
-        ?.split("id=")
-        .pop()
-        ?.replace("?pp=", "")
-        ?.replace("&mt=1", "") || id;
+  const constructLink = createMemo(() => {
+    const newId = extractTileId(props.link, props.id);
 
-    if (link && link.includes("viewMultiRoom")) {
+    if (props.link && props.link.includes("viewMultiRoom")) {
       return `/multiroom/${newId}`;
-    } else if ((link && link.includes("pp=")) || link.includes("curator")) {
+    } else if (
+      (props.link && props.link.includes("pp=")) ||
+      props.link.includes("curator")
+    ) {
       return `/curator/${newId}`;
-    } else if (link && link.includes("station")) {
+    } else if (props.link && props.link.includes("station")) {
       return `/station/${newId}`;
-    } else if (link) {
-      const newId =
-        link
-          ?.toLowerCase()
-          ?.split("/")
-          ?.pop()
-          ?.split("id=")
-          .pop()
-          ?.replace("?pp=", "")
-          ?.replace("&mt=1", "") || id;
-
+    } else if (props.link) {
       if (props.contentType) {
         return `/${props.contentType?.substring(
           0,
@@ -52,7 +39,7 @@ export function EditorialTileLarge(props: EditorialTileLargeProps) {
     } else {
       return "#";
     }
-  };
+  });
 
   return (
     <div class={styles.editorialTileLarge}>
@@ -67,10 +54,7 @@ export function EditorialTileLarge(props: EditorialTileLargeProps) {
           {props.subtitle}
         </div>
       </div>
-      <A
-        class={styles.editorialTileLarge__overlay}
-        href={constructLink(props.link, props.id)}
-      >
+      <A class={styles.editorialTileLarge__overlay} href={constructLink()}>
         <div class={styles.editorialTileLarge__overlay__inner} />
         <img
           loading="lazy"
