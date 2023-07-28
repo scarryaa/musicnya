@@ -6,6 +6,7 @@ import { Albums } from "./Albums/Albums";
 import { Match, Switch, createSignal } from "solid-js";
 
 export function Library() {
+  const ACTIVE_PAGE_CLASS = "library__header--chip--selected";
   const [selectedPage, setSelectedPage] = createSignal("playlists");
 
   return (
@@ -14,9 +15,7 @@ export function Library() {
         <h1 class={styles.library__title}>library</h1>
         <Chip
           class={
-            selectedPage() === "playlists"
-              ? styles["library__header--chip--selected"]
-              : ""
+            selectedPage() === "playlists" ? styles[ACTIVE_PAGE_CLASS] : ""
           }
           style="margin-left: 2rem;"
           label="playlists"
@@ -28,11 +27,7 @@ export function Library() {
           }}
         />
         <Chip
-          class={
-            selectedPage() === "albums"
-              ? styles["library__header--chip--selected"]
-              : ""
-          }
+          class={selectedPage() === "albums" ? styles[ACTIVE_PAGE_CLASS] : ""}
           label="albums"
           icon={IoAlbums({
             size: 22,
@@ -42,11 +37,7 @@ export function Library() {
           }}
         />
         <Chip
-          class={
-            selectedPage() === "artists"
-              ? styles["library__header--chip--selected"]
-              : ""
-          }
+          class={selectedPage() === "artists" ? styles[ACTIVE_PAGE_CLASS] : ""}
           label="artists"
           onClick={() => {
             setSelectedPage("artists");
@@ -56,11 +47,7 @@ export function Library() {
           })}
         />
         <Chip
-          class={
-            selectedPage() === "songs"
-              ? styles["library__header--chip--selected"]
-              : ""
-          }
+          class={selectedPage() === "songs" ? styles[ACTIVE_PAGE_CLASS] : ""}
           label="songs"
           icon={BsMusicNote({
             size: 22,

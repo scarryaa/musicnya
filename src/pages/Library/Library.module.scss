@@ -23,7 +23,8 @@
 
     &--chip--selected {
       background-color: var(--accent);
-      color: var(--text);
+      color: #fff;
+      fill: #fff;
 
       &:hover {
         background-color: var(--accent);
