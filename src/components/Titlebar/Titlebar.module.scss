@@ -1,11 +1,13 @@
 :root {
   --titlebar-button-hover: #333;
   --titlebar-button-active: #666;
+  --titlebar-background: #000;
 }
 
 :root[theme="light"] {
   --titlebar-button-hover: #c9c9c9;
   --titlebar-button-active: #a8a8a8;
+  --titlebar-background: #fff;
 }
 
 .titlebar {
@@ -13,7 +15,7 @@
   justify-content: end;
   align-items: center;
   height: var(--titlebar-height);
-  background-color: #000;
+  background-color: var(--titlebar-background);
   -webkit-app-region: drag;
   position: fixed;
   top: 0;

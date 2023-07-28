@@ -1,9 +1,6 @@
 import {
   BiSolidHome,
-  BiSolidPlaylist,
-  BiSolidAlbum,
   BiSolidMessage,
-  BiSolidSearch,
   BiRegularSearch,
   BiRegularLibrary,
 } from "solid-icons/bi";
@@ -11,11 +8,10 @@ import {
   IoGrid,
   IoRadio,
   IoSettings,
-  IoAlbums,
   IoChevronBack,
   IoChevronForward,
 } from "solid-icons/io";
-import { BsList, BsMusicNote, BsPeopleFill } from "solid-icons/bs";
+import { BsList } from "solid-icons/bs";
 import { CircleIcon } from "../CircleIcon/CircleIcon";
 import styles from "./Drawer.module.scss";
 import { A } from "@solidjs/router";
@@ -28,8 +24,7 @@ import {
 import { fetchLyrics } from "../Lyrics/Lyrics";
 import { Tooltip } from "../Tooltip/Tooltip";
 
-const lightTheme = false;
-//matchMedia("(prefers-color-scheme: light)").matches;
+const lightTheme = matchMedia("(prefers-color-scheme: light)").matches;
 
 const handleQueueClick = () => {
   document.body.style.setProperty(

@@ -25,7 +25,8 @@
 }
 
 :root[theme="light"] {
-  --background: white;
+  --background: #fff;
+  --background-inverse: #000;
 
   .active-route {
     color: #4f4f4f !important;

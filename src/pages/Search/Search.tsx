@@ -1,9 +1,69 @@
+import { For, Match, Show, Switch } from "solid-js";
+import { createSearchCategoriesStore } from "../../stores/api-store";
 import styles from "./Search.module.scss";
+import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
+import { Error } from "../../components/Error/Error";
+import { replaceSrc } from "../../util/utils";
+import { SearchTile } from "../../components/SearchTile/SearchTile";
 
 export function Search() {
+  const searchCategoriesStore = createSearchCategoriesStore();
+  const searchCategoriesData = searchCategoriesStore();
+
   return (
     <div class={styles.search}>
-      <h1>search</h1>
+      <Switch fallback={<div>Not found</div>}>
+        <Match
+          when={
+            searchCategoriesData.state === "pending" ||
+            searchCategoriesData.state === "unresolved" ||
+            searchCategoriesData.state === "refreshing"
+          }
+        >
+          <LoadingSpinner />
+        </Match>
+        <Match when={searchCategoriesData.state === "errored"}>
+          <Error error={searchCategoriesData.error} />
+        </Match>
+        <Match when={searchCategoriesData.state === "ready"}>
+          <Show when={searchCategoriesData}>
+            <h1 class={styles.search__title}>search</h1>
+            <div class={styles.search__content}>
+              <For each={searchCategoriesData()?.data}>
+                {(category) => (
+                  <For each={category.relationships.contents.data}>
+                    {(content) => (
+                      <SearchTile
+                        id={content.id}
+                        type={content.type}
+                        artists={content.attributes.artistName}
+                        title={
+                          content.attributes.name ||
+                          content.attributes.editorialNotes.name
+                        }
+                        mediaArt={
+                          (content.attributes?.editorialArtwork ||
+                            content.attributes?.artwork) && {
+                            url: replaceSrc(
+                              content?.attributes?.editorialArtwork
+                                ?.subscriptionCover?.url ||
+                                content.attributes?.artwork?.url ||
+                                content.attributes?.editorialArtwork?.artwork
+                                  ?.url,
+                              600,
+                            ),
+                          }
+                        }
+                        link={content.attributes.url}
+                      />
+                    )}
+                  </For>
+                )}
+              </For>
+            </div>
+          </Show>
+        </Match>
+      </Switch>
     </div>
   );
 }

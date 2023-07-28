@@ -1,0 +1,40 @@
+.searchTile {
+  position: relative;
+  display: flex;
+
+  &:hover {
+    .searchTile__overlay__inner {
+      opacity: 1;
+    }
+  }
+
+  &__image {
+    object-fit: cover;
+    border-radius: var(--border-radius);
+  }
+
+  &__mediaInfo {
+    &__title {
+      position: absolute;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      z-index: 1;
+      left: 0.5rem;
+      bottom: 0.2rem;
+    }
+  }
+
+  &__overlay {
+    &__inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 98.5%;
+      border-radius: var(--border-radius);
+      background-color: rgba(0, 0, 0, 0.4);
+      opacity: 0;
+    }
+  }
+}

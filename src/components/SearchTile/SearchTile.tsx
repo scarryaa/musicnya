@@ -1,21 +1,18 @@
-import { JSX } from "solid-js";
-import styles from "./EditorialTile.module.scss";
-import { IoEllipsisVertical, IoPlay } from "solid-icons/io";
 import { A } from "@solidjs/router";
+import styles from "./SearchTile.module.scss";
 import { createMemo } from "solid-js";
 import { extractTileId } from "../../util/utils";
 
-export type EditorialTileProps = {
+export type SearchTileProps = {
   mediaArt: MusicKit.Artwork;
   title: string;
   artists: string[];
   type: MusicKit.MediaItemType;
   id: string;
   link: string;
-  editorialElementKind: string;
 };
 
-export function EditorialTile(props: EditorialTileProps) {
+export function SearchTile(props: SearchTileProps) {
   const constructLink = createMemo(() => {
     const newId = extractTileId(props.link, props.id);
 
@@ -36,26 +33,23 @@ export function EditorialTile(props: EditorialTileProps) {
   });
 
   return (
-    <div class={styles.editorialTile}>
-      <div class={styles.editorialTile__overlay}>
-        <A class={styles.editorialTile__overlay__inner} href={constructLink()}>
-          <IoEllipsisVertical
-            size={26}
-            class={styles.editorialTile__overlay__inner__button__more}
-          />
-        </A>
+    <div class={styles.searchTile}>
+      <div class={styles.searchTile__overlay}>
+        <A class={styles.searchTile__overlay__inner} href={constructLink()} />
         <img
           loading="lazy"
           decoding="async"
-          class={styles.editorialTile__image}
+          class={styles.searchTile__image}
           src={props.mediaArt?.url}
           alt="Album Art"
           width={300}
           height={150}
         />
       </div>
-      <div class={styles.editorialTile__mediaInfo}>
-        <div class={styles.editorialTile__mediaInfo__title}>{props.title}</div>
+      <div class={styles.searchTile__mediaInfo}>
+        <div class={styles.searchTile__mediaInfo__title}>
+          {props.title?.replace("Apple Music ", "").replace("Apple ", "")}
+        </div>
       </div>
     </div>
   );

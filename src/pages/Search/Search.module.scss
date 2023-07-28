@@ -1,3 +1,34 @@
+:root {
+  --spacing-search-lg: 2rem;
+  --spacing-search-bottom: 5rem;
+}
+
 .search {
-  padding: var(--page-padding);
+  padding-block: var(--page-padding);
+  padding-top: var(--spacing-search-lg) !important;
+  padding-left: var(--page-padding);
+  height: calc(
+    100% - var(--content-offset) - var(--titlebar-height) / 2 -
+      var(--page-padding-bottom)
+  );
+  padding-bottom: var(--page-padding-bottom);
+  overflow-y: overlay;
+  overflow-x: hidden;
+  color: var(--text);
+
+  &__title {
+    margin-bottom: 1rem;
+  }
+
+  &__content {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  &__table {
+    margin-top: var(--spacing-search-lg);
+    padding-right: 1rem;
+  }
 }

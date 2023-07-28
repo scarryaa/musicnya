@@ -42,7 +42,7 @@ import { Tooltip } from "../Tooltip/Tooltip";
 
 export function Player() {
   const ButtonStyle = {
-    fill: "var(--text)",
+    fill: "#fff",
     size: 40,
     sizeSmall: 20,
     sizeVolume: 28,

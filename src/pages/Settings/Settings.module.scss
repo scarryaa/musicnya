@@ -1,3 +1,13 @@
 .settings {
   padding: var(--page-padding);
+
+  &__title {
+    margin-bottom: 2rem;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }

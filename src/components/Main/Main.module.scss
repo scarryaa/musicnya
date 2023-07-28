@@ -1,3 +1,12 @@
+:root[theme="light"] {
+  --main-background: #ececec;
+  --text: #000;
+}
+
+:root[theme="dark"] {
+  --main-background: #202020;
+}
+
 .main {
   height: calc(100% - var(--content-offset) * 2 - var(--titlebar-height));
   position: fixed;
