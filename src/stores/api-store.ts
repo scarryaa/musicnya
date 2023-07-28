@@ -12,6 +12,7 @@ import { fetchLibraryPlaylist } from "../api/library-playlist";
 import { fetchRadio } from "../api/radio";
 import { fetchStation } from "../api/station";
 import { fetchSearchCategories } from "../api/search";
+import { fetchLibraryAlbums } from "../api/library-albums";
 
 export const createAlbumStore = () => {
   return function (params: { id: string }) {
@@ -23,6 +24,27 @@ export const createAlbumStore = () => {
           musicUserToken: MusicKit.getInstance()?.musicUserToken,
           id: params.id,
         }),
+    );
+
+    return data;
+  };
+};
+
+export const createLibraryAlbumsStore = () => {
+  return function () {
+    const [data] = createResource(
+      () => {
+        return {
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
+          musicUserToken: MusicKit.getInstance()?.musicUserToken,
+        };
+      },
+      () => {
+        return fetchLibraryAlbums({
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
+          musicUserToken: MusicKit.getInstance()?.musicUserToken,
+        });
+      },
     );
 
     return data;

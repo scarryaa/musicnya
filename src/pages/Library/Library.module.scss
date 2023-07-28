@@ -1,3 +1,44 @@
+:root {
+  --spacing-home-lg: 2rem;
+  --spacing-home-bottom: 5rem;
+}
+
 .library {
-  padding: var(--page-padding);
+  padding-block: var(--page-padding);
+  padding-left: var(--page-padding);
+  height: calc(
+    100% - var(--content-offset) - var(--titlebar-height) / 2 -
+      var(--page-padding-bottom)
+  );
+  padding-bottom: var(--page-padding-bottom);
+  overflow-y: overlay;
+  overflow-x: hidden;
+  color: var(--text);
+
+  &__header {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+    &--chip--selected {
+      background-color: var(--accent);
+      color: var(--text);
+
+      &:hover {
+        background-color: var(--accent);
+      }
+
+      &__text {
+        color: var(--text);
+      }
+    }
+  }
+
+  &__content {
+    margin-left: -1rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-home-lg);
+  }
 }

@@ -11,6 +11,7 @@
 .mediaTile {
   position: relative;
   height: max-content;
+  max-width: 12rem;
 
   &:hover {
     .mediaTile__overlay__inner {
@@ -91,9 +92,7 @@
       font-weight: 500;
       color: var(--text);
       max-width: max-content;
-      transition:
-        transform 0.2s ease-in-out,
-        opacity 0.2s ease-in-out;
+      word-wrap: break-word;
 
       &:hover {
         text-decoration: underline;

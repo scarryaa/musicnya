@@ -36,30 +36,34 @@ export function Station() {
           <Error error={stationData.error} />
         </Match>
         <Match when={stationData.state === "ready"}>
-          <MediaDetail
-            type="stations"
-            title={getNestedAttributes(stationData())?.name}
-            mediaArt={
-              getNestedAttributes(stationData())?.artwork && {
-                url:
-                  replaceSrc(getNestedArtwork(stationData())?.url, 300) || "",
+          <div class={styles.station__content}>
+            <MediaDetail
+              type="stations"
+              title={getNestedAttributes(stationData())?.name}
+              mediaArt={
+                getNestedAttributes(stationData())?.artwork && {
+                  url:
+                    replaceSrc(getNestedArtwork(stationData())?.url, 300) || "",
+                }
               }
-            }
-            subtitle={
-              getNestedRelationships(stationData())?.catalog?.data?.[0]
-                ?.attributes?.curatorName
-            }
-            description={
-              getNestedAttributes(stationData()).description?.standard
-            }
-            id={stationData().data?.[0]?.id}
-            artistIds={getNestedRelationships(
-              stationData(),
-            )?.artists?.data?.map((artist: any) => artist.id)}
-            artists={getNestedRelationships(stationData())?.artists?.data?.map(
-              (artist: any) => getItemAttributes(artist).name,
-            )}
-          />
+              subtitle={
+                getNestedRelationships(stationData())?.catalog?.data?.[0]
+                  ?.attributes?.curatorName
+              }
+              description={
+                getNestedAttributes(stationData()).description?.standard
+              }
+              id={stationData().data?.[0]?.id}
+              artistIds={getNestedRelationships(
+                stationData(),
+              )?.artists?.data?.map((artist: any) => artist.id)}
+              artists={getNestedRelationships(
+                stationData(),
+              )?.artists?.data?.map(
+                (artist: any) => getItemAttributes(artist).name,
+              )}
+            />
+          </div>
         </Match>
       </Switch>
     </div>

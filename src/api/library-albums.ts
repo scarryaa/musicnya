@@ -1,14 +1,12 @@
-export const fetchLibraryAlbum = async ({
+export const fetchLibraryAlbums = async ({
   devToken,
   musicUserToken,
-  id,
 }: {
   devToken: string;
   musicUserToken: string;
-  id: string;
 }) => {
   return await fetch(
-    `https://amp-api.music.apple.com/v1/me/library/albums/${id}?art[url]=f&fields[artists]=name,url&includeOnly=catalog,artists,tracks&include[albums]=artists,tracks&include[library-albums]=artists,tracks&include[music-videos]=catalog,artists,tracks&l=en-US&platform=web`,
+    `https://amp-api.music.apple.com/v1/me/library/albums?art[url]=f&fields[albums]=artistName,artistUrl,artwork,contentRating,editorialArtwork,name,playParams,releaseDate,url&fields[artists]=name,url&includeOnly=catalog,artists&include[albums]=artists&include[library-albums]=artists&l=en-US&limit=100&meta=sorts&offset=0&platform=web`,
     {
       headers: {
         authorization: `Bearer ${devToken}`,

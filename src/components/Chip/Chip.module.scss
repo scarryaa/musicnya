@@ -1,0 +1,41 @@
+:root {
+  --chip-background: #ececec;
+  --chip-hover: #bdbdbd;
+  --chip-active: #9e9e9e;
+  --chip-border-radius: 0.5rem;
+}
+
+:root[theme="light"] {
+  --chip-background: #202020;
+  --chip-hover: #424242;
+  --chip-active: #616161;
+}
+
+.chip {
+  display: inline-block;
+  padding: 0.2rem 1rem;
+  border-radius: var(--chip-border-radius);
+  background-color: var(--chip-background);
+  color: #000;
+  font-size: 1rem;
+  white-space: nowrap;
+  user-select: none;
+
+  &__icon {
+    margin-right: 0.5rem;
+    vertical-align: top;
+    display: inline;
+  }
+
+  &__label {
+    vertical-align: sub;
+  }
+
+  &:hover {
+    background-color: var(--chip-hover);
+  }
+
+  &:active {
+    background-color: var(--chip-active);
+  }
+}
