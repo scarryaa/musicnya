@@ -30,6 +30,12 @@ const App: Component = () => {
       music.volume = 0.2;
       music.autoplayEnabled = true;
       music._autoplayEnabled = true;
+
+      // Check for light or dark mode
+      const lightTheme = localStorage.getItem("theme") === "light";
+      if (lightTheme) {
+        document.documentElement.setAttribute("theme", "light");
+      }
     })
     .catch((err) => {
       console.log(err);

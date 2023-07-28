@@ -22,3 +22,7 @@ export const [rightPanelOpen, setRightPanelOpen] = createStore({
 export const [rightPanelContent, setRightPanelContent] = createStore({
   value: "",
 });
+
+export const [darkMode, setDarkMode] = createStore({
+  value: localStorage.getItem("theme") === "dark",
+});

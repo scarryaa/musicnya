@@ -1,16 +1,16 @@
-import { createSignal } from "solid-js";
 import styles from "./Settings.module.scss";
+import { darkMode, setDarkMode } from "../../stores/store";
 
 export function Settings() {
-  const [darkMode, setDarkMode] = createSignal(true);
-
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode());
+    setDarkMode({ value: !darkMode.value });
     // theme = light
-    if (darkMode()) {
+    if (darkMode.value) {
       document.documentElement.setAttribute("theme", "dark");
+      localStorage.setItem("theme", "dark");
     } else {
       document.documentElement.setAttribute("theme", "light");
+      localStorage.setItem("theme", "light");
     }
   };
 
@@ -25,7 +25,7 @@ export function Settings() {
           type="checkbox"
           id="darkmode"
           name="darkmode"
-          checked={darkMode()}
+          checked={darkMode.value}
           onChange={toggleDarkMode}
         />
       </div>
