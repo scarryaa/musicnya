@@ -1,0 +1,59 @@
+:root {
+  --background: #000000;
+  --background-hover: #383838;
+}
+
+:root[data-theme="light"] {
+  --background: #ffffff;
+  --background-hover: #e5e5e5;
+}
+
+.searchResultTile {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 20px;
+  color: var(--text);
+  vertical-align: middle;
+  background-color: var(--background);
+  padding: 0.5rem;
+
+  &:hover {
+    background-color: var(--background-hover);
+  }
+
+  &__image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-block: auto;
+  }
+
+  &__mediaInfo {
+    margin-left: 0.5rem;
+    overflow: hidden;
+
+    &__title {
+      font-size: 1rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 100%;
+      max-width: max-content;
+    }
+
+    &__type {
+      font-size: 0.8rem;
+      color: var(--player-text-muted);
+      width: 100%;
+      max-width: max-content;
+    }
+
+    &__artist {
+      font-size: 0.9rem;
+      color: var(--player-text-muted);
+      width: 100%;
+      max-width: max-content;
+    }
+  }
+}

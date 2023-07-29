@@ -16,8 +16,39 @@
   overflow-x: hidden;
   color: #fff;
 
-  &__title {
-    margin-bottom: 1rem;
+  &__header {
+    display: flex;
+    flex-direction: row;
+
+    &__results {
+      position: absolute;
+      top: 4.2rem;
+      left: 8rem;
+      z-index: 999;
+      background-color: var(--background);
+      overflow-y: overlay;
+      overflow-x: hidden;
+      max-height: 20rem;
+      min-width: 16rem;
+      max-width: 16rem;
+      border-radius: var(--border-radius);
+    }
+
+    &__input {
+      max-height: 0.5rem;
+      margin-left: 1rem;
+      min-width: 10rem;
+      margin-top: 0.6rem;
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.2rem;
+      --webkit-appearance: none;
+      appearance: none;
+      border: none;
+    }
+
+    &__title {
+      margin-bottom: 1rem;
+    }
   }
 
   &__content {
