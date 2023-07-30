@@ -7,10 +7,11 @@ import {
   getItemRelationships,
   replaceSrc,
 } from "../../util/utils";
-import { A } from "@solidjs/router";
+import { A, Navigate, useNavigate } from "@solidjs/router";
 import { IoEllipsisHorizontal, IoPause, IoPlay } from "solid-icons/io";
 import { currentMediaItem, isPlaying, setIsShuffle } from "../../stores/store";
 import { pause, play, setQueue, setShuffleMode } from "../../api/musickit";
+import { fetchSearchResults } from "../../api/search";
 
 export type MediaTableProps = {
   items: MusicKit.MediaItem[];
@@ -24,7 +25,22 @@ const idEqualsCurrentMediaItem = (id: string) =>
   currentMediaItem.id === id && isPlaying.value;
 
 export function MediaTable(props: MediaTableProps) {
-  console.log(props.items);
+  const navigate = useNavigate();
+
+  const getArtistId = async (artist: string) => {
+    const id = await fetchSearchResults({
+      devToken: MusicKit.getInstance().developerToken,
+      musicUserToken: MusicKit.getInstance().musicUserToken,
+      term: artist,
+    }).then(
+      (res) =>
+        res.results.suggestions?.filter((s) => s.content?.type === "artists")[0]
+          ?.content.id,
+    );
+
+    return id;
+  };
+
   return (
     <div class={styles.mediaTable + " " + props.class}>
       <table>
@@ -52,6 +68,7 @@ export function MediaTable(props: MediaTableProps) {
                     class={styles.mediaTable__play}
                     fill="var(--text)"
                     style={{
+                      "margin-top": "1rem",
                       fill: idEqualsCurrentMediaItem(item.id)
                         ? "var(--accent)"
                         : "var(--text)",
@@ -68,6 +85,7 @@ export function MediaTable(props: MediaTableProps) {
                     class={styles.mediaTable__play}
                     fill="var(--text)"
                     style={{
+                      "margin-top": "1rem",
                       fill: idEqualsCurrentMediaItem(item.id)
                         ? "var(--accent)"
                         : "var(--text)",
@@ -116,18 +134,48 @@ export function MediaTable(props: MediaTableProps) {
                       {getItemAttributes(item)?.name}
                     </div>
                     <div
-                      class={styles.mediaTable__title__container__info__artist}
+                      classList={{
+                        [styles.mediaTable__title__container__info__artist]:
+                          true,
+                      }}
                     >
-                      <For each={getItemRelationships(item)?.artists?.data}>
+                      <For
+                        each={
+                          getItemRelationships(item)?.artists?.data || [
+                            getItemAttributes(item)?.artistName,
+                          ]
+                        }
+                      >
                         {(relationship, i) => (
                           <A
-                            title={getItemRelationships(relationship)?.name}
-                            href={`/artist/${relationship.id}`}
+                            title={
+                              getItemRelationships(relationship)?.name ||
+                              getItemAttributes(item)?.artistName
+                            }
+                            href={
+                              relationship.id
+                                ? `/artist/${relationship.id}`
+                                : `#`
+                            }
+                            onclick={async (e) => {
+                              e.preventDefault();
+                              const id = await getArtistId(
+                                getItemRelationships(relationship)?.name ||
+                                  getItemAttributes(item)?.artistName.replace(
+                                    "&",
+                                    "and",
+                                  ),
+                              );
+
+                              navigate(`/artist/${id}`, { replace: true });
+                            }}
                           >
-                            {getItemAttributes(relationship)?.name}
+                            {getItemAttributes(relationship)?.name ||
+                              getItemAttributes(item)?.artistName}
                             {i() + 1 !==
-                              getItemRelationships(item)?.artists?.data
-                                .length && ", "}
+                              getItemRelationships(item)?.artists?.data ||
+                              ([getItemAttributes(item)?.artistName].length &&
+                                ", ")}
                           </A>
                         )}
                       </For>
