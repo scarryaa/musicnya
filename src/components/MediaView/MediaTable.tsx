@@ -34,8 +34,9 @@ export function MediaTable(props: MediaTableProps) {
       term: artist,
     }).then(
       (res) =>
-        res.results.suggestions?.filter((s) => s.content?.type === "artists")[0]
-          ?.content.id,
+        res.results.suggestions?.filter(
+          (s: any) => s.content?.type === "artists",
+        )[0]?.content.id,
     );
 
     return id;

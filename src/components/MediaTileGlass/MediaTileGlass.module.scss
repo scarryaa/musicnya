@@ -12,6 +12,7 @@
 .mediaTileGlass {
   position: relative;
   height: max-content;
+  filter: drop-shadow(var(--media-tile-drop-shadow));
 
   &:hover {
     .mediaTileGlass__overlay__inner {

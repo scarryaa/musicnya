@@ -13,6 +13,7 @@ import styles from "./Player.module.scss";
 import { BiRegularSkipNext, BiRegularSkipPrevious } from "solid-icons/bi";
 import {
   currentMediaItem,
+  darkMode,
   isPlaying,
   isRepeat,
   isShuffle,
@@ -41,8 +42,10 @@ import { Show } from "solid-js";
 import { Tooltip } from "../Tooltip/Tooltip";
 
 export function Player() {
+  const lightTheme = !darkMode.value;
+
   const ButtonStyle = {
-    fill: "#fff",
+    fill: lightTheme ? "black" : "white",
     size: 40,
     sizeSmall: 20,
     sizeVolume: 28,

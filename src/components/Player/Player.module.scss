@@ -1,11 +1,21 @@
 :root {
+  --player-background: rgba(0, 0, 0, 0.8);
+  --player-button: #fff;
   --player-button-hover: #333;
   --player-button-active: #666;
   --player-text-muted: #bebebe;
 }
 
+:root[theme="light"] {
+  --player-background: rgba(255, 255, 255, 0.8);
+  --player-button: #000000;
+  --player-button-hover: #000000;
+  --player-button-active: #4e4e4e;
+  --player-text-muted: #353535;
+}
+
 .player {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: var(--player-background);
   border-radius: var(--app-border-radius);
   position: absolute;
   bottom: var(--content-offset);
@@ -14,9 +24,10 @@
   height: 4rem;
   display: flex;
   user-select: none;
+  backdrop-filter: blur(10px);
 
   > * {
-    color: #fff;
+    color: var(--text);
   }
 
   &__left {

@@ -34,7 +34,7 @@ export function Albums() {
             {(album) => (
               <MediaTile
                 id={album.id}
-                type="library-albums"
+                type={album.type}
                 title={album.attributes.name}
                 artists={getNestedRelationships(album)?.artists?.data?.map(
                   (artist: any) => artist.attributes.name,
