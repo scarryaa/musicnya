@@ -7,7 +7,6 @@ import { setupEvents } from "./util/utils";
 import { Lyrics } from "./components/Lyrics/Lyrics";
 import { rightPanelContent, rightPanelOpen } from "./stores/store";
 import { Queue } from "./components/Queue/Queue";
-import { Navigate } from "@solidjs/router";
 
 const App: Component = () => {
   // Check if user is logged in
@@ -44,6 +43,7 @@ const App: Component = () => {
   return (
     <div>
       <Titlebar />
+      <div id="apple-music-video-container" style="position: absolute; z-index: 9999999999"></div>
       <Drawer />
       <Show when={rightPanelContent.value === "lyrics" && rightPanelOpen}>
         <Lyrics />

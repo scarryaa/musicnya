@@ -7,9 +7,11 @@ import { Match, Switch, createSignal } from "solid-js";
 import { Playlists } from "./Playlists/Playlists";
 import { Artists } from "./Artists/Artists";
 
+// Removed from library function to retain state
+const [selectedPage, setSelectedPage] = createSignal("playlists");
+
 export function Library() {
   const ACTIVE_PAGE_CLASS = "library__header--chip--selected";
-  const [selectedPage, setSelectedPage] = createSignal("playlists");
 
   return (
     <div class={styles.library}>
