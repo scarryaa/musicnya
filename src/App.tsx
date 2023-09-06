@@ -1,12 +1,14 @@
 import { Show, type Component } from "solid-js";
 
 import { Drawer } from "./components/Drawer/Drawer";
-import { Titlebar } from "./components/Titlebar/Titlebar";
+import { Titlebar, TitlebarMac } from "./components/Titlebar/Titlebar";
 import { Main } from "./components/Main/Main";
 import { setupEvents } from "./util/utils";
 import { Lyrics } from "./components/Lyrics/Lyrics";
 import { rightPanelContent, rightPanelOpen } from "./stores/store";
 import { Queue } from "./components/Queue/Queue";
+
+console.log(navigator.platform);
 
 const App: Component = () => {
   // Check if user is logged in
@@ -41,8 +43,13 @@ const App: Component = () => {
     });
 
   return (
-    <div>
-      <Titlebar />
+    <div>      
+      <Show when={navigator.platform == 'MacIntel'}>
+        <TitlebarMac />
+      </Show>
+      <Show when={navigator.platform != 'MacIntel'}>
+        <Titlebar />
+      </Show>
       <div id="apple-music-video-container" style="position: absolute; z-index: 9999999999"></div>
       <Drawer />
       <Show when={rightPanelContent.value === "lyrics" && rightPanelOpen}>
