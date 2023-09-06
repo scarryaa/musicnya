@@ -26,7 +26,7 @@ export function Home() {
           <Error error={homeData.error} />
         </Match>
         <Match when={homeData.state === "ready"}>
-          <h1 class={styles.home__title}>home</h1>
+          <h1 class={styles.home__title}>Home</h1>
           <div class={styles.home__content}>
             <For
               each={homeData()?.data}
