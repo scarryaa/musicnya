@@ -142,7 +142,7 @@ const MediaComponentFactory = (
               (artist: any) => artist.id,
             );
             const artistNames = item.relationships?.artists?.data?.map(
-              (artist: any) => artist.attributes.name,
+              (artist: any) => artist?.attributes?.name,
             );
             const title =
               item?.attributes?.designTag ||
