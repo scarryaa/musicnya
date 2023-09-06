@@ -39,7 +39,7 @@ const handleQueueClick = () => {
   document.body.style.setProperty(
     "--side-panel-offset",
     rightPanelOpen.value
-      ? rightPanelContent.value === "queue"
+      ? rightPanelContent.value === "lyrics"
         ? "14rem"
         : "0rem"
       : "14rem",
