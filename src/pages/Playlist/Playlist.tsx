@@ -25,7 +25,6 @@ export function Playlist() {
   // scroll to top on params change
   createEffect(() => {
     (playlistPage.scrollTop = 0), params.id;
-    console.log(playlistData()?.data[0]);
   });
 
   let playlistPage: HTMLDivElement = undefined as unknown as HTMLDivElement;

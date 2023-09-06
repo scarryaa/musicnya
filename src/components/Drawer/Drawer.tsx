@@ -36,11 +36,13 @@ const handleQueueClick = () => {
       : "18rem",
   );
 
-  rightPanelOpen.value === true && rightPanelContent.value === "queue"
+  (rightPanelOpen.value === true && rightPanelContent.value === "queue")
     ? setRightPanelOpen({ value: false })
     : setRightPanelOpen({ value: true });
 
-  setRightPanelContent({ value: "queue" });
+    (rightPanelOpen.value === true && rightPanelContent.value !== "queue")
+    ? setRightPanelContent({ value: "queue" })
+    : setRightPanelContent({ value: "" });
 };
 
 const handleLyricsClick = () => {
@@ -53,11 +55,14 @@ const handleLyricsClick = () => {
       : "18rem",
   );
 
-  rightPanelOpen.value === true && rightPanelContent.value === "lyrics"
+  (rightPanelOpen.value === true && rightPanelContent.value === "lyrics")
     ? setRightPanelOpen({ value: false })
     : setRightPanelOpen({ value: true });
 
-  setRightPanelContent({ value: "lyrics" });
+    (rightPanelOpen.value === true && rightPanelContent.value !== "lyrics")
+    ? setRightPanelContent({ value: "lyrics" })
+    : setRightPanelContent({ value: "" });
+    
   if (rightPanelOpen.value) {
     fetchLyrics();
   }
