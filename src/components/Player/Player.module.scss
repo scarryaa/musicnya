@@ -20,7 +20,7 @@
   position: absolute;
   bottom: calc(var(--content-offset) * 3.5);
   left: calc(var(--content-offset) * 10);
-  width: calc(100% - var(--content-offset) * 13);
+  width: calc(100% - (var(--content-offset) * 13) - var(--side-panel-offset));
   height: 4rem;
   display: flex;
   user-select: none;
