@@ -1,4 +1,5 @@
 import styles from "./MediaTileNoControls.module.scss";
+import musicNote from "../../assets/music_note.png";
 
 export type MediaTileNoControlsProps = {
   mediaArt: MusicKit.Artwork;
@@ -17,7 +18,7 @@ export function MediaTileNoControls(props: MediaTileNoControlsProps) {
           loading="lazy"
           decoding="async"
           class={styles.mediaTileNoControls__image}
-          src={props.mediaArt.url}
+          src={props.mediaArt?.url || musicNote}
           alt="Album Art"
           width={300}
           height={300}

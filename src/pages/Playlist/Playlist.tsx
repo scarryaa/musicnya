@@ -25,6 +25,7 @@ export function Playlist() {
   // scroll to top on params change
   createEffect(() => {
     (playlistPage.scrollTop = 0), params.id;
+    console.log(playlistData()?.data[0]);
   });
 
   let playlistPage: HTMLDivElement = undefined as unknown as HTMLDivElement;
@@ -54,8 +55,15 @@ export function Playlist() {
                   url:
                     replaceSrc(getNestedArtwork(playlistData())?.url, 300) ||
                     "",
-                }
-              }
+                } || getNestedRelationships(playlistData())?.tracks?.data?.[0]
+                  ?.attributes?.artwork && {
+                  url:
+                    replaceSrc(
+                      getNestedRelationships(playlistData())?.tracks?.data?.[0]
+                        ?.attributes?.artwork?.url,
+                      300,
+                    ) || "",
+              }}
               subtitle={
                 getNestedRelationships(playlistData())?.catalog?.data?.[0]
                   ?.attributes?.curatorName

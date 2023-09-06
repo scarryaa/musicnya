@@ -2,7 +2,7 @@ import { Switch, Match, For } from "solid-js";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import { MediaTile } from "../../../components/MediaTile/MediaTile";
 import { createLibraryPlaylistStore } from "../../../stores/api-store";
-import { getNestedRelationships, getItemAttributes, replaceSrc } from "../../../util/utils";
+import { getNestedRelationships, getItemAttributes, replaceSrc, getItemRelationships } from "../../../util/utils";
 import { Error } from "../../../components/Error/Error";
 import styles from "./Playlists.module.scss";
 
@@ -28,7 +28,6 @@ export function Playlists() {
         <Match when={playlistsData.state === "ready"}>
           <For each={playlistsData()?.data}>
             {(playlist) => (
-              console.log(playlist),
               <MediaTile
                 id={playlist.id}
                 type={playlist.type}
@@ -42,6 +41,15 @@ export function Playlists() {
                 mediaArt={
                   getItemAttributes(playlist).artwork && {
                     url: replaceSrc(getItemAttributes(playlist).artwork.url, 300),
+                  } || getItemRelationships(playlist)?.tracks?.data?.[0]
+                    ?.attributes?.artwork && {
+                    url: replaceSrc(
+                      getItemRelationships(playlist)?.tracks?.data?.[0]
+                        ?.attributes?.artwork.url,
+                      300,
+                    ),
+                  } || {
+                    url: "",
                   }
                 }
               />

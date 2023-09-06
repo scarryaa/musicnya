@@ -14,6 +14,7 @@ import { fetchStation } from "../api/station";
 import { fetchSearchCategories, fetchSearchResults } from "../api/search";
 import { fetchLibraryAlbums } from "../api/library-albums";
 import { fetchLibraryPlaylists } from "../api/library-playlists";
+import { fetchLibraryArtists } from "../api/library-artists";
 
 export const createAlbumStore = () => {
   return function (params: { id: string }) {
@@ -238,9 +239,27 @@ export const createLibraryPlaylistStore = () => {
           musicUserToken: MusicKit.getInstance()?.musicUserToken,
         });
       },
+    );
+
+    return data;
+  };
+};
+
+export const createLibraryArtistsStore = () => {
+  return function () {
+    const [data] = createResource(
       () => {
-        return true;
-      }
+        return {
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
+          musicUserToken: MusicKit.getInstance()?.musicUserToken,
+        };
+      },
+      () => {
+        return fetchLibraryArtists({
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
+          musicUserToken: MusicKit.getInstance()?.musicUserToken,
+        });
+      },
     );
 
     return data;

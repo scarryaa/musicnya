@@ -5,6 +5,7 @@ import { IoAlbums } from "solid-icons/io";
 import { Albums } from "./Albums/Albums";
 import { Match, Switch, createSignal } from "solid-js";
 import { Playlists } from "./Playlists/Playlists";
+import { Artists } from "./Artists/Artists";
 
 export function Library() {
   const ACTIVE_PAGE_CLASS = "library__header--chip--selected";
@@ -64,7 +65,7 @@ export function Library() {
             <Albums />
           </Match>
           <Match when={selectedPage() === "artists"}>
-            <div>Artists</div>
+            <Artists />
           </Match>
           <Match when={selectedPage() === "songs"}>
             <div>Songs</div>
