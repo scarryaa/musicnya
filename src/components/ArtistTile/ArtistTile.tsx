@@ -31,8 +31,7 @@ export function ArtistTile(props: ArtistTileProps) {
           loading="lazy"
           decoding="async"
           class={styles.artistTile__image}
-          src={props.mediaArt.url}
-          alt="Album Art"
+          src={props.mediaArt.url || ""}
           width={300}
           height={150}
         />

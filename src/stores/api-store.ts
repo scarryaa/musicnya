@@ -13,6 +13,7 @@ import { fetchRadio } from "../api/radio";
 import { fetchStation } from "../api/station";
 import { fetchSearchCategories, fetchSearchResults } from "../api/search";
 import { fetchLibraryAlbums } from "../api/library-albums";
+import { fetchLibraryPlaylists } from "../api/library-playlists";
 
 export const createAlbumStore = () => {
   return function (params: { id: string }) {
@@ -216,6 +217,30 @@ export const createPlaylistStore = () => {
         id: params.id,
       },
       params.id.substring(0, 2) === "pl" ? fetchPlaylist : fetchLibraryPlaylist,
+    );
+
+    return data;
+  };
+};
+
+export const createLibraryPlaylistStore = () => {
+  return function () {
+    const [data] = createResource(
+      () => {
+        return {
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
+          musicUserToken: MusicKit.getInstance()?.musicUserToken,
+        };
+      },
+      () => {
+        return fetchLibraryPlaylists({
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
+          musicUserToken: MusicKit.getInstance()?.musicUserToken,
+        });
+      },
+      () => {
+        return true;
+      }
     );
 
     return data;

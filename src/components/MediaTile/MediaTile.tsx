@@ -4,6 +4,7 @@ import styles from "./MediaTile.module.scss";
 import { setQueue, stop } from "../../api/musickit";
 import { A } from "@solidjs/router";
 import { constructLink } from "../../util/utils";
+import musicNote from "../../assets/music_note.png"
 
 export type MediaTileProps = {
   mediaArt: MusicKit.Artwork;
@@ -52,7 +53,7 @@ export function MediaTile(props: MediaTileProps) {
           loading="lazy"
           decoding="async"
           class={styles.mediaTile__image}
-          src={props.mediaArt.url}
+          src={props.mediaArt.url || musicNote}
           alt="Album Art"
           width={150}
           height={150}
