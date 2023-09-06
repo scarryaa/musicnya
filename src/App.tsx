@@ -1,4 +1,4 @@
-import { Show, type Component } from "solid-js";
+import { Show, type Component, createSignal } from "solid-js";
 
 import { Drawer } from "./components/Drawer/Drawer";
 import { Titlebar, TitlebarMac } from "./components/Titlebar/Titlebar";
@@ -12,6 +12,7 @@ console.log(navigator.platform);
 
 const App: Component = () => {
   // Check if user is logged in
+  const [isAuthorized, setIsAuthorized] = createSignal(false);
 
   // Initialize MusicKit
   MusicKit.configure({
@@ -25,6 +26,7 @@ const App: Component = () => {
     .then((music) => {
       music.authorize().then(() => {
         console.log("Authorized");
+        setIsAuthorized(true);
       });
 
       setupEvents();
@@ -58,7 +60,9 @@ const App: Component = () => {
       <Show when={rightPanelContent.value === "queue" && rightPanelOpen}>
         <Queue />
       </Show>
-      <Main />
+      <Show when={isAuthorized()}>
+        <Main />
+      </Show>
     </div>
   );
 };
