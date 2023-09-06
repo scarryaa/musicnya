@@ -166,6 +166,22 @@ export const setupEvents = () => {
     () => {
       setCurrentMediaItem(MusicKit.getInstance().nowPlayingItem || {});
       fetchLyrics();
+
+      //@ts-ignore
+      if (MusicKit.getInstance().nowPlayingItem?.type === "musicVideo") {
+        document.getElementById("apple-music-video-container")!.style.display = "block";
+        document.getElementById("apple-music-video-container")!.style.background = "black";
+        document.getElementById("apple-music-video-player")!.style.width = "100%";
+        document.getElementById("apple-music-video-player")!.style.height = "100%";
+        document.getElementById("apple-music-video-player")!.style.maxHeight = "100%";
+        document.getElementById("apple-music-video-close-btn")!.style.display = "block";
+        document.getElementById("player-artwork")!.style.opacity = "0";
+        (document.getElementById("player-artwork")! as HTMLImageElement).src = "";
+      } else {
+        document.getElementById("apple-music-video-container")!.style.display = "none";
+        document.getElementById("apple-music-video-close-btn")!.style.display = "none";
+        document.getElementById("player-artwork")!.style.opacity = "1";
+      }
     },
   );
 
