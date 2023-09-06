@@ -36,6 +36,15 @@ const handleQueueClick = () => {
       : "18rem",
   );
 
+  document.body.style.setProperty(
+    "--side-panel-offset",
+    rightPanelOpen.value
+      ? rightPanelContent.value === "lyrics"
+        ? "14rem"
+        : "0rem"
+      : "14rem",
+  );
+
   (rightPanelOpen.value === true && rightPanelContent.value === "queue")
     ? setRightPanelOpen({ value: false })
     : setRightPanelOpen({ value: true });
@@ -55,6 +64,15 @@ const handleLyricsClick = () => {
       : "18rem",
   );
 
+  document.body.style.setProperty(
+    "--side-panel-offset",
+    rightPanelOpen.value
+      ? rightPanelContent.value === "queue"
+        ? "14rem"
+        : "0rem"
+      : "14rem",
+  );
+
   (rightPanelOpen.value === true && rightPanelContent.value === "lyrics")
     ? setRightPanelOpen({ value: false })
     : setRightPanelOpen({ value: true });
@@ -62,7 +80,7 @@ const handleLyricsClick = () => {
     (rightPanelOpen.value === true && rightPanelContent.value !== "lyrics")
     ? setRightPanelContent({ value: "lyrics" })
     : setRightPanelContent({ value: "" });
-    
+
   if (rightPanelOpen.value) {
     fetchLyrics();
   }
