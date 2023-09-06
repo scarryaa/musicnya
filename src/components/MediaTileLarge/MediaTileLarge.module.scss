@@ -25,7 +25,7 @@
     max-height: var(--media_tile_large-max-height);
     width: var(--media_tile_large-min-width);
     height: var(--media_tile_large-min-height);
-    object-fit: contain;
+    object-fit: cover;
     background-color: rgba(0, 0, 0, 0.1);
   }
 

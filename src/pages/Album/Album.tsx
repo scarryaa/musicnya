@@ -3,6 +3,7 @@ import styles from "./Album.module.scss";
 import { useParams } from "@solidjs/router";
 import { Match, Show, Switch, createEffect, createSignal } from "solid-js";
 import {
+  getItemRelationships,
   getNestedArtwork,
   getNestedAttributes,
   getNestedData,
@@ -28,6 +29,7 @@ export const Album = () => {
   // scroll to top on params change
   createEffect(() => {
     (albumPage.scrollTop = 0), params.id;
+    console.log(albumData());
   });
 
   let albumPage: HTMLDivElement = undefined as unknown as HTMLDivElement;
@@ -69,9 +71,12 @@ export const Album = () => {
                 getNestedAttributes(albumData())?.description?.standard
               }
               id={getNestedData(albumData())?.id}
-              artistIds={getNestedRelationships(
-                albumData(),
-              )?.artists?.data?.map((artist: any) => artist.id)}
+              artistIds={getNestedData(albumData())?.type === 'library-albums' ? 
+              getNestedRelationships(albumData())?.artists?.data?.map((artist: any) => 
+              getItemRelationships(artist)?.catalog?.data?.[0]?.id) :
+                getNestedRelationships(
+                  albumData(),
+                )?.artists?.data?.map((artist: any) => artist.id)}
               artists={getNestedRelationships(albumData())?.artists?.data?.map(
                 (artist: any) => artist.attributes?.name,
               )}
