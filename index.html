@@ -9,8 +9,15 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-
+    <div id="root">
+      <div id="apple-music-video-container" takeover="true" playsinline="false" style="position: absolute; z-index: 9999999999; height: 100%; width: 100%; margin-inline: auto; display: none;"></div>
+      <div id="apple-music-video-close-btn" style="position: absolute; z-index: 9999999999; display: none; left: 10px;">
+        <button style="width: 25px; height: 25px; background-color: white; border-radius: 50%" onclick="
+          document.getElementById('apple-music-video-container').style.display = 'none';
+          document.getElementById('apple-music-video-close-btn').style.display = 'none';
+          ">X</button>
+      </div>
+    </div>
     <script src="https://jpillora.com/xhook/dist/xhook.min.js"></script>
     <script>
       xhook.before(function (request, callback) {

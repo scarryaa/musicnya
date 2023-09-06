@@ -275,6 +275,7 @@ export function Player() {
     <div class={styles.player}>
       <div class={styles.player__left}>
         <img
+          id="player-artwork"
           loading="lazy"
           decoding="async"
           class={styles.player__left__mediaArt}

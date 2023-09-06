@@ -7,6 +7,8 @@ import { setupEvents } from "./util/utils";
 import { Lyrics } from "./components/Lyrics/Lyrics";
 import { rightPanelContent, rightPanelOpen } from "./stores/store";
 import { Queue } from "./components/Queue/Queue";
+import { currentMediaItem } from "../src/stores/store";
+import { Player } from "./components/Player/Player";
 
 console.log(navigator.platform);
 
@@ -62,6 +64,9 @@ const App: Component = () => {
       </Show>
       <Show when={isAuthorized()}>
         <Main />
+      </Show>
+      <Show when={currentMediaItem.id}>
+        <Player />
       </Show>
     </div>
   );

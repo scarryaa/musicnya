@@ -12,9 +12,6 @@ export function Main() {
         <Route path="/" element={<Home />} />
       </Routes>
       <Outlet />
-      <Show when={currentMediaItem.id}>
-        <Player />
-      </Show>
-      </div>
+    </div>
   );
 }
