@@ -1,7 +1,16 @@
 .artists {
   padding: var(--page-padding);
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  height: 100vh;
+  overflow-y: auto;
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 20rem;
+    padding-bottom: 6rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100vh - 13rem);
+  }
 }

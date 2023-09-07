@@ -5,6 +5,7 @@ import styles from "./Artists.module.scss";
 import { ArtistTile } from "../../../components/ArtistTile/ArtistTile";
 import { createLibraryArtistsStore } from "../../../stores/api-store";
 import { Error } from "../../../components/Error/Error";
+import { ArtistTableTile } from "../../../components/ArtistTableTile/ArtistTableTile";
 
 export function Artists() {
   const artistsStore = createLibraryArtistsStore();
@@ -27,31 +28,33 @@ export function Artists() {
             <Error error={artistsData.error} />
           </Match>
           <Match when={artistsData.state === "ready"}>
+          <div class={styles.artists__list}>
             <For each={artistsData()?.data}>
               {(artist) => (
                 console.log(artist),
-                <ArtistTile
-                  id={getItemRelationships(artist)?.catalog?.data?.[0]?.id}
-                  type={artist.type}
-                  title={artist.attributes.name}
-                  artists={getNestedRelationships(artist)?.artists?.data?.map(
-                    (artist: any) => artist.attributes.name,
-                  )}
-                  mediaArt={
-                    getItemRelationships(artist)?.catalog?.data?.[0]
-                      ?.attributes?.artwork && {
-                      url: replaceSrc(
-                        getItemRelationships(artist)?.catalog?.data?.[0]
-                          ?.attributes?.artwork.url,
-                        300,
-                      ),
-                    } || {
-                      url: "",
+                  <ArtistTableTile
+                    id={getItemRelationships(artist)?.catalog?.data?.[0]?.id}
+                    type={artist.type}
+                    title={artist.attributes.name}
+                    artists={getNestedRelationships(artist)?.artists?.data?.map(
+                      (artist: any) => artist.attributes.name,
+                    )}
+                    mediaArt={
+                      getItemRelationships(artist)?.catalog?.data?.[0]
+                        ?.attributes?.artwork && {
+                        url: replaceSrc(
+                          getItemRelationships(artist)?.catalog?.data?.[0]
+                            ?.attributes?.artwork.url,
+                          300,
+                        ),
+                      } || {
+                        url: "",
+                      }
                     }
-                  }
-                />
-              )}
+                  />
+                  )}
             </For>
+          </div>
           </Match>
         </Switch>
       </div>

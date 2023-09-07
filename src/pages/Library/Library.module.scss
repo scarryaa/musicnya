@@ -11,8 +11,7 @@
       var(--page-padding-bottom)
   );
   padding-bottom: var(--page-padding-bottom);
-  overflow-y: overlay;
-  overflow-x: hidden;
+  overflow: hidden;
   color: var(--text);
 
   &__header {
