@@ -8,11 +8,17 @@ export type ArtistTableTileProps = {
   artists: string[];
   type: MusicKit.MediaItemType;
   id: string;
+  onClick?: () => void;
 };
 
 export function ArtistTableTile(props: ArtistTableTileProps) {
+  const handleClick = () => {
+    if (props.onClick) {
+      props.onClick();
+    }
+  }
   return (
-    <div class={styles.artistTableTile}>
+    <div class={styles.artistTableTile} onClick={handleClick}>
     <img
         loading="lazy"
         decoding="async"
