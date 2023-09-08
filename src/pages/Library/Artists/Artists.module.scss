@@ -17,10 +17,17 @@
   &__albums {
     gap: 0.5rem;
     width: 100%;
-    padding-bottom: 6rem;
+    padding-left: 1rem;
     overflow-y: auto;
     overflow-x: hidden;
-    height: calc(100vh - 13rem);
   }
+}
+
+.albums {
+  margin-top: 1rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  display: flex;
+  gap: 1rem;
 }
 
