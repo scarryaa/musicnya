@@ -1,18 +1,18 @@
-import { JSXElement } from "solid-js";
-import styles from "./Chip.module.scss";
+import { JSXElement } from 'solid-js';
+import styles from './Chip.module.scss';
 
-export type ChipProps = {
-  label: string;
-  onClick: () => void;
-  style?: string;
-  icon?: any;
-  class?: string;
-};
+export interface ChipProps {
+  label: string
+  onClick: () => void
+  style?: string
+  icon?: any
+  class?: string
+}
 
 export function Chip(props: ChipProps) {
   return (
     <button
-      class={styles.chip + " " + props.class}
+      class={styles.chip + ' ' + props.class}
       onClick={props.onClick}
       style={props.style}
     >

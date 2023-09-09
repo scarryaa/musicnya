@@ -7,7 +7,7 @@ import {
   getItemRelationships,
   getNestedAttributes,
   getNestedRelationships,
-  replaceSrc,
+  replaceSrc
 } from "../../util/utils";
 import { MediaSelector } from "../../components/MediaSelector/MediaSelector";
 import { createMultiroomStore } from "../../stores/api-store";
@@ -24,6 +24,7 @@ export function Multiroom() {
     (multiroomPage.scrollTop = 0), params.id;
   });
 
+  // eslint-disable-next-line prefer-const
   let multiroomPage: HTMLDivElement = undefined as unknown as HTMLDivElement;
 
   return (
@@ -48,7 +49,7 @@ export function Multiroom() {
                 class={styles.multiroom__header__image}
                 style={{
                   "background-color": `#${getNestedAttributes(multiroomData())
-                    ?.uber?.masterArt?.bgColor}`,
+                    ?.uber?.masterArt?.bgColor}`
                 }}
               >
                 <img
@@ -58,8 +59,8 @@ export function Multiroom() {
                     getNestedAttributes(multiroomData())?.uber?.masterArt?.url,
                     Math.floor(
                       getNestedAttributes(multiroomData())?.uber?.masterArt
-                        ?.width / 2,
-                    ),
+                        ?.width / 2
+                    )
                   )}
                   alt="Album Art"
                   class={styles.multiroom__header__image__img}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { For, Match, Switch } from "solid-js";
 import { createLibraryAlbumsStore } from "../../../stores/api-store";
 import styles from "./Albums.module.scss";
@@ -7,10 +8,11 @@ import { MediaTile } from "../../../components/MediaTile/MediaTile";
 import {
   getItemAttributes,
   getNestedRelationships,
-  replaceSrc,
+  replaceSrc
 } from "../../../util/utils";
+import type { JSX } from "solid-js";
 
-export function Albums() {
+export function Albums(): JSX.Element {
   const albumsStore = createLibraryAlbumsStore();
   const albumsData = albumsStore();
 
@@ -37,14 +39,14 @@ export function Albums() {
                 type={album.type}
                 title={album.attributes.name}
                 artists={getNestedRelationships(album)?.artists?.data?.map(
-                  (artist: any) => artist.attributes.name,
+                  (artist: any) => artist.attributes.name
                 )}
                 artistIds={getNestedRelationships(album)?.artists?.data?.map(
-                  (artist: any) => artist.id,
+                  (artist: any) => artist.id
                 )}
                 mediaArt={
                   getItemAttributes(album).artwork && {
-                    url: replaceSrc(getItemAttributes(album).artwork.url, 300),
+                    url: replaceSrc(getItemAttributes(album).artwork.url, 300)
                   }
                 }
               />

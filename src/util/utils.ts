@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { FastAverageColor } from "fast-average-color";
 import {
-  isPlaying,
   setCurrentMediaItem,
   setIsPlaying,
   setPlaybackDuration,
-  setPlaybackTime,
+  setPlaybackTime
 } from "../stores/store";
 import { fetchLyrics } from "../components/Lyrics/Lyrics";
 
@@ -12,8 +13,8 @@ export const replaceSrc = (
   src: string | undefined,
   width: number,
   height: number = width,
-  format = "webp",
-) => {
+  format = "webp"
+): string | undefined => {
   if (src === undefined) return;
   return src
     .replace("{w}x{h}", `${Math.floor(width)}x${Math.floor(height)}`)
@@ -21,24 +22,24 @@ export const replaceSrc = (
     .replace("{c}", "");
 };
 
-export const splitArtists = (artists: string) => {
+export const splitArtists = (artists: string): string[] => {
   if (artists === undefined) return [];
   return artists.split("&").map((artist) => artist.trim());
 };
 
-export const getArtworkColor = (src: string) => {
+export const getArtworkColor = async (src: string): Promise<string> => {
   const fac = new FastAverageColor();
   const color = fac.getColorAsync(src);
-  return color.then((color) => color.hex);
+  return await color.then((color) => color.hex);
 };
 
-export const formatTime = (timeInSeconds: number) => {
+export const formatTime = (timeInSeconds: number): string => {
   const minutes = Math.floor(timeInSeconds / 60);
   const seconds = Math.floor(timeInSeconds % 60).toFixed(0);
   return `${minutes}:${seconds.length === 1 ? "0" + seconds : seconds}`;
 };
 
-export const constructLink = (type: string, id: string) => {
+export const constructLink = (type: string, id: string): string => {
   if (id === undefined) return "";
 
   switch (type) {
@@ -68,79 +69,79 @@ export const constructLink = (type: string, id: string) => {
 
 // data functions
 
-export const getNestedData = (data: any) => {
+export const getNestedData = (data: any): any => {
   // data?.data[0]
   return data?.data?.[0];
 };
 
-export const getNestedAttributes = (data: any) => {
+export const getNestedAttributes = (data: any): any => {
   // data?.data[0]?.attributes
   return getNestedData(data)?.attributes;
 };
 
-export const getNestedRelationships = (data: any) => {
+export const getNestedRelationships = (data: any): any => {
   // data?.data[0]?.relationships
   return getNestedData(data)?.relationships;
 };
 
-export const getNestedArtwork = (data: any) => {
+export const getNestedArtwork = (data: any): any => {
   // data?.data[0]?.attributes?.artwork
   return getNestedAttributes(data)?.artwork;
 };
 
-export const getNestedEditorialArtwork = (data: any) => {
+export const getNestedEditorialArtwork = (data: any): any => {
   // data?.data[0]?.attributes?.editorialArtwork
   return getNestedAttributes(data)?.editorialArtwork;
 };
 
-export const getNestedPlainEditorialNotes = (data: any) => {
+export const getNestedPlainEditorialNotes = (data: any): any => {
   // data?.data[0]?.attributes?.plainEditorialNotes
   return getNestedAttributes(data)?.plainEditorialNotes;
 };
 
-export const getNestedTabsData = (data: any) => {
+export const getNestedTabsData = (data: any): any => {
   // data?.data[0]?.relationships?.tabs?.data
   return getNestedRelationships(data)?.tabs?.data[0];
 };
 
-export const getNestedTabsRelationshipsData = (data: any) => {
+export const getNestedTabsRelationshipsData = (data: any): any => {
   // data?.data[0]?.relationships?.tabs?.data[0]?.relationships?.children?.data
   return getNestedTabsData(data)?.relationships.children?.data;
 };
 
-export const getNestedGroupingData = (data: any) => {
+export const getNestedGroupingData = (data: any): any => {
   // data?.data[0]?.relationships?.grouping?.data
   return getNestedRelationships(data)?.grouping?.data;
 };
 
-export const getNestedGroupingRelationshipsData = (data: any) => {
+export const getNestedGroupingRelationshipsData = (data: any): any => {
   // data?.data[0]?.relationships?.groupings?.data[0]?.relationships?.contents?.data
   return getNestedGroupingData(data)?.relationships.contents?.data;
 };
 
-export const getItemAttributes = (item: any) => {
+export const getItemAttributes = (item: any): any => {
   // item?.attributes
   return item?.attributes;
 };
 
-export const getItemRelationships = (item: any) => {
+export const getItemRelationships = (item: any): any => {
   // item?.relationships
   return item?.relationships;
 };
 
-export const getMultiplexTarget = (data: any) => {
+export const getMultiplexTarget = (data: any): any => {
   // data?.results?.target
   return data?.results?.target;
 };
 
-export const getAlbumIdFromUrl = (url: string) => {
+export const getAlbumIdFromUrl = (url: string): string => {
   if (url === undefined) return "";
 
   const splitUrl = url.split("/");
   return splitUrl[splitUrl.length - 1];
 };
 
-export const extractTileId = (link: string, id: string) => {
+export const extractTileId = (link: string, id: string): string => {
   return (
     link
       ?.toLowerCase()
@@ -149,79 +150,107 @@ export const extractTileId = (link: string, id: string) => {
       ?.split("id=")
       ?.pop()
       ?.replace("?pp=", "")
-      ?.replace("&mt=1", "") || id
+      ?.replace("&mt=1", "") ?? id
   );
 };
 
-export const setupEvents = () => {
+export const setupEvents = (): void => {
   MusicKit.getInstance().addEventListener(
     MusicKit.Events.playbackStateDidChange as unknown as string,
     () => {
       setIsPlaying({ value: MusicKit.getInstance().isPlaying });
-    },
+    }
   );
 
   MusicKit.getInstance().addEventListener(
     MusicKit.Events.nowPlayingItemDidChange as unknown as string,
     () => {
-      setCurrentMediaItem(MusicKit.getInstance().nowPlayingItem || {});
-      fetchLyrics();
+      setCurrentMediaItem(MusicKit.getInstance().nowPlayingItem ?? {});
+      void fetchLyrics();
 
-      //@ts-ignore
+      // @ts-expect-error ts-migrate allow overlapping types
       if (MusicKit.getInstance().nowPlayingItem?.type === "musicVideo") {
-        document.getElementById("apple-music-video-container")!.style.display = "block";
-        document.getElementById("apple-music-video-container")!.style.background = "black";
-        document.getElementById("apple-music-video-player")!.style.width = "100%";
-        document.getElementById("apple-music-video-player")!.style.height = "100%";
-        document.getElementById("apple-music-video-player")!.style.maxHeight = "100%";
-        document.getElementById("apple-music-video-close-btn")!.style.display = "block";
-        document.getElementById("player-artwork")!.style.opacity = "0";
-        (document.getElementById("player-artwork")! as HTMLImageElement).src = "";
+        const videoContainer = document.getElementById(
+          "apple-music-video-container"
+        )!;
+
+        const videoPlayer = document.getElementById(
+          "apple-music-video-player"
+        )! as HTMLVideoElement;
+
+        const videoCloseBtn = document.getElementById(
+          "apple-music-video-close-btn"
+        )!;
+
+        const playerArtwork = document.getElementById(
+          "player-artwork"
+        )! as HTMLImageElement;
+
+        videoContainer.style.display = "block";
+        videoContainer.style.background = "black";
+        videoPlayer.style.width = "100%";
+        videoPlayer.style.height = "100%";
+        videoPlayer.style.maxHeight = "100%";
+        videoCloseBtn.style.display = "block";
+        playerArtwork.style.opacity = "0";
+        playerArtwork.src = "";
       } else {
-        document.getElementById("apple-music-video-container")!.style.display = "none";
-        document.getElementById("apple-music-video-close-btn")!.style.display = "none";
-        document.getElementById("player-artwork")!.style.opacity = "1";
+        const videoContainer = document.getElementById(
+          "apple-music-video-container"
+        )!;
+
+        const videoCloseBtn = document.getElementById(
+          "apple-music-video-close-btn"
+        )!;
+
+        const playerArtwork = document.getElementById(
+          "player-artwork"
+        )! as HTMLImageElement;
+
+        videoContainer.style.display = "none";
+        videoCloseBtn.style.display = "none";
+        playerArtwork.style.opacity = "1";
       }
-    },
+    }
   );
 
   MusicKit.getInstance().addEventListener(
     MusicKit.Events.queueItemsDidChange as string,
     () => {
       console.log("queueItemsDidChange");
-      fetchLyrics();
-    },
+      void fetchLyrics();
+    }
   );
 
   MusicKit.getInstance().addEventListener(
     MusicKit.Events.queuePositionDidChange as string,
     () => {
       console.log("queuePositionDidChange");
-    },
+    }
   );
 
   MusicKit.getInstance().addEventListener(
     MusicKit.Events.mediaItemStateDidChange as string,
     () => {
       console.log("mediaItemStateDidChange");
-    },
+    }
   );
 
   MusicKit.getInstance().addEventListener(
     MusicKit.Events.playbackDurationDidChange as string,
     () => {
       setPlaybackDuration({
-        value: MusicKit.getInstance().currentPlaybackDuration,
+        value: MusicKit.getInstance().currentPlaybackDuration
       });
-    },
+    }
   );
 
   MusicKit.getInstance().addEventListener(
     MusicKit.Events.playbackTimeDidChange as string,
     () => {
       setPlaybackTime({
-        value: MusicKit.getInstance().currentPlaybackTime,
+        value: MusicKit.getInstance().currentPlaybackTime
       });
-    },
+    }
   );
 };

@@ -1,10 +1,10 @@
-import styles from "./LinkTile.module.scss";
-import { IoChevronForward } from "solid-icons/io";
+import styles from './LinkTile.module.scss';
+import { IoChevronForward } from 'solid-icons/io';
 
-export type LinkTileProps = {
-  title: string;
-  url: string;
-};
+export interface LinkTileProps {
+  title: string
+  url: string
+}
 
 export function LinkTile(props: LinkTileProps) {
   return (

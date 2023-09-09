@@ -5,8 +5,9 @@ import { MediaSelector } from "../../components/MediaSelector/MediaSelector";
 import { Error } from "../../components/Error/Error";
 import { createHomeStore } from "../../stores/api-store";
 import { getItemAttributes, getItemRelationships } from "../../util/utils";
+import type { JSX } from "solid-js";
 
-export function Home() {
+export function Home(): JSX.Element {
   const homeStore = createHomeStore();
   const homeData = homeStore();
 

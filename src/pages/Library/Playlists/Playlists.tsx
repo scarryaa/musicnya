@@ -1,12 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Switch, Match, For } from "solid-js";
+import type { JSX } from "solid-js";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import { MediaTile } from "../../../components/MediaTile/MediaTile";
 import { createLibraryPlaylistStore } from "../../../stores/api-store";
-import { getNestedRelationships, getItemAttributes, replaceSrc, getItemRelationships } from "../../../util/utils";
+import {
+  getNestedRelationships,
+  getItemAttributes,
+  replaceSrc,
+  getItemRelationships
+} from "../../../util/utils";
 import { Error } from "../../../components/Error/Error";
 import styles from "./Playlists.module.scss";
 
-export function Playlists() {
+export function Playlists(): JSX.Element {
   const playlistsStore = createLibraryPlaylistStore();
   const playlistsData = playlistsStore();
 
@@ -33,23 +40,27 @@ export function Playlists() {
                 type={playlist.type}
                 title={playlist.attributes.name}
                 artists={getNestedRelationships(playlist)?.artists?.data?.map(
-                  (artist: any) => artist.attributes.name,
+                  (artist: any) => artist.attributes.name
                 )}
                 artistIds={getNestedRelationships(playlist)?.artists?.data?.map(
-                  (artist: any) => artist.id,
+                  (artist: any) => artist.id
                 )}
                 mediaArt={
-                  getItemAttributes(playlist).artwork && {
-                    url: replaceSrc(getItemAttributes(playlist).artwork.url, 300),
-                  } || getItemRelationships(playlist)?.tracks?.data?.[0]
-                    ?.attributes?.artwork && {
+                  (getItemAttributes(playlist).artwork && {
+                    url: replaceSrc(
+                      getItemAttributes(playlist).artwork.url,
+                      300
+                    )
+                  }) ||
+                  (getItemRelationships(playlist)?.tracks?.data?.[0]?.attributes
+                    ?.artwork && {
                     url: replaceSrc(
                       getItemRelationships(playlist)?.tracks?.data?.[0]
                         ?.attributes?.artwork.url,
-                      300,
-                    ),
-                  } || {
-                    url: "",
+                      300
+                    )
+                  }) || {
+                    url: ""
                   }
                 }
               />

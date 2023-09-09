@@ -1,15 +1,14 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { app, BrowserWindow, components, ipcMain } = require("electron");
-const { processImport } = require("process");
 const path = require("path");
-const os = require("os");
 
 // Listen on a specific host via the HOST environment variable
 const host = "0.0.0.0";
 // Listen on a specific port via the PORT environment variable
 const corsPort = 8080;
 
-const cors_proxy = require("cors-anywhere");
-cors_proxy
+const corsProxy = require("cors-anywhere");
+corsProxy
   .createServer({
     originWhitelist: [], // Allow all origins
     methodWhitelist: ["GET", "HEAD", "POST", "PUT", "DELETE"],
@@ -19,15 +18,15 @@ cors_proxy
         "https://music.apple.com",
         "https://localhost:4200",
         "https://localhost:3000",
-        "https://localhost:3001",
+        "https://localhost:3001"
       ],
       // set recieved headers
       "access-control-allow-headers":
         "Origin, X-Requested-With, Content-Type, Accept, Range",
       "access-control-allow-methods": "*",
       "access-control-allow-credentials": "true",
-      "access-control-max-age": "86400",
-    },
+      "access-control-max-age": "86400"
+    }
   })
   .listen(corsPort, host, function () {
     console.log("Running CORS Anywhere on " + host + ":" + corsPort);
@@ -49,6 +48,7 @@ if (process.platform === "linux") {
   app.commandLine.appendSwitch("disable-features", "MediaSessionService");
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 1100,
@@ -58,10 +58,10 @@ const createWindow = () => {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: true,
-      preload: path.join(__dirname, "preload.cjs"),
+      preload: path.join(__dirname, "preload.cjs")
     },
     autoHideMenuBar: true,
-    frame: false,
+    frame: false
   });
 
   ipcMain.on("minimize-window", () => {
@@ -76,11 +76,11 @@ const createWindow = () => {
 
   win.removeMenu();
 
-  win.loadURL("http://localhost:3000");
+  void win.loadURL("http://localhost:3000");
   win.openDevTools();
 };
 
-app.whenReady().then(async () => {
+void app.whenReady().then(async () => {
   await components.whenReady();
   createWindow();
 });

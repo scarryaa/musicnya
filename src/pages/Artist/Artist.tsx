@@ -6,7 +6,7 @@ import {
   getNestedAttributes,
   getNestedData,
   getNestedEditorialArtwork,
-  replaceSrc,
+  replaceSrc
 } from "../../util/utils";
 import { IoPlay } from "solid-icons/io";
 import { ButtonPrimary } from "../../components/ButtonPrimary/ButtonPrimary";
@@ -30,6 +30,7 @@ export function Artist() {
     (artistPage.scrollTop = 0), params.id;
   });
 
+  // eslint-disable-next-line prefer-const
   let artistPage: HTMLDivElement = undefined as unknown as HTMLDivElement;
 
   return (
@@ -58,7 +59,7 @@ export function Artist() {
                     getNestedEditorialArtwork(artistData())?.subscriptionHero
                       ?.url || getNestedAttributes(artistData())?.artwork?.url,
                     getNestedEditorialArtwork(artistData())?.subscriptionHero
-                      ?.height || getNestedArtwork(artistData())?.height / 4,
+                      ?.height || getNestedArtwork(artistData())?.height / 4
                   )}
                   alt="Album Art"
                   class={styles.artist__header__image__img}

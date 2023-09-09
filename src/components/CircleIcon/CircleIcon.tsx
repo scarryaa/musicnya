@@ -1,4 +1,4 @@
-import styles from "./CircleIcon.module.scss";
+import styles from './CircleIcon.module.scss';
 
 export let style: string;
 

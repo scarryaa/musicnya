@@ -1,43 +1,43 @@
-import { A } from "@solidjs/router";
-import styles from "./EditorialTileLarge.module.scss";
-import { createMemo } from "solid-js";
-import { extractTileId } from "../../util/utils";
+import { A } from '@solidjs/router';
+import styles from './EditorialTileLarge.module.scss';
+import { createMemo } from 'solid-js';
+import { extractTileId } from '../../util/utils';
 
-export type EditorialTileLargeProps = {
-  mediaArt: MusicKit.Artwork;
-  badge: string;
-  title: string;
-  subtitle: string;
-  type: MusicKit.MediaItemType;
-  contentType: string;
-  id: string;
-  link: string;
-};
+export interface EditorialTileLargeProps {
+  mediaArt: MusicKit.Artwork
+  badge: string
+  title: string
+  subtitle: string
+  type: MusicKit.MediaItemType
+  contentType: string
+  id: string
+  link: string
+}
 
 export function EditorialTileLarge(props: EditorialTileLargeProps) {
   const constructLink = createMemo(() => {
     const newId = extractTileId(props.link, props.id);
 
-    if (props.link && props.link.includes("viewMultiRoom")) {
+    if (props.link && props.link.includes('viewMultiRoom')) {
       return `/multiroom/${newId}`;
     } else if (
-      (props.link && props.link.includes("pp=")) ||
-      props.link.includes("curator")
+      (props.link && props.link.includes('pp=')) ||
+      props.link.includes('curator')
     ) {
       return `/curator/${newId}`;
-    } else if (props.link && props.link.includes("station")) {
+    } else if (props.link && props.link.includes('station')) {
       return `/station/${newId}`;
     } else if (props.link) {
       if (props.contentType) {
         return `/${props.contentType?.substring(
           0,
-          props.contentType.length - 1,
+          props.contentType.length - 1
         )}/${newId}`;
       } else {
         return `/multiplex/${newId}`;
       }
     } else {
-      return "#";
+      return '#';
     }
   });
 

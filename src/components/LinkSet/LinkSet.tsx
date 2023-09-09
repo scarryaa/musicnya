@@ -1,13 +1,13 @@
-import { For } from "solid-js";
-import styles from "./LinkSet.module.scss";
-import { LinkTile } from "../LinkTile/LinkTile";
+import { For } from 'solid-js';
+import styles from './LinkSet.module.scss';
+import { LinkTile } from '../LinkTile/LinkTile';
 
-export type LinkSetProps = {
-  links: {
-    label: string;
-    url: string;
-  }[];
-};
+export interface LinkSetProps {
+  links: Array<{
+    label: string
+    url: string
+  }>
+}
 
 export function LinkSet(props: LinkSetProps) {
   return (

@@ -1,14 +1,14 @@
-import styles from "./Radio.module.scss";
-import { For, Match, Switch } from "solid-js";
-import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { MediaSelector } from "../../components/MediaSelector/MediaSelector";
-import { createRadioStore } from "../../stores/api-store";
-import { Error } from "../../components/Error/Error";
+import styles from './Radio.module.scss';
+import { For, Match, Switch } from 'solid-js';
+import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner';
+import { MediaSelector } from '../../components/MediaSelector/MediaSelector';
+import { createRadioStore } from '../../stores/api-store';
+import { Error } from '../../components/Error/Error';
 import {
   getItemAttributes,
   getItemRelationships,
-  getNestedTabsRelationshipsData,
-} from "../../util/utils";
+  getNestedTabsRelationshipsData
+} from '../../util/utils';
 
 export function Radio() {
   const radioStore = createRadioStore();
@@ -19,17 +19,17 @@ export function Radio() {
       <Switch fallback={<div>Not found</div>}>
         <Match
           when={
-            radioData.state === "pending" ||
-            radioData.state === "unresolved" ||
-            radioData.state === "refreshing"
+            radioData.state === 'pending' ||
+            radioData.state === 'unresolved' ||
+            radioData.state === 'refreshing'
           }
         >
           <LoadingSpinner />
         </Match>
-        <Match when={radioData.state === "errored"}>
+        <Match when={radioData.state === 'errored'}>
           <Error error={radioData.error} />
         </Match>
-        <Match when={radioData.state === "ready"}>
+        <Match when={radioData.state === 'ready'}>
           <h1 class={styles.radio__title}>radio</h1>
           <div class={styles.radio__content}>
             <For

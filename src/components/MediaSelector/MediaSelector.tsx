@@ -1,71 +1,71 @@
-import { For, JSX, Match, Switch, createMemo } from "solid-js";
-import { MediaTile } from "../MediaTile/MediaTile";
-import { replaceSrc } from "../../util/utils";
-import { MediaShelf } from "../MediaShelf/MediaShelf";
-import { MediaTileLarge } from "../MediaTileLarge/MediaTileLarge";
-import { MediaTileGlass } from "../MediaTileGlass/MediaTileGlass";
-import { LinkSet } from "../LinkSet/LinkSet";
-import { EditorialTile } from "../EditorialTile/EditorialTile";
-import { VideoTile } from "../VideoTile/VideoTile";
-import { CuratorTile } from "../CuratorTile/CuratorTile";
-import { EditorialTileLarge } from "../EditorialTileLarge/EditorialTileLarge";
-import { SongTile } from "../SongTile/SongTile";
-import { ArtistTile } from "../ArtistTile/ArtistTile";
+import { For, type JSX, Match, Switch, createMemo } from 'solid-js';
+import { MediaTile } from '../MediaTile/MediaTile';
+import { replaceSrc } from '../../util/utils';
+import { MediaShelf } from '../MediaShelf/MediaShelf';
+import { MediaTileLarge } from '../MediaTileLarge/MediaTileLarge';
+import { MediaTileGlass } from '../MediaTileGlass/MediaTileGlass';
+import { LinkSet } from '../LinkSet/LinkSet';
+import { EditorialTile } from '../EditorialTile/EditorialTile';
+import { VideoTile } from '../VideoTile/VideoTile';
+import { CuratorTile } from '../CuratorTile/CuratorTile';
+import { EditorialTileLarge } from '../EditorialTileLarge/EditorialTileLarge';
+import { SongTile } from '../SongTile/SongTile';
+import { ArtistTile } from '../ArtistTile/ArtistTile';
 
-export type MediaSelectorProps = {
-  children: any;
-  class?: string;
-  title?: string;
-  type: MusicKit.MediaItemType;
-  displayKind: string;
-  editorialElementKind?: string;
-  links: {
-    title: string;
-    url: string;
-  }[];
-  artistId: string;
-};
+export interface MediaSelectorProps {
+  children: any
+  class?: string
+  title?: string
+  type: MusicKit.MediaItemType
+  displayKind: string
+  editorialElementKind?: string
+  links: Array<{
+    title: string
+    url: string
+  }>
+  artistId: string
+}
 
 type MediaComponentType =
-  | "MusicNotesHeroShelf"
-  | "MusicSuperHeroShelf"
-  | "316"
-  | "322"
-  | "326"
-  | "327"
-  | "332"
-  | "336"
-  | "385"
-  | "387"
-  | "391"
-  | "394"
-  | "488"
-  | "editorial-elements"
-  | "personal-recommendation"
-  | "albums"
-  | "library-albums"
-  | "playlists"
-  | "songs"
-  | "music-videos"
-  | "uploaded-videos"
-  | "artists"
-  | "stations"
-  | "apple-curators"
-  | "library-playlists";
+  | 'MusicNotesHeroShelf'
+  | 'MusicSuperHeroShelf'
+  | '316'
+  | '322'
+  | '326'
+  | '327'
+  | '332'
+  | '336'
+  | '385'
+  | '387'
+  | '391'
+  | '394'
+  | '488'
+  | 'editorial-elements'
+  | 'personal-recommendation'
+  | 'albums'
+  | 'library-albums'
+  | 'playlists'
+  | 'songs'
+  | 'music-videos'
+  | 'uploaded-videos'
+  | 'artists'
+  | 'stations'
+  | 'apple-curators'
+  | 'library-playlists'
 
 interface ComponentProps {
-  id: string;
-  badge: string;
-  subtitle: string;
-  mediaArt: MusicKit.Artwork;
-  type: MusicKit.MediaItemType;
-  title: string;
-  artists: string[];
-  children?: JSX.Element[];
-  artistIds: string[];
-  editorialElementKind: string;
-  link: string;
-  contentType: string;
+  id: string
+  badge: string
+  subtitle: string
+  mediaArt: MusicKit.Artwork
+  type: MusicKit.MediaItemType
+  title: string
+  artists: string[]
+  children?: JSX.Element[]
+  artistIds: string[]
+  editorialElementKind: string
+  link: string
+  contentType: string
 }
 
 const LinkFactory = () => {
@@ -75,7 +75,7 @@ const LinkFactory = () => {
         <LinkSet
           links={props?.links?.map((item: any) => ({
             label: item?.label,
-            url: item?.url,
+            url: item?.url
           }))}
         />
       );
@@ -90,35 +90,35 @@ const renderComponentSwitch = (props: MediaSelectorProps) => {
 
   return (
     <Switch fallback={<div>Something went wrong.</div>}>
-      <Match when={childType === "albums"}>
-        {MediaComponents["albums"](props)}
+      <Match when={childType === 'albums'}>
+        {MediaComponents.albums(props)}
       </Match>
-      <Match when={childType === "library-albums"}>
-        {MediaComponents["library-albums"](props)}
+      <Match when={childType === 'library-albums'}>
+        {MediaComponents['library-albums'](props)}
       </Match>
-      <Match when={childType === "playlists"}>
-        {MediaComponents["playlists"](props)}
+      <Match when={childType === 'playlists'}>
+        {MediaComponents.playlists(props)}
       </Match>
-      <Match when={childType === "library-playlists"}>
-        {MediaComponents["library-playlists"](props)}
+      <Match when={childType === 'library-playlists'}>
+        {MediaComponents['library-playlists'](props)}
       </Match>
-      <Match when={childType === "songs"}>
-        {MediaComponents["songs"](props)}
+      <Match when={childType === 'songs'}>
+        {MediaComponents.songs(props)}
       </Match>
-      <Match when={childType === "music-videos"}>
-        {MediaComponents["music-videos"](props)}
+      <Match when={childType === 'music-videos'}>
+        {MediaComponents['music-videos'](props)}
       </Match>
-      <Match when={childType === "uploaded-videos"}>
-        {MediaComponents["uploaded-videos"](props)}
+      <Match when={childType === 'uploaded-videos'}>
+        {MediaComponents['uploaded-videos'](props)}
       </Match>
-      <Match when={childType === "artists"}>
-        {MediaComponents["artists"](props)}
+      <Match when={childType === 'artists'}>
+        {MediaComponents.artists(props)}
       </Match>
-      <Match when={childType === "stations"}>
-        {MediaComponents["stations"](props)}
+      <Match when={childType === 'stations'}>
+        {MediaComponents.stations(props)}
       </Match>
-      <Match when={childType === "apple-curators"}>
-        {MediaComponents["apple-curators"](props)}
+      <Match when={childType === 'apple-curators'}>
+        {MediaComponents['apple-curators'](props)}
       </Match>
     </Switch>
   );
@@ -127,7 +127,7 @@ const renderComponentSwitch = (props: MediaSelectorProps) => {
 const componentCache = new Map();
 
 const MediaComponentFactory = (
-  ComponentType: (props: ComponentProps) => JSX.Element,
+  ComponentType: (props: ComponentProps) => JSX.Element
 ) => {
   if (componentCache.has(ComponentType)) {
     return componentCache.get(ComponentType);
@@ -139,10 +139,10 @@ const MediaComponentFactory = (
         <For each={props.children}>
           {(item) => {
             const artistIds = item.relationships?.artists?.data?.map(
-              (artist: any) => artist.id,
+              (artist: any) => artist.id
             );
             const artistNames = item.relationships?.artists?.data?.map(
-              (artist: any) => artist?.attributes?.name,
+              (artist: any) => artist?.attributes?.name
             );
             const title =
               item?.attributes?.designTag ||
@@ -164,8 +164,8 @@ const MediaComponentFactory = (
                   Math.floor(item?.attributes?.artwork?.height / 1.5) ||
                   item.relationships?.contents?.data?.[0]?.attributes?.artwork
                     .height / 2 ||
-                  300,
-              ),
+                  300
+              )
             };
 
             return (
@@ -227,8 +227,8 @@ const MediaComponents: Record<MediaComponentType, any> = {
           ]?.editorialArtwork?.superHeroWide?.height ||
             props.children[0]?.attributes?.editorialArtwork?.subscriptionHero
               .height ||
-            props.children[0]?.attributes?.artwork?.height,
-        ),
+            props.children[0]?.attributes?.artwork?.height
+        )
       }}
     />
   ),
@@ -244,27 +244,27 @@ const MediaComponents: Record<MediaComponentType, any> = {
   391: LinkFactory(),
   394: MediaComponentFactory(EditorialTile),
   488: () => null,
-  "editorial-elements": MediaComponentFactory(EditorialTile),
-  "personal-recommendation": (props: MediaSelectorProps) =>
+  'editorial-elements': MediaComponentFactory(EditorialTile),
+  'personal-recommendation': (props: MediaSelectorProps) =>
     renderComponentSwitch(props),
   albums: MediaComponentFactory(MediaTile),
-  "library-albums": MediaComponentFactory(MediaTile),
+  'library-albums': MediaComponentFactory(MediaTile),
   playlists: MediaComponentFactory(MediaTile),
   songs: MediaComponentFactory(SongTile),
-  "music-videos": MediaComponentFactory(VideoTile),
-  "uploaded-videos": MediaComponentFactory(VideoTile),
+  'music-videos': MediaComponentFactory(VideoTile),
+  'uploaded-videos': MediaComponentFactory(VideoTile),
   artists: MediaComponentFactory(ArtistTile),
   stations: MediaComponentFactory(MediaTile),
-  "apple-curators": MediaComponentFactory(CuratorTile),
-  "library-playlists": MediaComponentFactory(MediaTile),
+  'apple-curators': MediaComponentFactory(CuratorTile),
+  'library-playlists': MediaComponentFactory(MediaTile)
 };
 
 const sameComponentTypes: MediaComponentType[] = [
-  "albums",
-  "library-albums",
-  "playlists",
-  "stations",
-  "library-playlists",
+  'albums',
+  'library-albums',
+  'playlists',
+  'stations',
+  'library-playlists'
 ];
 
 sameComponentTypes.forEach((type: MediaComponentType) => {
@@ -272,9 +272,9 @@ sameComponentTypes.forEach((type: MediaComponentType) => {
 });
 
 const isMediaComponentsKey = (
-  key: any,
+  key: any
 ): key is keyof typeof MediaComponents => {
-  return typeof key === "string" && MediaComponents.hasOwnProperty(key);
+  return typeof key === 'string' && MediaComponents.hasOwnProperty(key);
 };
 
 export function MediaSelector(props: MediaSelectorProps) {

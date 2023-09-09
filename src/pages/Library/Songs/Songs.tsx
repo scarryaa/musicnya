@@ -1,9 +1,6 @@
+import type { JSX } from "solid-js";
 import styles from "./Songs.module.scss";
 
-export function Songs() {
-  return (
-    <div class={styles.songs}>
-      <h1>songs</h1>
-    </div>
-  );
+export function Songs(): JSX.Element {
+  return <div class={styles.songs}></div>;
 }

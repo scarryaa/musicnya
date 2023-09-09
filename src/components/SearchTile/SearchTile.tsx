@@ -1,34 +1,34 @@
-import { A } from "@solidjs/router";
-import styles from "./SearchTile.module.scss";
-import { createMemo } from "solid-js";
-import { extractTileId } from "../../util/utils";
+import { A } from '@solidjs/router';
+import styles from './SearchTile.module.scss';
+import { createMemo } from 'solid-js';
+import { extractTileId } from '../../util/utils';
 
-export type SearchTileProps = {
-  mediaArt: MusicKit.Artwork;
-  title: string;
-  artists: string[];
-  type: MusicKit.MediaItemType;
-  id: string;
-  link: string;
-};
+export interface SearchTileProps {
+  mediaArt: MusicKit.Artwork
+  title: string
+  artists: string[]
+  type: MusicKit.MediaItemType
+  id: string
+  link: string
+}
 
 export function SearchTile(props: SearchTileProps) {
   const constructLink = createMemo(() => {
     const newId = extractTileId(props.link, props.id);
 
-    if (props.link && props.link.includes("viewMultiRoom")) {
+    if (props.link && props.link.includes('viewMultiRoom')) {
       return `/multiroom/${newId}`;
     } else if (
-      (props.link && props.link.includes("pp=")) ||
-      props.link.includes("curator")
+      (props.link && props.link.includes('pp=')) ||
+      props.link.includes('curator')
     ) {
       return `/curator/${newId}`;
-    } else if (props.link && props.link.includes("station")) {
+    } else if (props.link && props.link.includes('station')) {
       return `/station/${newId}`;
     } else if (props.link) {
       return `/multiplex/${newId}`;
     } else {
-      return "#";
+      return '#';
     }
   });
 
@@ -48,7 +48,7 @@ export function SearchTile(props: SearchTileProps) {
       </div>
       <div class={styles.searchTile__mediaInfo}>
         <div class={styles.searchTile__mediaInfo__title}>
-          {props.title?.replace("Apple Music ", "").replace("Apple ", "")}
+          {props.title?.replace('Apple Music ', '').replace('Apple ', '')}
         </div>
       </div>
     </div>
