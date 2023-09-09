@@ -2,15 +2,32 @@
   padding: var(--page-padding);
   height: 100vh;
   overflow-y: auto;
+  display: flex;
+  flex-direction: row;
 
   &__list {
-    display: flex;
-    flex-direction: column;
     gap: 0.5rem;
+    min-width: 20rem;
     width: 20rem;
     padding-bottom: 6rem;
     overflow-y: auto;
     overflow-x: hidden;
     height: calc(100vh - 13rem);
   }
+  &__albums {
+    gap: 0.5rem;
+    width: 100%;
+    padding-left: 1rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
+
+.albums {
+  margin-top: 1rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  display: flex;
+  gap: 1rem;
+}
+
