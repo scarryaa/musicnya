@@ -1,3 +1,10 @@
 .songs {
   padding: var(--page-padding);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-bottom: 6rem;
+  overflow-y: auto;
+  height: calc(100vh - 13rem);
 }
