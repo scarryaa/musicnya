@@ -1,18 +1,18 @@
-import styles from "./Station.module.scss";
+import styles from './Station.module.scss';
 
-import { useParams } from "@solidjs/router";
-import { Match, Switch } from "solid-js";
-import { MediaDetail } from "../../components/MediaView/MediaDetail";
+import { useParams } from '@solidjs/router';
+import { Match, Switch } from 'solid-js';
+import { MediaDetail } from '../../components/MediaView/MediaDetail';
 import {
   getItemAttributes,
   getNestedArtwork,
   getNestedAttributes,
   getNestedRelationships,
-  replaceSrc,
-} from "../../util/utils";
-import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { createStationStore } from "../../stores/api-store";
-import { Error } from "../../components/Error/Error";
+  replaceSrc
+} from '../../util/utils';
+import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner';
+import { createStationStore } from '../../stores/api-store';
+import { Error } from '../../components/Error/Error';
 
 export function Station() {
   const params = useParams<{ id: string }>();
@@ -25,17 +25,17 @@ export function Station() {
       <Switch fallback={<div>Not found</div>}>
         <Match
           when={
-            stationData.state === "pending" ||
-            stationData.state === "unresolved" ||
-            stationData.state === "refreshing"
+            stationData.state === 'pending' ||
+            stationData.state === 'unresolved' ||
+            stationData.state === 'refreshing'
           }
         >
           <LoadingSpinner />
         </Match>
-        <Match when={stationData.state === "errored"}>
+        <Match when={stationData.state === 'errored'}>
           <Error error={stationData.error} />
         </Match>
-        <Match when={stationData.state === "ready"}>
+        <Match when={stationData.state === 'ready'}>
           <div class={styles.station__content}>
             <MediaDetail
               type="stations"
@@ -43,7 +43,7 @@ export function Station() {
               mediaArt={
                 getNestedAttributes(stationData())?.artwork && {
                   url:
-                    replaceSrc(getNestedArtwork(stationData())?.url, 300) || "",
+                    replaceSrc(getNestedArtwork(stationData())?.url, 300) || ''
                 }
               }
               subtitle={
@@ -55,12 +55,12 @@ export function Station() {
               }
               id={stationData().data?.[0]?.id}
               artistIds={getNestedRelationships(
-                stationData(),
+                stationData()
               )?.artists?.data?.map((artist: any) => artist.id)}
               artists={getNestedRelationships(
-                stationData(),
+                stationData()
               )?.artists?.data?.map(
-                (artist: any) => getItemAttributes(artist).name,
+                (artist: any) => getItemAttributes(artist).name
               )}
             />
           </div>

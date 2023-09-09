@@ -1,21 +1,21 @@
 export const fetchBrowse = async ({
   devToken,
-  musicUserToken,
+  musicUserToken
 }: {
-  devToken: string;
-  musicUserToken: string;
+  devToken: string
+  musicUserToken: string
 }) => {
   return await fetch(
-    "https://amp-api.music.apple.com/v1/editorial/us/groupings?art[url]=c,f&extend=artistUrl,editorialArtwork,plainEditorialNotes&extend[station-events]=editorialVideo&fields[albums]=artistName,artistUrl,artwork,contentRating,editorialArtwork,plainEditorialNotes,name,playParams,releaseDate,url,trackCount&fields[artists]=name,url,artwork&include[albums]=artists&include[music-videos]=artists&include[songs]=artists&include[stations]=events,radio-show&l=en-US&name=music&omit[resource:artists]=relationships&platform=web&relate[songs]=albums&tabs=subscriber",
+    'https://amp-api.music.apple.com/v1/editorial/us/groupings?art[url]=c,f&extend=artistUrl,editorialArtwork,plainEditorialNotes&extend[station-events]=editorialVideo&fields[albums]=artistName,artistUrl,artwork,contentRating,editorialArtwork,plainEditorialNotes,name,playParams,releaseDate,url,trackCount&fields[artists]=name,url,artwork&include[albums]=artists&include[music-videos]=artists&include[songs]=artists&include[stations]=events,radio-show&l=en-US&name=music&omit[resource:artists]=relationships&platform=web&relate[songs]=albums&tabs=subscriber',
     {
       headers: {
         authorization: `Bearer ${devToken}`,
-        "music-user-token": musicUserToken,
-      },
-    },
+        'music-user-token': musicUserToken
+      }
+    }
   )
-    .then((response) => {
-      return response.json() as Promise<Response>;
+    .then(async (response) => {
+      return await (response.json() as Promise<Response>);
     })
     .catch((e) => {
       console.error(e);

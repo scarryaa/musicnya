@@ -1,37 +1,36 @@
-import { JSX } from "solid-js";
-import styles from "./EditorialTile.module.scss";
-import { IoEllipsisVertical, IoPlay } from "solid-icons/io";
-import { A } from "@solidjs/router";
-import { createMemo } from "solid-js";
-import { extractTileId } from "../../util/utils";
+import { JSX, createMemo } from 'solid-js';
+import styles from './EditorialTile.module.scss';
+import { IoEllipsisVertical, IoPlay } from 'solid-icons/io';
+import { A } from '@solidjs/router';
+import { extractTileId } from '../../util/utils';
 
-export type EditorialTileProps = {
-  mediaArt: MusicKit.Artwork;
-  title: string;
-  artists: string[];
-  type: MusicKit.MediaItemType;
-  id: string;
-  link: string;
-  editorialElementKind: string;
-};
+export interface EditorialTileProps {
+  mediaArt: MusicKit.Artwork
+  title: string
+  artists: string[]
+  type: MusicKit.MediaItemType
+  id: string
+  link: string
+  editorialElementKind: string
+}
 
 export function EditorialTile(props: EditorialTileProps) {
   const constructLink = createMemo(() => {
     const newId = extractTileId(props.link, props.id);
 
-    if (props.link && props.link.includes("viewMultiRoom")) {
+    if (props.link && props.link.includes('viewMultiRoom')) {
       return `/multiroom/${newId}`;
     } else if (
-      (props.link && props.link.includes("pp=")) ||
-      props.link.includes("curator")
+      (props.link && props.link.includes('pp=')) ||
+      props.link.includes('curator')
     ) {
       return `/curator/${newId}`;
-    } else if (props.link && props.link.includes("station")) {
+    } else if (props.link && props.link.includes('station')) {
       return `/station/${newId}`;
     } else if (props.link) {
       return `/multiplex/${newId}`;
     } else {
-      return "#";
+      return '#';
     }
   });
 

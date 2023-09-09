@@ -8,7 +8,31 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "rules": {},
+  "rules": {
+    "@typescript-eslint/quotes": [
+      //disable
+      "off",
+      "double",
+      {
+        "avoidEscape": true,
+        "allowTemplateLiterals": true
+      }
+    ],
+    // typescript allow semicolon
+    "@typescript-eslint/semi": "off",
+    "semi": [2, "always"],
+    "@typescript-eslint/space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "always",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ],
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/member-delimiter-style": "off",
+    "@typescript-eslint/indent": "off"
+  },
   "overrides": [
     {
       "files": ["*.ts", "*.tsx"],

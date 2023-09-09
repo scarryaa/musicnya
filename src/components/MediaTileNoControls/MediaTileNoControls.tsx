@@ -1,14 +1,14 @@
-import styles from "./MediaTileNoControls.module.scss";
-import musicNote from "../../assets/music_note.png";
+import styles from './MediaTileNoControls.module.scss';
+import musicNote from '../../assets/music_note.png';
 
-export type MediaTileNoControlsProps = {
-  mediaArt: MusicKit.Artwork;
-  title: string;
-  artists: string[];
-  type: MusicKit.MediaItemType;
-  id: string;
-  artistIds: string[];
-};
+export interface MediaTileNoControlsProps {
+  mediaArt: MusicKit.Artwork
+  title: string
+  artists: string[]
+  type: MusicKit.MediaItemType
+  id: string
+  artistIds: string[]
+}
 
 export function MediaTileNoControls(props: MediaTileNoControlsProps) {
   return (

@@ -21,11 +21,12 @@ const App: Component = () => {
     developerToken: import.meta.env.VITE_MUSICKIT_TOKEN as string,
     app: {
       name: "Music",
-      build: "1.0.0",
+      build: "1.0.0"
     },
-    sourceType: 24,
+    sourceType: 24
   })
     .then((music) => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       music.authorize().then(() => {
         console.log("Authorized");
         setIsAuthorized(true);
@@ -47,14 +48,17 @@ const App: Component = () => {
     });
 
   return (
-    <div>      
-      <Show when={navigator.platform == 'MacIntel'}>
+    <div>
+      <Show when={navigator.platform === "MacIntel"}>
         <TitlebarMac />
       </Show>
-      <Show when={navigator.platform != 'MacIntel'}>
+      <Show when={navigator.platform !== "MacIntel"}>
         <Titlebar />
       </Show>
-      <div id="apple-music-video-container" style="position: absolute; z-index: 9999999999"></div>
+      <div
+        id="apple-music-video-container"
+        style="position: absolute; z-index: 9999999999"
+      ></div>
       <Drawer />
       <Show when={rightPanelContent.value === "lyrics" && rightPanelOpen}>
         <Lyrics />

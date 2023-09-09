@@ -1,11 +1,12 @@
-import { Switch, Match, createSignal, For } from "solid-js";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Switch, Match, createSignal, For, type JSX } from "solid-js";
 import { MediaTile } from "../../../components/MediaTile/MediaTile";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import {
   getItemAttributes,
   getItemRelationships,
   getNestedRelationships,
-  replaceSrc,
+  replaceSrc
 } from "../../../util/utils";
 import styles from "./Artists.module.scss";
 import { createLibraryArtistsStore } from "../../../stores/api-store";
@@ -13,7 +14,7 @@ import { Error } from "../../../components/Error/Error";
 import { ArtistTableTile } from "../../../components/ArtistTableTile/ArtistTableTile";
 import { fetchLibraryAlbum } from "../../../api/get-artist-album";
 
-export function Artists() {
+export function Artists(): JSX.Element {
   const artistsStore = createLibraryArtistsStore();
   const artistsData = artistsStore();
 
@@ -24,7 +25,7 @@ export function Artists() {
   const [recievedAlbums, setRecievedAlbums] = createSignal([] as any);
   const [albumArray, setAlbumArray] = createSignal([]);
 
-  const handleArtistClick = async (artist: any) => {
+  const handleArtistClick = async (artist: any): Promise<void> => {
     setSelectedArtist(artist);
     console.log(selectedArtist());
 
@@ -32,16 +33,16 @@ export function Artists() {
       await fetchLibraryAlbum({
         devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
         musicUserToken: MusicKit.getInstance()?.musicUserToken,
-        id: artist.id,
-      }),
+        id: artist.id
+      })
     );
     albums = Object.keys(recievedAlbums().resources["library-albums"]).map(
       (key, index) => {
         return {
           ...recievedAlbums().resources["library-albums"][key],
-          index: index,
+          index
         };
-      },
+      }
     );
     setAlbumArray(albums);
   };
@@ -72,7 +73,7 @@ export function Artists() {
                     type={artist.type}
                     title={artist.attributes.name}
                     artists={getNestedRelationships(artist)?.artists?.data?.map(
-                      (artist: any) => artist.attributes.name,
+                      (artist: any) => artist.attributes.name
                     )}
                     mediaArt={
                       (getItemRelationships(artist)?.catalog?.data?.[0]
@@ -80,11 +81,14 @@ export function Artists() {
                         url: replaceSrc(
                           getItemRelationships(artist)?.catalog?.data?.[0]
                             ?.attributes?.artwork.url,
-                          300,
-                        ),
+                          300
+                        )
                       }) || { url: "" }
                     }
-                    onClick={() => handleArtistClick(artist)}
+                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                    onClick={async () => {
+                      await handleArtistClick(artist);
+                    }}
                   />
                 )}
               </For>
@@ -104,17 +108,17 @@ export function Artists() {
                     type={album.type}
                     title={album.attributes.name}
                     artists={getNestedRelationships(album)?.artists?.data?.map(
-                      (artist: any) => artist.attributes.name,
+                      (artist: any) => artist.attributes.name
                     )}
                     artistIds={getNestedRelationships(
-                      album,
+                      album
                     )?.artists?.data?.map((artist: any) => artist.id)}
                     mediaArt={
                       getItemAttributes(album).artwork && {
                         url: replaceSrc(
                           getItemAttributes(album).artwork.url,
-                          300,
-                        ),
+                          300
+                        )
                       }
                     }
                   />

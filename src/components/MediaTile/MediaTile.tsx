@@ -1,19 +1,19 @@
-import { For, Show } from "solid-js";
-import { IoPlay, IoEllipsisVertical } from "solid-icons/io";
-import styles from "./MediaTile.module.scss";
-import { setQueue, stop } from "../../api/musickit";
-import { A } from "@solidjs/router";
-import { constructLink } from "../../util/utils";
-import musicNote from "../../assets/music_note.png"
+import { For, Show } from 'solid-js';
+import { IoPlay, IoEllipsisVertical } from 'solid-icons/io';
+import styles from './MediaTile.module.scss';
+import { setQueue, stop } from '../../api/musickit';
+import { A } from '@solidjs/router';
+import { constructLink } from '../../util/utils';
+import musicNote from '../../assets/music_note.png';
 
-export type MediaTileProps = {
-  mediaArt: MusicKit.Artwork;
-  title: string;
-  artists: string[];
-  type: MusicKit.MediaItemType;
-  id: string;
-  artistIds: string[];
-};
+export interface MediaTileProps {
+  mediaArt: MusicKit.Artwork
+  title: string
+  artists: string[]
+  type: MusicKit.MediaItemType
+  id: string
+  artistIds: string[]
+}
 
 export function MediaTile(props: MediaTileProps) {
   return (
@@ -32,9 +32,9 @@ export function MediaTile(props: MediaTileProps) {
               setQueue(
                 props.type
                   .substring(0, props.type.length - 1)
-                  .replace("library-", ""),
+                  .replace('library-', ''),
                 props.id,
-                false,
+                false
               ).then(() => {
                 MusicKit.getInstance().play();
               });
@@ -45,7 +45,7 @@ export function MediaTile(props: MediaTileProps) {
             class={styles.mediaTile__overlay__inner__button__more}
             onclick={(e) => {
               e.preventDefault();
-              console.log("more");
+              console.log('more');
             }}
           />
         </A>
@@ -70,7 +70,7 @@ export function MediaTile(props: MediaTileProps) {
           <For each={props.artists}>
             {(artist, i) => (
               <A
-                href={constructLink("artists", props.artistIds?.[i()])}
+                href={constructLink('artists', props.artistIds?.[i()])}
                 class={styles.mediaTile__mediaInfo__artist__name}
               >
                 {artist}
@@ -81,7 +81,7 @@ export function MediaTile(props: MediaTileProps) {
                   }
                 >
                   <span class={styles.mediaTile__mediaInfo__artist__separator}>
-                    ,{" "}
+                    ,{' '}
                   </span>
                 </Show>
               </A>

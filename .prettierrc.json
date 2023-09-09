@@ -1,1 +1,7 @@
-{}
+{
+  "trailingComma": "none",
+  "typescript.format.insertSpaceBeforeFunctionParenthesis": false,
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "printWidth": 80
+}

@@ -1,10 +1,10 @@
-import styles from "./ButtonPrimary.module.scss";
+import styles from './ButtonPrimary.module.scss';
 
-export type ButtonPrimaryProps = {
-  icon: any;
-  label: string;
-  onClick: () => void;
-};
+export interface ButtonPrimaryProps {
+  icon: any
+  label: string
+  onClick: () => void
+}
 
 export function ButtonPrimary(props: ButtonPrimaryProps) {
   return (

@@ -1,9 +1,9 @@
-import { IoInfinite } from "solid-icons/io";
-import styles from "./Queue.module.scss";
-import { getQueueItems, setAutoplay } from "../../api/musickit";
-import { For, createEffect, createSignal } from "solid-js";
-import { replaceSrc } from "../../util/utils";
-import { QueueItem } from "./QueueItem";
+import { IoInfinite } from 'solid-icons/io';
+import styles from './Queue.module.scss';
+import { getQueueItems, setAutoplay } from '../../api/musickit';
+import { For, createEffect, createSignal } from 'solid-js';
+import { replaceSrc } from '../../util/utils';
+import { QueueItem } from './QueueItem';
 
 export function Queue() {
   const [autoplay, _setAutoplay] = createSignal(true);
@@ -26,7 +26,7 @@ export function Queue() {
         <h1>Queue</h1>
         <IoInfinite
           size={30}
-          color={"var(--text)"}
+          color={'var(--text)'}
           class={styles.queue__autoplay}
           onclick={async () => {
             await setAutoplay(autoplay());
@@ -58,7 +58,7 @@ export function Queue() {
               isCurrentItem={false}
               mediaArt={{
                 ...item.attributes?.artwork,
-                url: replaceSrc(item.attributes?.artwork?.url, 50),
+                url: replaceSrc(item.attributes?.artwork?.url, 50)
               }}
               title={item.title}
               artist={item.artistName}

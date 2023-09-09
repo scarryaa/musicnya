@@ -6,7 +6,7 @@ import {
   getNestedAttributes,
   getNestedData,
   getNestedRelationships,
-  replaceSrc,
+  replaceSrc
 } from "../../util/utils";
 import { MediaDetail } from "../../components/MediaView/MediaDetail";
 import { MediaTable } from "../../components/MediaView/MediaTable";
@@ -27,6 +27,7 @@ export function Playlist() {
     (playlistPage.scrollTop = 0), params.id;
   });
 
+  // eslint-disable-next-line prefer-const
   let playlistPage: HTMLDivElement = undefined as unknown as HTMLDivElement;
 
   return (
@@ -50,19 +51,20 @@ export function Playlist() {
               type="playlists"
               title={getNestedAttributes(playlistData())?.name}
               mediaArt={
-                getNestedArtwork(playlistData()) && {
+                (getNestedArtwork(playlistData()) && {
                   url:
-                    replaceSrc(getNestedArtwork(playlistData())?.url, 300) ||
-                    "",
-                } || getNestedRelationships(playlistData())?.tracks?.data?.[0]
+                    replaceSrc(getNestedArtwork(playlistData())?.url, 300) || ""
+                }) ||
+                (getNestedRelationships(playlistData())?.tracks?.data?.[0]
                   ?.attributes?.artwork && {
                   url:
                     replaceSrc(
                       getNestedRelationships(playlistData())?.tracks?.data?.[0]
                         ?.attributes?.artwork?.url,
-                      300,
-                    ) || "",
-              }}
+                      300
+                    ) || ""
+                })
+              }
               subtitle={
                 getNestedRelationships(playlistData())?.catalog?.data?.[0]
                   ?.attributes?.curatorName

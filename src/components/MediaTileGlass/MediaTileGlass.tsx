@@ -1,17 +1,17 @@
-import { For, Show } from "solid-js";
-import { IoPlay, IoEllipsisVertical } from "solid-icons/io";
-import styles from "./MediaTileGlass.module.scss";
-import { A } from "@solidjs/router";
-import { constructLink } from "../../util/utils";
+import { For, Show } from 'solid-js';
+import { IoPlay, IoEllipsisVertical } from 'solid-icons/io';
+import styles from './MediaTileGlass.module.scss';
+import { A } from '@solidjs/router';
+import { constructLink } from '../../util/utils';
 
-export type MediaTileProps = {
-  mediaArt: MusicKit.Artwork;
-  title: string;
-  artists: string[];
-  type: MusicKit.MediaItemType;
-  id: string;
-  artistIds: string[];
-};
+export interface MediaTileProps {
+  mediaArt: MusicKit.Artwork
+  title: string
+  artists: string[]
+  type: MusicKit.MediaItemType
+  id: string
+  artistIds: string[]
+}
 
 export function MediaTileGlass(props: MediaTileProps) {
   return (
@@ -28,7 +28,7 @@ export function MediaTileGlass(props: MediaTileProps) {
               e.preventDefault();
               await MusicKit.getInstance().setQueue({
                 [props.type.substring(0, props.type.length - 1)]: props.id,
-                startPlaying: true,
+                startPlaying: true
               });
             }}
           />
@@ -37,7 +37,7 @@ export function MediaTileGlass(props: MediaTileProps) {
             class={styles.mediaTileGlass__overlay__inner__button__more}
             onclick={(e) => {
               e.preventDefault();
-              console.log("more");
+              console.log('more');
             }}
           />
         </A>
@@ -53,7 +53,7 @@ export function MediaTileGlass(props: MediaTileProps) {
         class={styles.mediaTileGlass__backdrop}
         style={{
           background: `url(${props.mediaArt.url})`,
-          "background-position": "center",
+          'background-position': 'center'
         }}
       ></div>
       <div class={styles.mediaTileGlass__mediaInfo}>
@@ -67,11 +67,11 @@ export function MediaTileGlass(props: MediaTileProps) {
             <For each={props.artists}>
               {(artist, i) => (
                 <A
-                  href={constructLink("artists", props.artistIds?.[i()])}
+                  href={constructLink('artists', props.artistIds?.[i()])}
                   class={styles.mediaTileGlass__mediaInfo__artist__name}
                 >
                   {artist}
-                  {i() !== props.artists.length - 1 && ", "}
+                  {i() !== props.artists.length - 1 && ', '}
                 </A>
               )}
             </For>

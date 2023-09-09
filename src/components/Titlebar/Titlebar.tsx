@@ -1,8 +1,9 @@
 import styles from "./Titlebar.module.scss";
 import { IoClose } from "solid-icons/io";
 import { VsChromeMinimize, VsChromeMaximize } from "solid-icons/vs";
+import type { JSX } from "solid-js";
 
-export function Titlebar() {
+export function Titlebar(): JSX.Element {
   return (
     <div class={styles.titlebar}>
       <button
@@ -26,7 +27,7 @@ export function Titlebar() {
     </div>
   );
 }
-export function TitlebarMac() {
+export function TitlebarMac(): JSX.Element {
   return (
     <div class={styles.titlebar} style={{ "justify-content": "flex-start" }}>
       <button
@@ -39,7 +40,7 @@ export function TitlebarMac() {
           height: "12px",
           "margin-left": "8px",
           "margin-right": "8px",
-          "line-height": "20px",
+          "line-height": "20px"
         }}
       ></button>
       <button
@@ -51,7 +52,7 @@ export function TitlebarMac() {
           width: "12px",
           height: "12px",
           "margin-right": "8px",
-          "line-height": "20px",
+          "line-height": "20px"
         }}
       ></button>
       <button
@@ -63,7 +64,7 @@ export function TitlebarMac() {
           width: "12px",
           height: "12px",
           "margin-right": "8px",
-          "line-height": "20px",
+          "line-height": "20px"
         }}
       ></button>
     </div>

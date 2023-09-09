@@ -1,15 +1,16 @@
 import { IoPlay } from "solid-icons/io";
 import styles from "./SongTile.module.scss";
+import type { JSX } from "solid-js";
 
-export type SongTileProps = {
+export interface SongTileProps {
   mediaArt: MusicKit.Artwork;
   title: string;
   artists: string[];
   type: MusicKit.MediaItemType;
   id: string;
-};
+}
 
-export function SongTile(props: SongTileProps) {
+export function SongTile(props: SongTileProps): JSX.Element {
   return (
     <div class={styles.songTile}>
       <div class={styles.songTile__overlay}>
@@ -17,10 +18,11 @@ export function SongTile(props: SongTileProps) {
           <IoPlay
             size={30}
             class={styles.songTile__overlay__inner__button}
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onclick={async () => {
               await MusicKit.getInstance().setQueue({
                 [props.type.substring(0, props.type.length - 1)]: props.id,
-                startPlaying: true,
+                startPlaying: true
               });
             }}
           />

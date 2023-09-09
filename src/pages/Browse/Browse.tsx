@@ -1,14 +1,14 @@
-import styles from "./Browse.module.scss";
-import { For, Match, Show, Switch, createSignal } from "solid-js";
-import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { MediaSelector } from "../../components/MediaSelector/MediaSelector";
-import { createBrowseStore } from "../../stores/api-store";
-import { Error } from "../../components/Error/Error";
+import styles from './Browse.module.scss';
+import { For, Match, Show, Switch, createSignal } from 'solid-js';
+import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner';
+import { MediaSelector } from '../../components/MediaSelector/MediaSelector';
+import { createBrowseStore } from '../../stores/api-store';
+import { Error } from '../../components/Error/Error';
 import {
   getItemAttributes,
   getItemRelationships,
-  getNestedTabsRelationshipsData,
-} from "../../util/utils";
+  getNestedTabsRelationshipsData
+} from '../../util/utils';
 
 export function Browse() {
   const browseStore = createBrowseStore();
@@ -21,17 +21,17 @@ export function Browse() {
       <Switch fallback={<div>Not found</div>}>
         <Match
           when={
-            browseData.state === "pending" ||
-            browseData.state === "unresolved" ||
-            browseData.state === "refreshing"
+            browseData.state === 'pending' ||
+            browseData.state === 'unresolved' ||
+            browseData.state === 'refreshing'
           }
         >
           <LoadingSpinner />
         </Match>
-        <Match when={browseData.state === "errored"}>
+        <Match when={browseData.state === 'errored'}>
           <Error error={browseData.error} />
         </Match>
-        <Match when={browseData.state === "ready"}>
+        <Match when={browseData.state === 'ready'}>
           <Show when={browse}>
             <h1 class={styles.browse__title}>browse</h1>
             <div class={styles.browse__content}>

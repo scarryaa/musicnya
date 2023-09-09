@@ -10,18 +10,20 @@ import {
   getNestedEditorialArtwork,
   getNestedGroupingData,
   getNestedPlainEditorialNotes,
-  replaceSrc,
+  replaceSrc
 } from "../../util/utils";
 import { MediaSelector } from "../../components/MediaSelector/MediaSelector";
 import { createCuratorStore } from "../../stores/api-store";
 import { Error } from "../../components/Error/Error";
+import type { JSX } from "solid-js";
 
-export function Curator() {
+export function Curator(): JSX.Element {
   const params = useParams<{ id: string }>();
 
   const curatorStore = createCuratorStore();
   const curatorData = curatorStore(params);
 
+  // eslint-disable-next-line prefer-const -- causes app bug??
   let curatorPage: HTMLDivElement = undefined as unknown as HTMLDivElement;
 
   return (
@@ -46,8 +48,8 @@ export function Curator() {
                 class={styles.curator__header__image}
                 style={{
                   "background-color": `#${getNestedEditorialArtwork(
-                    curatorData(),
-                  )?.storeFlowcase?.bgColor}`,
+                    curatorData()
+                  )?.storeFlowcase?.bgColor}`
                 }}
               >
                 <img
@@ -67,8 +69,8 @@ export function Curator() {
                           ?.width / 2 ||
                         getNestedEditorialArtwork(curatorData())?.superHeroWide
                           ?.width / 2 ||
-                        getNestedArtwork(curatorData())?.width / 2,
-                    ),
+                        getNestedArtwork(curatorData())?.width / 2
+                    )
                   )}
                   alt="Album Art"
                   class={styles.curator__header__image__img}

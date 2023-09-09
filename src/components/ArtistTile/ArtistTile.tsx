@@ -1,14 +1,14 @@
-import { IoPlay } from "solid-icons/io";
-import styles from "./ArtistTile.module.scss";
-import { A } from "@solidjs/router";
+import { IoPlay } from 'solid-icons/io';
+import styles from './ArtistTile.module.scss';
+import { A } from '@solidjs/router';
 
-export type ArtistTileProps = {
-  title: string;
-  mediaArt: MusicKit.Artwork;
-  artists: string[];
-  type: MusicKit.MediaItemType;
-  id: string;
-};
+export interface ArtistTileProps {
+  title: string
+  mediaArt: MusicKit.Artwork
+  artists: string[]
+  type: MusicKit.MediaItemType
+  id: string
+}
 
 export function ArtistTile(props: ArtistTileProps) {
   return (
@@ -21,7 +21,7 @@ export function ArtistTile(props: ArtistTileProps) {
             onclick={async () => {
               await MusicKit.getInstance().setQueue({
                 [props.type.substring(0, props.type.length - 1)]: props.id,
-                startPlaying: true,
+                startPlaying: true
               });
             }}
           />
@@ -31,7 +31,7 @@ export function ArtistTile(props: ArtistTileProps) {
           loading="lazy"
           decoding="async"
           class={styles.artistTile__image}
-          src={props.mediaArt.url || ""}
+          src={props.mediaArt.url || ''}
           width={300}
           height={150}
         />

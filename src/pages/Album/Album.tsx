@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from "./Album.module.scss";
 
 import { useParams } from "@solidjs/router";
@@ -8,17 +9,18 @@ import {
   getNestedAttributes,
   getNestedData,
   getNestedRelationships,
-  replaceSrc,
+  replaceSrc
 } from "../../util/utils";
 import { MediaDetail } from "../../components/MediaView/MediaDetail";
 import { MediaTable } from "../../components/MediaView/MediaTable";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { Error } from "../../components/Error/Error";
 import { createAlbumStore } from "../../stores/api-store";
+import type { JSX } from "solid-js";
 
 const ARTWORK_RESOLUTION = 300;
 
-export const Album = () => {
+export const Album = (): JSX.Element => {
   const params = useParams<{ id: string }>();
 
   const albumStore = createAlbumStore();
@@ -28,10 +30,12 @@ export const Album = () => {
 
   // scroll to top on params change
   createEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions, no-sequences
     (albumPage.scrollTop = 0), params.id;
     console.log(albumData());
   });
 
+  // eslint-disable-next-line prefer-const
   let albumPage: HTMLDivElement = undefined as unknown as HTMLDivElement;
 
   return (
@@ -59,8 +63,8 @@ export const Album = () => {
                   url:
                     replaceSrc(
                       getNestedArtwork(albumData())?.url,
-                      ARTWORK_RESOLUTION,
-                    ) || "",
+                      ARTWORK_RESOLUTION
+                    ) ?? ""
                 }
               }
               subtitle={
@@ -71,14 +75,18 @@ export const Album = () => {
                 getNestedAttributes(albumData())?.description?.standard
               }
               id={getNestedData(albumData())?.id}
-              artistIds={getNestedData(albumData())?.type === 'library-albums' ? 
-              getNestedRelationships(albumData())?.artists?.data?.map((artist: any) => 
-              getItemRelationships(artist)?.catalog?.data?.[0]?.id) :
-                getNestedRelationships(
-                  albumData(),
-                )?.artists?.data?.map((artist: any) => artist.id)}
+              artistIds={
+                getNestedData(albumData())?.type === "library-albums"
+                  ? getNestedRelationships(albumData())?.artists?.data?.map(
+                      (artist: any) =>
+                        getItemRelationships(artist)?.catalog?.data?.[0]?.id
+                    )
+                  : getNestedRelationships(albumData())?.artists?.data?.map(
+                      (artist: any) => artist.id
+                    )
+              }
               artists={getNestedRelationships(albumData())?.artists?.data?.map(
-                (artist: any) => artist.attributes?.name,
+                (artist: any) => artist.attributes?.name
               )}
             />
             <MediaTable

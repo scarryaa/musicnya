@@ -1,13 +1,13 @@
-import styles from "./VideoTile.module.scss";
-import { IoEllipsisVertical, IoPlay } from "solid-icons/io";
+import styles from './VideoTile.module.scss';
+import { IoEllipsisVertical, IoPlay } from 'solid-icons/io';
 
-export type VideoTileProps = {
-  mediaArt: MusicKit.Artwork;
-  title: string;
-  artists: string[];
-  type: MusicKit.MediaItemType;
-  id: string;
-};
+export interface VideoTileProps {
+  mediaArt: MusicKit.Artwork
+  title: string
+  artists: string[]
+  type: MusicKit.MediaItemType
+  id: string
+}
 export function VideoTile(props: VideoTileProps) {
   return (
     <div class={styles.videoTile}>
@@ -19,7 +19,7 @@ export function VideoTile(props: VideoTileProps) {
             onclick={async () => {
               await MusicKit.getInstance().setQueue({
                 musicVideo: props.id,
-                startPlaying: true,
+                startPlaying: true
               });
             }}
           />

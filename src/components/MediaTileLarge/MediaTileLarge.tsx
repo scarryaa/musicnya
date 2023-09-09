@@ -1,37 +1,37 @@
-import { IoEllipsisVertical } from "solid-icons/io";
-import styles from "./MediaTileLarge.module.scss";
-import { A } from "@solidjs/router";
-import { createMemo } from "solid-js";
-import { extractTileId } from "../../util/utils";
+import { IoEllipsisVertical } from 'solid-icons/io';
+import styles from './MediaTileLarge.module.scss';
+import { A } from '@solidjs/router';
+import { createMemo } from 'solid-js';
+import { extractTileId } from '../../util/utils';
 
-export type MediaTileLargeProps = {
-  class?: string;
-  title?: string;
-  type: MusicKit.MediaItemType;
-  id: string;
-  mediaArt: MusicKit.Artwork;
-  childType?: string;
-  link?: string;
-};
+export interface MediaTileLargeProps {
+  class?: string
+  title?: string
+  type: MusicKit.MediaItemType
+  id: string
+  mediaArt: MusicKit.Artwork
+  childType?: string
+  link?: string
+}
 
 export function MediaTileLarge(props: MediaTileLargeProps) {
   const constructLink = createMemo(() => {
-    const newId = extractTileId(props.link || "", props.id);
+    const newId = extractTileId(props.link || '', props.id);
 
-    if (props.link && props.link.includes("viewMultiRoom")) {
+    if (props.link && props.link.includes('viewMultiRoom')) {
       return `/multiroom/${newId}`;
     } else if (
-      (props.link && props.link.includes("pp=")) ||
-      props.link?.includes("curator")
+      (props.link && props.link.includes('pp=')) ||
+      props.link?.includes('curator')
     ) {
       return `/curator/${newId}`;
-    } else if (props.link && props.link.includes("station")) {
+    } else if (props.link && props.link.includes('station')) {
       return `/station/${newId}`;
     } else if (props.link) {
       if (props.childType) {
         return `/${props.childType?.substring(
           0,
-          props.childType.length - 1,
+          props.childType.length - 1
         )}/${newId}`;
       } else {
         return `/multiplex/${newId}`;
@@ -60,7 +60,7 @@ export function MediaTileLarge(props: MediaTileLargeProps) {
           />
         </A>
         <img
-          style={{ "background-color": `#${props.mediaArt.bgColor}` }}
+          style={{ 'background-color': `#${props.mediaArt.bgColor}` }}
           loading="lazy"
           decoding="async"
           class={styles.mediaTileLarge__image}

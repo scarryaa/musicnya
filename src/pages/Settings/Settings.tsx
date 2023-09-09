@@ -1,16 +1,16 @@
-import styles from "./Settings.module.scss";
-import { darkMode, setDarkMode } from "../../stores/store";
+import styles from './Settings.module.scss';
+import { darkMode, setDarkMode } from '../../stores/store';
 
 export function Settings() {
   const toggleDarkMode = () => {
     setDarkMode({ value: !darkMode.value });
     // theme = light
     if (darkMode.value) {
-      document.documentElement.setAttribute("theme", "dark");
-      localStorage.setItem("theme", "dark");
+      document.documentElement.setAttribute('theme', 'dark');
+      localStorage.setItem('theme', 'dark');
     } else {
-      document.documentElement.setAttribute("theme", "light");
-      localStorage.setItem("theme", "light");
+      document.documentElement.setAttribute('theme', 'light');
+      localStorage.setItem('theme', 'light');
     }
   };
 
