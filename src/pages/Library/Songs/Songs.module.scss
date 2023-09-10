@@ -1,10 +1,82 @@
+:root {
+  --table-background: #111111;
+}
+
 .songs {
-  padding: var(--page-padding);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   gap: 0.5rem;
-  padding-bottom: 6rem;
-  overflow-y: auto;
-  height: calc(100vh - 13rem);
+
+  &__body {
+    overflow-y: auto;
+    height: calc(100vh - 13rem);
+    padding-bottom: 5rem;
+    margin-top: 1.5rem;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    overflow: hidden;
+
+    &__header {
+      font-weight: 400;
+      font-size: 1.1rem;
+      color: var(--color-gray-400);
+      background-color: var(--table-background);
+      text-align: left;
+      position: absolute;
+      top: 3.95rem;
+      left: 0;
+      right: 0;
+      height: 2rem;
+      display: table;
+      width: 100%;
+
+      > tr {
+        > th {
+          padding: 0rem 0.8rem;
+        }
+
+        > th:nth-child(1) {
+          width: 5%;
+        }
+
+        > th:nth-child(2) {
+          width: 34.2%;
+        }
+
+        > th:nth-child(3) {
+          width: 20.8%;
+        }
+
+        > th:nth-child(4) {
+          width: 33.2%;
+        }
+      }
+    }
+
+    &__data {
+      font-weight: 400;
+      font-size: 1.1rem;
+      text-align: left;
+    }
+
+    td {
+      padding: 0.5rem 1rem;
+      color: var(--color-gray-500);
+
+      &:nth-child(2) {
+        color: var(--color-gray-200);
+      }
+    }
+
+    tr:not(.songs__table__header__row) {
+      &:hover {
+        background-color: var(--color-gray-800);
+      }
+    }
+  }
 }

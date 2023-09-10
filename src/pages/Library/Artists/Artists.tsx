@@ -87,6 +87,10 @@ export function Artists(): JSX.Element {
                     }
                     // eslint-disable-next-line @typescript-eslint/no-misused-promises
                     onClick={async () => {
+                      // Clear the selected artist and albums when a new artist is clicked
+                      setSelectedArtist(null);
+                      setRecievedAlbums(null);
+                      setAlbumArray([]);
                       await handleArtistClick(artist);
                     }}
                   />
