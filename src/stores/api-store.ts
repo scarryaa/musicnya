@@ -1,27 +1,28 @@
-import { createResource } from 'solid-js';
-import { fetchAlbum } from '../api/album';
-import { fetchLibraryAlbum } from '../api/library-album';
-import { fetchArtist } from '../api/artist';
-import { fetchBrowse } from '../api/browse';
-import { fetchCurator } from '../api/curator';
-import { fetchRecommendations } from '../api/home';
-import { fetchMultiplex } from '../api/multiplex';
-import { fetchMultiroom } from '../api/multiroom';
-import { fetchPlaylist } from '../api/playlist';
-import { fetchLibraryPlaylist } from '../api/library-playlist';
-import { fetchRadio } from '../api/radio';
-import { fetchStation } from '../api/station';
-import { fetchSearchCategories, fetchSearchResults } from '../api/search';
-import { fetchLibraryAlbums } from '../api/library-albums';
-import { fetchLibraryPlaylists } from '../api/library-playlists';
-import { fetchLibraryArtists } from '../api/library-artists';
+import { createResource } from "solid-js";
+import { fetchAlbum } from "../api/album";
+import { fetchLibraryAlbum } from "../api/library-album";
+import { fetchArtist } from "../api/artist";
+import { fetchBrowse } from "../api/browse";
+import { fetchCurator } from "../api/curator";
+import { fetchRecommendations } from "../api/home";
+import { fetchMultiplex } from "../api/multiplex";
+import { fetchMultiroom } from "../api/multiroom";
+import { fetchPlaylist } from "../api/playlist";
+import { fetchLibraryPlaylist } from "../api/library-playlist";
+import { fetchRadio } from "../api/radio";
+import { fetchStation } from "../api/station";
+import { fetchSearchCategories, fetchSearchResults } from "../api/search";
+import { fetchLibraryAlbums } from "../api/library-albums";
+import { fetchLibraryPlaylists } from "../api/library-playlists";
+import { fetchLibraryArtists } from "../api/library-artists";
+import { fetchLibrarySongs } from "../api/library-songs";
 
 export const createAlbumStore = () => {
   return function (params: { id: string }) {
     const [data] = createResource(
       () => params.id,
       async () =>
-        await (params.id.startsWith('l.') ? fetchLibraryAlbum : fetchAlbum)({
+        await (params.id.startsWith("l.") ? fetchLibraryAlbum : fetchAlbum)({
           devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
           musicUserToken: MusicKit.getInstance()?.musicUserToken,
           id: params.id
@@ -56,12 +57,12 @@ export const createLibraryAlbumsStore = () => {
 export const createSearchCategoriesStore = () => {
   return function () {
     const [data] = createResource<
-    any,
-    {
-      devToken: string
-      musicUserToken: string
-    },
-    string
+      any,
+      {
+        devToken: string;
+        musicUserToken: string;
+      },
+      string
     >(
       {
         devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
@@ -111,12 +112,12 @@ export const createArtistStore = () => {
 export const createBrowseStore = () => {
   return function () {
     const [data] = createResource<
-    any,
-    {
-      devToken: string
-      musicUserToken: string
-    },
-    string
+      any,
+      {
+        devToken: string;
+        musicUserToken: string;
+      },
+      string
     >(
       {
         devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
@@ -149,12 +150,12 @@ export const createCuratorStore = () => {
 export const createHomeStore = () => {
   return function () {
     const [data] = createResource<
-    any,
-    {
-      devToken: string
-      musicUserToken: string
-    },
-    string
+      any,
+      {
+        devToken: string;
+        musicUserToken: string;
+      },
+      string
     >(
       {
         devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
@@ -204,20 +205,20 @@ export const createMultiroomStore = () => {
 export const createPlaylistStore = () => {
   return function (params: { id: string }) {
     const [data] = createResource<
-    any,
-    {
-      devToken: string
-      musicUserToken: string
-      id: string
-    },
-    string
+      any,
+      {
+        devToken: string;
+        musicUserToken: string;
+        id: string;
+      },
+      string
     >(
       {
         devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
         musicUserToken: MusicKit.getInstance()?.musicUserToken,
         id: params.id
       },
-      params.id.substring(0, 2) === 'pl' ? fetchPlaylist : fetchLibraryPlaylist
+      params.id.substring(0, 2) === "pl" ? fetchPlaylist : fetchLibraryPlaylist
     );
 
     return data;
@@ -266,15 +267,36 @@ export const createLibraryArtistsStore = () => {
   };
 };
 
+export const createLibrarySongsStore = () => {
+  return function () {
+    const [data] = createResource(
+      () => {
+        return {
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
+          musicUserToken: MusicKit.getInstance()?.musicUserToken
+        };
+      },
+      async () => {
+        return await fetchLibrarySongs({
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
+          musicUserToken: MusicKit.getInstance()?.musicUserToken
+        });
+      }
+    );
+
+    return data;
+  };
+};
+
 export const createRadioStore = () => {
   return function () {
     const [data] = createResource<
-    any,
-    {
-      devToken: string
-      musicUserToken: string
-    },
-    string
+      any,
+      {
+        devToken: string;
+        musicUserToken: string;
+      },
+      string
     >(
       {
         devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
@@ -290,13 +312,13 @@ export const createRadioStore = () => {
 export const createStationStore = () => {
   return function (params: { id: string }) {
     const [data] = createResource<
-    any,
-    {
-      devToken: string
-      musicUserToken: string
-      id: string
-    },
-    string
+      any,
+      {
+        devToken: string;
+        musicUserToken: string;
+        id: string;
+      },
+      string
     >(
       {
         devToken: import.meta.env.VITE_MUSICKIT_TOKEN,

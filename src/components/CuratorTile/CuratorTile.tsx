@@ -1,19 +1,19 @@
-import { For, Show } from 'solid-js';
-import { IoEllipsisVertical, IoLink } from 'solid-icons/io';
-import styles from './CuratorTile.module.scss';
-import { A } from '@solidjs/router';
-import { constructLink } from '../../util/utils';
+import { For, type JSX, Show } from "solid-js";
+import { IoEllipsisVertical, IoLink } from "solid-icons/io";
+import styles from "./CuratorTile.module.scss";
+import { A } from "@solidjs/router";
+import { constructLink } from "../../util/utils";
 
 export interface CuratorTileProps {
-  mediaArt: MusicKit.Artwork
-  title: string
-  artists: string[]
-  type: MusicKit.MediaItemType
-  id: string
-  artistIds: string[]
+  mediaArt: MusicKit.Artwork;
+  title: string;
+  artists: string[];
+  type: MusicKit.MediaItemType;
+  id: string;
+  artistIds: string[];
 }
 
-export function CuratorTile(props: CuratorTileProps) {
+export function CuratorTile(props: CuratorTileProps): JSX.Element {
   return (
     <div class={styles.curatorTile}>
       <div class={styles.curatorTile__overlay}>
@@ -30,7 +30,7 @@ export function CuratorTile(props: CuratorTileProps) {
             class={styles.curatorTile__overlay__inner__button__more}
             onclick={(e) => {
               e.preventDefault();
-              console.log('more');
+              console.log("more");
             }}
           />
         </A>
@@ -55,7 +55,7 @@ export function CuratorTile(props: CuratorTileProps) {
           <For each={props.artists}>
             {(artist, i) => (
               <A
-                href={constructLink('artists', props.artistIds?.[i()])}
+                href={constructLink("artists", props.artistIds?.[i()])}
                 class={styles.curatorTile__mediaInfo__artist__name}
               >
                 {artist}
@@ -68,7 +68,7 @@ export function CuratorTile(props: CuratorTileProps) {
                   <span
                     class={styles.curatorTile__mediaInfo__artist__separator}
                   >
-                    ,{' '}
+                    ,{" "}
                   </span>
                 </Show>
               </A>
