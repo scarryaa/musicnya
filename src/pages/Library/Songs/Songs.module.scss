@@ -71,6 +71,18 @@
       &:nth-child(2) {
         color: var(--color-gray-200);
       }
+
+      &:nth-child(4) {
+        display: block;
+        max-width: 90%;
+      }
+
+      > div {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
 
     tr:not(.songs__table__header__row) {

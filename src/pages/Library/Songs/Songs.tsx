@@ -51,18 +51,20 @@ export function Songs(): JSX.Element {
                   <tr>
                     <td class={styles.songs__table__index}>{i() + 1}</td>
                     <td class={styles.songs__table__title}>
-                      {getItemAttributes(song).name}
+                      <div>{getItemAttributes(song).name}</div>
                     </td>
                     <td class={styles.songs__table__artist}>
-                      {getItemAttributes(song).artistName}
+                      <div>{getItemAttributes(song).artistName}</div>
                     </td>
                     <td class={styles.songs__table__album}>
-                      {getItemAttributes(song).albumName}
+                      <div>{getItemAttributes(song).albumName}</div>
                     </td>
                     <td class={styles.songs__table__time}>
-                      {new Date(getItemAttributes(song).durationInMillis)
-                        .toISOString()
-                        .substr(15, 4)}
+                      <div>
+                        {new Date(getItemAttributes(song).durationInMillis)
+                          .toISOString()
+                          .substr(15, 4)}
+                      </div>
                     </td>
                   </tr>
                 )}

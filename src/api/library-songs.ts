@@ -16,20 +16,38 @@ export const fetchLibrarySongs = async ({
   )
     .then(async (response) => {
       const responseJson = await (response.json() as Promise<Response>);
-      // make consequtive requests to get all songs
-      if (responseJson.next) {
-        const nextUrl = "https://amp-api.music.apple.com" + responseJson.next;
-        const nextResponse = await fetch(nextUrl, {
-          headers: {
-            authorization: `Bearer ${devToken}`,
-            "music-user-token": musicUserToken
-          }
-        });
-        const nextResponseJson =
-          await (nextResponse.json() as Promise<Response>);
-        responseJson.data.push(...nextResponseJson.data);
+      // make subsequent requests to get all songs, in groups of 100
+      const total = responseJson.meta.total;
+      const limit = 100;
+      const requests = [];
+      for (let i = 0; i < total / limit; i++) {
+        requests.push(
+          fetch(
+            `https://amp-api.music.apple.com/v1/me/library/songs?offset=${
+              i * limit
+            }&l=en-US&limit=${limit}&include%5Blibrary-songs%5D=albums&sort=dateAdded`,
+            {
+              headers: {
+                authorization: `Bearer ${devToken}`,
+                "music-user-token": musicUserToken
+              }
+            }
+          )
+        );
       }
-      return responseJson;
+      const responses = await Promise.all(requests);
+      const jsons = await Promise.all(
+        responses.map((response) => response.json())
+      );
+      const songs = jsons
+        .map((json) => json.data)
+        .reduce((acc, val) => acc.concat(val), []);
+      return {
+        data: songs,
+        meta: {
+          total: songs.length
+        }
+      };
     })
     .catch((e) => {
       console.error(e);
