@@ -12,7 +12,7 @@ export function createContextMenu(e, items): void {
     items: items,
     x: e.clientX,
     y: e.clientY
-  });
+  }) as HTMLElement;
 
   // Remove the context menu if it already exists
   const existingContextMenu = document.querySelector("contextMenu");
