@@ -1,23 +1,30 @@
-import { For, Show } from 'solid-js';
-import { IoPlay, IoEllipsisVertical } from 'solid-icons/io';
-import styles from './MediaTile.module.scss';
-import { setQueue, stop } from '../../api/musickit';
-import { A } from '@solidjs/router';
-import { constructLink } from '../../util/utils';
-import musicNote from '../../assets/music_note.png';
+import { For, Show, createEffect, createSignal } from "solid-js";
+import { IoPlay, IoEllipsisVertical } from "solid-icons/io";
+import styles from "./MediaTile.module.scss";
+import { setQueue, stop } from "../../api/musickit";
+import { A } from "@solidjs/router";
+import { constructLink } from "../../util/utils";
+import musicNote from "../../assets/music_note.png";
+import { ContextMenu, createContextMenu } from "../ContextMenu/ContextMenu";
+import { mediaTileContextMenu } from "./ContextMenu";
 
 export interface MediaTileProps {
-  mediaArt: MusicKit.Artwork
-  title: string
-  artists: string[]
-  type: MusicKit.MediaItemType
-  id: string
-  artistIds: string[]
+  mediaArt: MusicKit.Artwork;
+  title: string;
+  artists: string[];
+  type: MusicKit.MediaItemType;
+  id: string;
+  artistIds: string[];
 }
 
 export function MediaTile(props: MediaTileProps) {
   return (
-    <div class={styles.mediaTile}>
+    <div
+      class={styles.mediaTile}
+      onContextMenu={(e) => {
+        createContextMenu(e, mediaTileContextMenu);
+      }}
+    >
       <div class={styles.mediaTile__overlay}>
         <A
           href={constructLink(props.type, props.id)}
@@ -32,7 +39,7 @@ export function MediaTile(props: MediaTileProps) {
               setQueue(
                 props.type
                   .substring(0, props.type.length - 1)
-                  .replace('library-', ''),
+                  .replace("library-", ""),
                 props.id,
                 false
               ).then(() => {
@@ -45,7 +52,7 @@ export function MediaTile(props: MediaTileProps) {
             class={styles.mediaTile__overlay__inner__button__more}
             onclick={(e) => {
               e.preventDefault();
-              console.log('more');
+              createContextMenu(e, mediaTileContextMenu);
             }}
           />
         </A>
@@ -70,7 +77,7 @@ export function MediaTile(props: MediaTileProps) {
           <For each={props.artists}>
             {(artist, i) => (
               <A
-                href={constructLink('artists', props.artistIds?.[i()])}
+                href={constructLink("artists", props.artistIds?.[i()])}
                 class={styles.mediaTile__mediaInfo__artist__name}
               >
                 {artist}
@@ -81,7 +88,7 @@ export function MediaTile(props: MediaTileProps) {
                   }
                 >
                   <span class={styles.mediaTile__mediaInfo__artist__separator}>
-                    ,{' '}
+                    ,{" "}
                   </span>
                 </Show>
               </A>

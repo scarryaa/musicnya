@@ -1,24 +1,24 @@
-import { For, Show } from 'solid-js';
-import styles from './MediaTable.module.scss';
+import { For, Show } from "solid-js";
+import styles from "./MediaTable.module.scss";
 import {
   formatTime,
   getAlbumIdFromUrl,
   getItemAttributes,
   getItemRelationships,
   replaceSrc
-} from '../../util/utils';
-import { A, Navigate, useNavigate } from '@solidjs/router';
-import { IoEllipsisHorizontal, IoPause, IoPlay } from 'solid-icons/io';
-import { currentMediaItem, isPlaying, setIsShuffle } from '../../stores/store';
-import { pause, play, setQueue, setShuffleMode } from '../../api/musickit';
-import { fetchSearchResults } from '../../api/search';
+} from "../../util/utils";
+import { A, Navigate, useNavigate } from "@solidjs/router";
+import { IoEllipsisHorizontal, IoPause, IoPlay } from "solid-icons/io";
+import { currentMediaItem, isPlaying, setIsShuffle } from "../../stores/store";
+import { pause, play, setQueue, setShuffleMode } from "../../api/musickit";
+import { fetchSearchResults } from "../../api/search";
 
 export interface MediaTableProps {
-  items: MusicKit.MediaItem[]
-  class: string
-  showArt: boolean
-  id: string
-  type: MusicKit.MediaItemType
+  items: MusicKit.MediaItem[];
+  class: string;
+  showArt: boolean;
+  id: string;
+  type: MusicKit.MediaItemType;
 }
 
 const idEqualsCurrentMediaItem = (id: string) =>
@@ -35,7 +35,7 @@ export function MediaTable(props: MediaTableProps) {
     }).then(
       (res) =>
         res.results.suggestions?.filter(
-          (s: any) => s.content?.type === 'artists'
+          (s: any) => s.content?.type === "artists"
         )[0]?.content.id
     );
 
@@ -43,7 +43,7 @@ export function MediaTable(props: MediaTableProps) {
   };
 
   return (
-    <div class={styles.mediaTable + ' ' + props.class}>
+    <div class={styles.mediaTable + " " + props.class}>
       <table>
         <thead>
           <tr>
@@ -59,39 +59,39 @@ export function MediaTable(props: MediaTableProps) {
           <For each={props.items}>
             {(item, i) => (
               <tr
-                ondblclick={async () => { await setQueue(props.type, [props.id], true, i()); }}
+                ondblclick={async () => {
+                  await setQueue(props.type, [props.id], true, i());
+                }}
               >
                 <td class={styles.mediaTable__number}>{i() + 1}</td>
-                {currentMediaItem.id === item.id && isPlaying.value
-                  ? (
+                {currentMediaItem.id === item.id && isPlaying.value ? (
                   <IoPause
                     role="button"
                     size={24}
                     class={styles.mediaTable__play}
                     fill="var(--text)"
                     style={{
-                      'margin-top': '1rem',
+                      "margin-top": "1rem",
                       fill: idEqualsCurrentMediaItem(item.id)
-                        ? 'var(--accent)'
-                        : 'var(--text)'
+                        ? "var(--accent)"
+                        : "var(--text)"
                     }}
                     onclick={async (e) => {
                       e.preventDefault();
                       pause();
                     }}
                   />
-                    )
-                  : (
+                ) : (
                   <IoPlay
                     role="button"
                     size={24}
                     class={styles.mediaTable__play}
                     fill="var(--text)"
                     style={{
-                      'margin-top': '1rem',
+                      "margin-top": "1rem",
                       fill: idEqualsCurrentMediaItem(item.id)
-                        ? 'var(--accent)'
-                        : 'var(--text)'
+                        ? "var(--accent)"
+                        : "var(--text)"
                     }}
                     onclick={async (e) => {
                       e.preventDefault();
@@ -99,18 +99,20 @@ export function MediaTable(props: MediaTableProps) {
                       setIsShuffle({ value: 0 });
 
                       idEqualsCurrentMediaItem(item.id)
-                        ? await play().catch((e) => { console.log(e); })
+                        ? await play().catch((e) => {
+                            console.log(e);
+                          })
                         : setQueue(
-                          props.type
-                            .substring(0, props.type.length - 1)
-                            .replace('library-', ''),
-                          props.id,
-                          true,
-                          i()
-                        );
+                            props.type
+                              .substring(0, props.type.length - 1)
+                              .replace("library-", ""),
+                            props.id,
+                            true,
+                            i()
+                          );
                     }}
                   />
-                    )}
+                )}
                 <td class={styles.mediaTable__title__container}>
                   <Show when={props.showArt}>
                     <img
@@ -130,8 +132,8 @@ export function MediaTable(props: MediaTableProps) {
                       style={{
                         color:
                           currentMediaItem.id === item.id
-                            ? 'var(--accent)'
-                            : 'var(--text)'
+                            ? "var(--accent)"
+                            : "var(--text)"
                       }}
                     >
                       {getItemAttributes(item)?.name}
@@ -158,15 +160,15 @@ export function MediaTable(props: MediaTableProps) {
                             href={
                               relationship.id
                                 ? `/artist/${relationship.id}`
-                                : '#'
+                                : "#"
                             }
                             onclick={async (e) => {
                               e.preventDefault();
                               const id = await getArtistId(
                                 getItemRelationships(relationship)?.name ||
                                   getItemAttributes(item)?.artistName.replace(
-                                    '&',
-                                    'and'
+                                    "&",
+                                    "and"
                                   )
                               );
 
@@ -177,8 +179,9 @@ export function MediaTable(props: MediaTableProps) {
                               getItemAttributes(item)?.artistName}
                             {i() + 1 !==
                               getItemRelationships(item)?.artists?.data ||
-                              (([getItemAttributes(item)?.artistName].length > 0) &&
-                                ', ')}
+                              ([getItemAttributes(item)?.artistName].length >
+                                0 &&
+                                ", ")}
                           </A>
                         )}
                       </For>
@@ -205,7 +208,7 @@ export function MediaTable(props: MediaTableProps) {
                     fill="var(--text)"
                     onclick={(e) => {
                       e.preventDefault();
-                      console.log('more');
+                      console.log("more");
                     }}
                   />
                 </td>

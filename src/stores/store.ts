@@ -1,6 +1,6 @@
-import { createStore } from 'solid-js/store';
+import { createStore } from "solid-js/store";
 
-export const [countryCode, setCountryCode] = createStore({ value: 'us' });
+export const [countryCode, setCountryCode] = createStore({ value: "us" });
 export const [currentMediaItem, setCurrentMediaItem] = createStore(
   {} as MusicKit.MediaItem
 );
@@ -20,9 +20,19 @@ export const [rightPanelOpen, setRightPanelOpen] = createStore({
   value: false
 });
 export const [rightPanelContent, setRightPanelContent] = createStore({
-  value: ''
+  value: ""
 });
 
 export const [darkMode, setDarkMode] = createStore({
-  value: localStorage.getItem('theme') === 'dark'
+  value: localStorage.getItem("theme") === "dark"
+});
+
+export const [contextMenu, setContextMenu] = createStore({
+  value: {
+    open: false,
+    x: 0,
+    y: 0,
+    items: [],
+    id: ""
+  }
 });

@@ -13,6 +13,7 @@ import { createLibraryArtistsStore } from "../../../stores/api-store";
 import { Error } from "../../../components/Error/Error";
 import { ArtistTableTile } from "../../../components/ArtistTableTile/ArtistTableTile";
 import { fetchLibraryAlbum } from "../../../api/get-artist-album";
+import { A } from "@solidjs/router";
 
 export function Artists(): JSX.Element {
   const artistsStore = createLibraryArtistsStore();
@@ -21,7 +22,7 @@ export function Artists(): JSX.Element {
   let albums: any;
 
   // State to hold the selected artist
-  const [selectedArtist, setSelectedArtist] = createSignal([] as any);
+  const [selectedArtist, setSelectedArtist] = createSignal(null as any);
   const [recievedAlbums, setRecievedAlbums] = createSignal([] as any);
   const [albumArray, setAlbumArray] = createSignal([]);
 
@@ -103,7 +104,16 @@ export function Artists(): JSX.Element {
         {/* Second column */}
         {selectedArtist() && (
           <div class={styles.artists__albums}>
-            <h2>{selectedArtist().attributes?.name}</h2>
+            <div class={styles.artists__albums__header}>
+              <h2>{selectedArtist()?.attributes?.name}</h2>
+              <A
+                class={styles.artists__albums__header__showInAppleMusic}
+                href={`/artist/${getItemRelationships(selectedArtist()).catalog
+                  ?.data?.[0]?.id}`}
+              >
+                Show in Apple Music
+              </A>
+            </div>
             <div class={styles.albums}>
               <For each={albumArray()}>
                 {(album: any) => (

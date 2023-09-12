@@ -1,0 +1,45 @@
+:root {
+  --contextmenu-background: rgba(0, 0, 0, 0.8);
+  --contextmenu-color: #fff;
+}
+
+:root[theme="light"] {
+  --contextmenu-background: rgba(255, 255, 255, 0.8);
+  --contextmenu-color: #000;
+}
+
+.contextMenu {
+  position: absolute;
+  z-index: 100;
+  background: var(--contextmenu-background);
+  border-radius: 4px;
+  padding: 0.5rem 0.5rem;
+  color: var(--contextmenu-color);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+
+  .contextMenu__quick__item {
+    padding: 0.2rem 0.2rem;
+    border-radius: 4px;
+
+    &:first-child {
+      margin-left: 0.1rem;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+  }
+
+  .contextMenu__item {
+    padding: 0.2rem 0.2rem;
+    font-size: 0.875rem;
+    vertical-align: middle;
+    border-radius: 4px;
+    margin-inline: 0.1rem;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+  }
+}
