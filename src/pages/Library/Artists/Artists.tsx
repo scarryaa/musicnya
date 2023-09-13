@@ -13,6 +13,7 @@ import { createLibraryArtistsStore } from "../../../stores/api-store";
 import { Error } from "../../../components/Error/Error";
 import { ArtistTableTile } from "../../../components/ArtistTableTile/ArtistTableTile";
 import { fetchLibraryAlbum } from "../../../api/get-artist-album";
+import * as config from "../../../../config.json";
 import { A } from "@solidjs/router";
 
 export function Artists(): JSX.Element {
@@ -32,7 +33,7 @@ export function Artists(): JSX.Element {
 
     setRecievedAlbums(
       await fetchLibraryAlbum({
-        devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
+        devToken: config.MusicKit.token,
         musicUserToken: MusicKit.getInstance()?.musicUserToken,
         id: artist.id
       })

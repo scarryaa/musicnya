@@ -1,5 +1,5 @@
 import { Show, type Component, createSignal } from "solid-js";
-
+import * as config from "../config.json";
 import { Drawer } from "./components/Drawer/Drawer";
 import { Titlebar, TitlebarMac } from "./components/Titlebar/Titlebar";
 import { Main } from "./components/Main/Main";
@@ -18,7 +18,7 @@ const App: Component = () => {
 
   // Initialize MusicKit
   MusicKit.configure({
-    developerToken: import.meta.env.VITE_MUSICKIT_TOKEN as string,
+    developerToken: config.MusicKit.token as string,
     app: {
       name: "Music",
       build: "1.0.0"
