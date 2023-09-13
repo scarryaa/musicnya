@@ -1,64 +1,74 @@
 import { For, type JSX } from "solid-js";
 import styles from "./ContextMenu.module.scss";
+import { contextMenu, setContextMenu } from "../../stores/store";
 
-export function createContextMenu(e, items): void {
-  let contextMenu = document.createElement("contextMenu");
-  contextMenu.setAttribute("class", styles.contextMenu);
-  contextMenu.style.top = `${e.clientY}px`;
-  contextMenu.style.left = `${e.clientX}px`;
+export function ContextMenu(): JSX.Element {
+  // click event handler for context menu
+  const handleClick = (e: MouseEvent) => {
+    e.preventDefault();
+    setContextMenu({
+      value: {
+        x: -1000,
+        y: -1000,
+        items: [],
+        open: false,
+        id: "",
+        type: ""
+      }
+    });
 
-  contextMenu = ContextMenu({
-    isVisible: true,
-    items: items,
-    x: e.clientX,
-    y: e.clientY
-  }) as HTMLElement;
+    // remove event listener
+    window.removeEventListener("click", handleClick);
+  };
 
-  // Remove the context menu if it already exists
-  const existingContextMenu = document.querySelector("contextMenu");
-  if (existingContextMenu) {
-    existingContextMenu.remove();
-  }
-
-  // Remove the context menu if user right clicks
-  document.addEventListener("contextmenu", (e) => {
-    contextMenu.remove();
-  });
-
-  // Remove the context menu if the user clicks outside of it
-  document.addEventListener("click", (e) => {
-    if (e.target !== contextMenu) {
-      contextMenu.remove();
+  // handle click outside of context menu
+  window.addEventListener("click", (e) => {
+    if (contextMenu.value.open) {
+      handleClick(e);
     }
   });
 
-  document.body.appendChild(contextMenu);
-}
-
-export function ContextMenu(props): JSX.Element {
   return (
     <div
+      onClick={handleClick}
       class={styles.contextMenu}
-      style={`top: ${props.y}px; left: ${props.x}px; position: absolute;`}
+      style={`top: ${contextMenu.value.y}px; left: ${contextMenu.value.x}px; position: absolute;`}
     >
       <div>
         <div style="display: flex; flex-direction: row">
-          <For each={props.items.filter((item) => item.isQuickAction)}>
+          <For
+            each={contextMenu.value.items
+              .filter((item) => item !== null)
+              .filter((item) => item.isQuickAction)}
+          >
             {(item) => (
               <div
                 class={styles.contextMenu__quick__item}
                 onclick={item.action}
               >
-                <item.icon size={item.iconSize || 24} />
+                <item.icon
+                  size={item.iconSize || 24}
+                  color="white"
+                  fill="white"
+                />
               </div>
             )}
           </For>
         </div>
 
-        <For each={props.items.filter((item) => !item.isQuickAction)}>
+        <For
+          each={contextMenu.value.items
+            .filter((item) => item !== null)
+            .filter((item) => !item.isQuickAction)}
+        >
           {(item) => (
             <div class={styles.contextMenu__item} onclick={item.action}>
-              <item.icon size={item.iconSize || 24} style="margin-top: 3px" />
+              <item.icon
+                size={item.iconSize || 24}
+                color="white"
+                fill="white"
+                style="margin-top: 3px"
+              />
               <span
                 style={`vertical-align: top; margin-left: 0.5rem; margin-top: 6px; display: inline-block;`}
               >

@@ -12,6 +12,7 @@ import { Player } from "./components/Player/Player";
 import { addUser } from "./util/firebase";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore/lite";
+import { ContextMenu } from "./components/ContextMenu/ContextMenu";
 
 export let cutToken: string;
 export let userToken: string;
@@ -97,6 +98,7 @@ const App: Component = () => {
       <Show when={currentMediaItem.id}>
         <Player />
       </Show>
+      <ContextMenu />
     </div>
   );
 };

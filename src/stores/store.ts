@@ -1,4 +1,5 @@
 import { createStore } from "solid-js/store";
+import type { ContextMenuItem } from "../types/context-menu";
 
 export const [countryCode, setCountryCode] = createStore({ value: "us" });
 export const [currentMediaItem, setCurrentMediaItem] = createStore(
@@ -32,7 +33,8 @@ export const [contextMenu, setContextMenu] = createStore({
     open: false,
     x: 0,
     y: 0,
-    items: [],
-    id: ""
+    items: [] as ContextMenuItem[],
+    id: "",
+    type: ""
   }
 });

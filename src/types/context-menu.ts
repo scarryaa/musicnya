@@ -1,5 +1,5 @@
 export interface ContextMenuItem {
-  label: string;
+  label?: string;
   icon?: any;
   action: () => void;
 }
