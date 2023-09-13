@@ -41,6 +41,7 @@
     "cors-anywhere": "^0.4.4",
     "electron": "https://github.com/castlabs/electron-releases#26.0.0-alpha.6+wvcus",
     "fast-average-color": "^9.3.0",
+    "firebase": "^10.3.1",
     "solid-icons": "^1.0.11",
     "solid-js": "^1.7.6"
   }

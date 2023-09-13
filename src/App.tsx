@@ -1,4 +1,4 @@
-import { Show, type Component, createSignal } from "solid-js";
+import { Show, type Component, createSignal, createEffect } from "solid-js";
 import * as config from "../config.json";
 import { Drawer } from "./components/Drawer/Drawer";
 import { Titlebar, TitlebarMac } from "./components/Titlebar/Titlebar";
@@ -9,8 +9,27 @@ import { rightPanelContent, rightPanelOpen } from "./stores/store";
 import { Queue } from "./components/Queue/Queue";
 import { currentMediaItem } from "../src/stores/store";
 import { Player } from "./components/Player/Player";
+import { addUser } from "./util/firebase";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore/lite";
+
+export let cutToken: string;
+export let userToken: string;
 
 console.log(navigator.platform);
+
+const firebaseConfig = {
+  apiKey: config.FireBase.apiKey,
+  authDomain: config.FireBase.authDomain,
+  projectId: config.FireBase.projectId,
+  storageBucket: config.FireBase.storageBucket,
+  messagingSenderId: config.FireBase.messagingSenderId,
+  appId: config.FireBase.appId,
+  measurementId: config.FireBase.measurementId
+};
+
+export const firebaseApp = initializeApp(firebaseConfig);
+export const db = getFirestore(firebaseApp);
 
 const App: Component = () => {
   // Check if user is logged in
@@ -18,7 +37,7 @@ const App: Component = () => {
 
   // Initialize MusicKit
   MusicKit.configure({
-    developerToken: config.MusicKit.token as string,
+    developerToken: config.MusicKit.token,
     app: {
       name: "Music",
       build: "1.0.0"
@@ -42,10 +61,16 @@ const App: Component = () => {
       if (lightTheme) {
         document.documentElement.setAttribute("theme", "light");
       }
+      userToken = music.musicUserToken;
+      cutToken = userToken.slice(-20);
     })
     .catch((err) => {
       console.log(err);
     });
+
+  createEffect(async () => {
+    await addUser();
+  });
 
   return (
     <div>
