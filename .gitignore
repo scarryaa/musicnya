@@ -2,3 +2,5 @@ node_modules
 dist
 .env
 hls.js
+config.json
+.DS_Store
