@@ -59,9 +59,13 @@ export function Playlists(): JSX.Element {
                         ?.attributes?.artwork.url,
                       300
                     )
-                  }) || {
-                    url: ""
-                  }
+                  }) ||
+                  (playlist.songs?.[0]?.attributes?.artwork && {
+                    url: replaceSrc(
+                      playlist.songs?.[0]?.attributes?.artwork.url,
+                      300
+                    )
+                  })
                 }
               />
             )}

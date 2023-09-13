@@ -2,10 +2,12 @@ import {
   IoAddCircleOutline,
   IoHeartOutline,
   IoPlayCircleOutline,
+  IoShare,
   IoThumbsDownOutline
 } from "solid-icons/io";
 import { CgRowFirst, CgRowLast } from "solid-icons/cg";
 import type { ContextMenuType } from "../../types/context-menu";
+import { BiSolidPlaylist } from "solid-icons/bi";
 
 export const mediaTileContextMenu = [
   {
@@ -46,18 +48,18 @@ export const mediaTileContextMenu = [
     iconSize: 26
   },
   {
-    label: "Add to Queue",
-    icon: IoAddCircleOutline,
-    action: () => {}
-  },
-  {
     label: "Add to Playlist",
-    icon: IoAddCircleOutline,
+    icon: BiSolidPlaylist,
     action: () => {}
   },
   {
     label: "Share",
-    icon: IoAddCircleOutline,
+    icon: IoShare,
     action: () => {}
   }
+  // {
+  //   label: "Properties",
+  //   icon: IoAddCircleOutline,
+  //   action: () => {}
+  // }
 ];
