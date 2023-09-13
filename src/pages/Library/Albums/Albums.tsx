@@ -7,7 +7,7 @@ import { Error } from "../../../components/Error/Error";
 import { MediaTile } from "../../../components/MediaTile/MediaTile";
 import {
   getItemAttributes,
-  getNestedRelationships,
+  getItemRelationships,
   replaceSrc
 } from "../../../util/utils";
 import type { JSX } from "solid-js";
@@ -38,11 +38,11 @@ export function Albums(): JSX.Element {
                 id={album.id}
                 type={album.type}
                 title={album.attributes.name}
-                artists={getNestedRelationships(album)?.artists?.data?.map(
+                artists={getItemRelationships(album)?.artists?.data?.map(
                   (artist: any) => artist.attributes.name
                 )}
-                artistIds={getNestedRelationships(album)?.artists?.data?.map(
-                  (artist: any) => artist.id
+                artistIds={getItemRelationships(album)?.artists?.data?.map(
+                  (artist: any) => artist.relationships.catalog.data?.[0].id
                 )}
                 mediaArt={
                   getItemAttributes(album).artwork && {

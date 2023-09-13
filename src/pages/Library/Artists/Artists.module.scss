@@ -14,12 +14,26 @@
     overflow-x: hidden;
     height: calc(100vh - 13rem);
   }
+
   &__albums {
     gap: 0.5rem;
     width: 100%;
     padding-left: 1rem;
     overflow-y: auto;
     overflow-x: hidden;
+
+    &__header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      &__showInAppleMusic {
+        &:hover {
+          color: var(--accent);
+        }
+      }
+    }
   }
 }
 
@@ -30,4 +44,3 @@
   display: flex;
   gap: 1rem;
 }
-
