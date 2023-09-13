@@ -16,7 +16,7 @@ import { fetchLibraryAlbums } from "../api/library-albums";
 import { fetchLibraryPlaylists } from "../api/library-playlists";
 import { fetchLibraryArtists } from "../api/library-artists";
 import { fetchLibrarySongs } from "../api/library-songs";
-import * as config from "../../config.json";
+import { getLibrary } from "../util/firebase";
 
 export const createAlbumStore = () => {
   return function (params: { id: string }) {
@@ -24,7 +24,7 @@ export const createAlbumStore = () => {
       () => params.id,
       async () =>
         await (params.id.startsWith("l.") ? fetchLibraryAlbum : fetchAlbum)({
-          devToken: config.MusicKit.token,
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
           musicUserToken: MusicKit.getInstance()?.musicUserToken,
           id: params.id
         })
@@ -39,13 +39,13 @@ export const createLibraryAlbumsStore = () => {
     const [data] = createResource(
       () => {
         return {
-          devToken: config.MusicKit.token,
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
           musicUserToken: MusicKit.getInstance()?.musicUserToken
         };
       },
       async () => {
         return await fetchLibraryAlbums({
-          devToken: config.MusicKit.token,
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
           musicUserToken: MusicKit.getInstance()?.musicUserToken
         });
       }
@@ -66,7 +66,7 @@ export const createSearchCategoriesStore = () => {
       string
     >(
       {
-        devToken: config.MusicKit.token,
+        devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
         musicUserToken: MusicKit.getInstance()?.musicUserToken
       },
       fetchSearchCategories
@@ -82,7 +82,7 @@ export const createSearchResultsStore = () => {
       () => params.term,
       async () => {
         return await fetchSearchResults({
-          devToken: config.MusicKit.token,
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
           musicUserToken: MusicKit.getInstance()?.musicUserToken,
           term: params.term
         });
@@ -99,7 +99,7 @@ export const createArtistStore = () => {
       () => params.id,
       async () => {
         return await fetchArtist({
-          devToken: config.MusicKit.token,
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
           musicUserToken: MusicKit.getInstance()?.musicUserToken,
           id: params.id
         });
@@ -121,7 +121,7 @@ export const createBrowseStore = () => {
       string
     >(
       {
-        devToken: config.MusicKit.token,
+        devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
         musicUserToken: MusicKit.getInstance()?.musicUserToken
       },
       fetchBrowse
@@ -137,7 +137,7 @@ export const createCuratorStore = () => {
       () => params.id,
       async () => {
         return await fetchCurator({
-          devToken: config.MusicKit.token,
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
           musicUserToken: MusicKit.getInstance()?.musicUserToken,
           id: params.id
         });
@@ -159,7 +159,7 @@ export const createHomeStore = () => {
       string
     >(
       {
-        devToken: config.MusicKit.token,
+        devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
         musicUserToken: MusicKit.getInstance()?.musicUserToken
       },
       fetchRecommendations
@@ -175,7 +175,7 @@ export const createMultiplexStore = () => {
       () => params.id,
       async () => {
         return await fetchMultiplex({
-          devToken: config.MusicKit.token,
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
           musicUserToken: MusicKit.getInstance()?.musicUserToken,
           id: params.id
         });
@@ -192,7 +192,7 @@ export const createMultiroomStore = () => {
       () => params.id,
       async () => {
         return await fetchMultiroom({
-          devToken: config.MusicKit.token,
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
           musicUserToken: MusicKit.getInstance()?.musicUserToken,
           id: params.id
         });
@@ -215,7 +215,7 @@ export const createPlaylistStore = () => {
       string
     >(
       {
-        devToken: config.MusicKit.token,
+        devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
         musicUserToken: MusicKit.getInstance()?.musicUserToken,
         id: params.id
       },
@@ -231,13 +231,13 @@ export const createLibraryPlaylistStore = () => {
     const [data] = createResource(
       () => {
         return {
-          devToken: config.MusicKit.token,
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
           musicUserToken: MusicKit.getInstance()?.musicUserToken
         };
       },
       async () => {
         return await fetchLibraryPlaylists({
-          devToken: config.MusicKit.token,
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
           musicUserToken: MusicKit.getInstance()?.musicUserToken
         });
       }
@@ -252,13 +252,13 @@ export const createLibraryArtistsStore = () => {
     const [data] = createResource(
       () => {
         return {
-          devToken: config.MusicKit.token,
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
           musicUserToken: MusicKit.getInstance()?.musicUserToken
         };
       },
       async () => {
         return await fetchLibraryArtists({
-          devToken: config.MusicKit.token,
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
           musicUserToken: MusicKit.getInstance()?.musicUserToken
         });
       }
@@ -273,15 +273,12 @@ export const createLibrarySongsStore = () => {
     const [data] = createResource(
       () => {
         return {
-          devToken: config.MusicKit.token,
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
           musicUserToken: MusicKit.getInstance()?.musicUserToken
         };
       },
       async () => {
-        return await fetchLibrarySongs({
-          devToken: config.MusicKit.token,
-          musicUserToken: MusicKit.getInstance()?.musicUserToken
-        });
+        return await getLibrary();
       }
     );
 
@@ -300,7 +297,7 @@ export const createRadioStore = () => {
       string
     >(
       {
-        devToken: config.MusicKit.token,
+        devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
         musicUserToken: MusicKit.getInstance()?.musicUserToken
       },
       fetchRadio
@@ -322,7 +319,7 @@ export const createStationStore = () => {
       string
     >(
       {
-        devToken: config.MusicKit.token,
+        devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
         musicUserToken: MusicKit.getInstance()?.musicUserToken,
         id: params.id
       },

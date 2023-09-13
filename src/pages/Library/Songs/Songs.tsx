@@ -1,77 +1,57 @@
 /* eslint-disable multiline-ternary */
-import { For, type JSX } from "solid-js";
+import { For, createResource, type JSX } from "solid-js";
 import styles from "./Songs.module.scss";
-import { createLibrarySongsStore } from "../../../stores/api-store";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import { Error } from "../../../components/Error/Error";
-import { getItemAttributes } from "../../../util/utils";
+import { getLibrary } from "../../../util/firebase";
+import { A } from "@solidjs/router";
 
 export function Songs(): JSX.Element {
-  const songsStore = createLibrarySongsStore();
-  const songsData = songsStore();
+  const [userLibrary] = createResource(async () => await getLibrary());
 
   return (
     <div class={styles.songs}>
+      <div class={styles.songs__header}>
+        <div class={styles.songs__header__title}>Title</div>
+        <div class={styles.songs__header__artist}>Artist</div>
+        <div class={styles.songs__header__album}>Album</div>
+        <div class={styles.songs__header__duration}>Duration</div>
+      </div>
       <div class={styles.songs__body}>
-        <table class={styles.songs__table}>
-          <thead class={styles.songs__table__header}>
-            <tr class={styles.songs__table__header__row}>
-              <th class={styles.songs__table__index}>#</th>
-              <th class={styles.songs__table__title}>title</th>
-              <th class={styles.songs__table__artist}>artist</th>
-              <th class={styles.songs__table__album}>album</th>
-              <th class={styles.songs__table__time}>time</th>
-            </tr>
-          </thead>
-          <tbody>
-            {songsData.state === "pending" ||
-            songsData.state === "unresolved" ||
-            songsData.state === "refreshing" ? (
-              <tr>
-                <td>
-                  <div class={styles.songs__table__loading}>
-                    <LoadingSpinner />
-                  </div>
-                </td>
-              </tr>
-            ) : songsData.state === "errored" ? (
-              <tr>
-                <td>
-                  <Error
-                    message={
-                      songsData.error?.message ??
-                      "An error occured while fetching your songs."
-                    }
-                  />
-                </td>
-              </tr>
-            ) : (
-              <For each={songsData().data} fallback={<LoadingSpinner />}>
-                {(song, i) => (
-                  <tr>
-                    <td class={styles.songs__table__index}>{i() + 1}</td>
-                    <td class={styles.songs__table__title}>
-                      <div>{getItemAttributes(song).name}</div>
-                    </td>
-                    <td class={styles.songs__table__artist}>
-                      <div>{getItemAttributes(song).artistName}</div>
-                    </td>
-                    <td class={styles.songs__table__album}>
-                      <div>{getItemAttributes(song).albumName}</div>
-                    </td>
-                    <td class={styles.songs__table__time}>
-                      <div>
-                        {new Date(getItemAttributes(song).durationInMillis)
-                          .toISOString()
-                          .substr(15, 4)}
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </For>
+        {userLibrary.state === "pending" ||
+        userLibrary.state === "unresolved" ||
+        userLibrary.state === "refreshing" ? (
+          <LoadingSpinner />
+        ) : userLibrary.state === "errored" ? (
+          <Error error={userLibrary.error} />
+        ) : (
+          <For each={userLibrary()?.songs}>
+            {(song) => (
+              <div class={styles.songs__body__song}>
+                <div class={styles.songs__body__song__title}>{song.title}</div>
+                <div>
+                  <A
+                    class={styles.songs__body__song__artist}
+                    href={`/library/artists/${song.artistId}`}
+                  >
+                    {song.artist}
+                  </A>
+                </div>
+                <div>
+                  <A
+                    class={styles.songs__body__song__album}
+                    href={`/library/albums/${song.albumId}`}
+                  >
+                    {song.album}
+                  </A>
+                </div>
+                <div class={styles.songs__body__song__duration}>
+                  {song.duration}
+                </div>
+              </div>
             )}
-          </tbody>
-        </table>
+          </For>
+        )}
       </div>
     </div>
   );
