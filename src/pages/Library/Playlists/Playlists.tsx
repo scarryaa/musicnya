@@ -1,71 +1,44 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Switch, Match, For } from "solid-js";
+import { Switch, Match, For, createResource } from "solid-js";
 import type { JSX } from "solid-js";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import { MediaTile } from "../../../components/MediaTile/MediaTile";
-import { createLibraryPlaylistStore } from "../../../stores/api-store";
-import {
-  getNestedRelationships,
-  getItemAttributes,
-  replaceSrc,
-  getItemRelationships
-} from "../../../util/utils";
+import { replaceSrc } from "../../../util/utils";
 import { Error } from "../../../components/Error/Error";
 import styles from "./Playlists.module.scss";
+import { getLibrary } from "../../../util/firebase";
 
 export function Playlists(): JSX.Element {
-  const playlistsStore = createLibraryPlaylistStore();
-  const playlistsData = playlistsStore();
+  const [userLibrary] = createResource(async () => await getLibrary());
 
   return (
     <div class={styles.playlists}>
       <Switch fallback={<div>Not found</div>}>
         <Match
           when={
-            playlistsData.state === "pending" ||
-            playlistsData.state === "unresolved" ||
-            playlistsData.state === "refreshing"
+            userLibrary.state === "pending" ||
+            userLibrary.state === "unresolved" ||
+            userLibrary.state === "refreshing"
           }
         >
           <LoadingSpinner />
         </Match>
-        <Match when={playlistsData.state === "errored"}>
-          <Error error={playlistsData.error} />
+        <Match when={userLibrary.state === "errored"}>
+          <Error error={userLibrary.error} />
         </Match>
-        <Match when={playlistsData.state === "ready"}>
-          <For each={playlistsData()?.data}>
+        <Match when={userLibrary.state === "ready"}>
+          <For each={userLibrary()?.playlists}>
             {(playlist) => (
               <MediaTile
                 id={playlist.id}
                 type={playlist.type}
-                title={playlist.attributes.name}
-                artists={getNestedRelationships(playlist)?.artists?.data?.map(
-                  (artist: any) => artist.attributes.name
-                )}
-                artistIds={getNestedRelationships(playlist)?.artists?.data?.map(
-                  (artist: any) => artist.id
-                )}
+                title={playlist.title}
+                artists={[]}
+                artistIds={[]}
                 mediaArt={
-                  (getItemAttributes(playlist).artwork && {
-                    url: replaceSrc(
-                      getItemAttributes(playlist).artwork.url,
-                      300
-                    )
-                  }) ||
-                  (getItemRelationships(playlist)?.tracks?.data?.[0]?.attributes
-                    ?.artwork && {
-                    url: replaceSrc(
-                      getItemRelationships(playlist)?.tracks?.data?.[0]
-                        ?.attributes?.artwork.url,
-                      300
-                    )
-                  }) ||
-                  (playlist.songs?.[0]?.attributes?.artwork && {
-                    url: replaceSrc(
-                      playlist.songs?.[0]?.attributes?.artwork.url,
-                      300
-                    )
-                  })
+                  playlist.mediaArt && {
+                    url: replaceSrc(playlist.mediaArt.url, 300)
+                  }
                 }
               />
             )}

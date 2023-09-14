@@ -15,7 +15,7 @@ import { fetchLibrarySongs } from "../api/library-songs";
 import { fetchLibraryPlaylists } from "../api/library-playlists";
 import { fetchLibraryAlbums } from "../api/library-albums";
 import { fetchLibraryArtists } from "../api/library-artists";
-import { userToken, cutToken, firebaseApp, db } from "../App";
+import { userToken, cutToken, firebaseApp } from "../App";
 
 const artworkPlaceholder =
   "https://raw.githubusercontent.com/scarryaa/musicnya/main/src/assets/music_note.png";
@@ -42,16 +42,18 @@ export const addUser = async () => {
           musicUserToken: userToken
         })
       ).data.map((song) => ({
-        title: song.attributes.name || namePlaceholder,
-        artist: song.attributes.artistName || namePlaceholder,
-        album: song.attributes.albumName || namePlaceholder,
-        duration: new Date(song.attributes.durationInMillis)
+        title: song?.attributes?.name || namePlaceholder,
+        artist: song?.attributes?.artistName || namePlaceholder,
+        album: song?.attributes?.albumName || namePlaceholder,
+        duration: new Date(song?.attributes?.durationInMillis)
           .toISOString()
           .substr(15, 4),
         artistCatalogId:
-          song.relationships.artists.data[0].relationships.catalog.data[0]?.id || namePlaceholder,
+          song.relationships.artists.data[0].relationships.catalog.data[0]
+            ?.id || namePlaceholder,
         albumCatalogId:
-          song.relationships.albums.data[0].relationships?.catalog.data[0]?.id || namePlaceholder,
+          song.relationships.albums.data[0].relationships?.catalog.data[0]
+            ?.id || namePlaceholder,
         id: song.id
       })),
       playlists: (
@@ -60,7 +62,11 @@ export const addUser = async () => {
           musicUserToken: userToken
         })
       ).data.map((playlist) => ({
-        mediaArt: playlist.attributes.artwork?.url || artworkPlaceholder,
+        mediaArt:
+          playlist.attributes.artwork ||
+          playlist.tracks?.data?.[0]?.attributes?.artwork ||
+          playlist.songs?.[0]?.attributes?.artwork ||
+          artworkPlaceholder,
         title: playlist.attributes.name || namePlaceholder,
         type: playlist.type,
         id: playlist.id || namePlaceholder
@@ -71,12 +77,17 @@ export const addUser = async () => {
           musicUserToken: userToken
         })
       ).data.map((album) => ({
+        artistCatalogId:
+          album.relationships.artists.data[0].relationships.catalog.data[0]
+            ?.id || namePlaceholder,
         mediaArt: album.attributes.artwork || artworkPlaceholder,
         title: album.attributes.name || namePlaceholder,
         artists: album.attributes.artistName || namePlaceholder,
         type: album.type,
         id: album.id || namePlaceholder,
-        artistIds: album.relationships.artists.data.map((artist) => artist.id) || namePlaceholder
+        artistIds:
+          album.relationships.artists.data.map((artist) => artist.id) ||
+          namePlaceholder
       })),
       artists: (
         await fetchLibraryArtists({
@@ -90,7 +101,9 @@ export const addUser = async () => {
         title: artist.attributes.name || namePlaceholder,
         type: artist.type,
         id: artist.id || namePlaceholder,
-        artistIds: artist.relationships.catalog.data.map((artist) => artist.id) || namePlaceholder
+        artistIds:
+          artist.relationships.catalog.data.map((artist) => artist.id) ||
+          namePlaceholder
       }))
     });
   }
