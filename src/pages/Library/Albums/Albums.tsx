@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { For, Match, Switch } from "solid-js";
+import { For, Match, Switch, createResource } from "solid-js";
 import { createLibraryAlbumsStore } from "../../../stores/api-store";
 import styles from "./Albums.module.scss";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
@@ -11,42 +11,38 @@ import {
   replaceSrc
 } from "../../../util/utils";
 import type { JSX } from "solid-js";
+import { getLibrary } from "../../../util/firebase";
 
 export function Albums(): JSX.Element {
-  const albumsStore = createLibraryAlbumsStore();
-  const albumsData = albumsStore();
+  const [userLibrary] = createResource(async () => await getLibrary());
 
   return (
     <div class={styles.albums}>
       <Switch fallback={<div>Not found</div>}>
         <Match
           when={
-            albumsData.state === "pending" ||
-            albumsData.state === "unresolved" ||
-            albumsData.state === "refreshing"
+            userLibrary.state === "pending" ||
+            userLibrary.state === "unresolved" ||
+            userLibrary.state === "refreshing"
           }
         >
           <LoadingSpinner />
         </Match>
-        <Match when={albumsData.state === "errored"}>
-          <Error error={albumsData.error} />
+        <Match when={userLibrary.state === "errored"}>
+          <Error error={userLibrary.error} />
         </Match>
-        <Match when={albumsData.state === "ready"}>
-          <For each={albumsData()?.data}>
+        <Match when={userLibrary.state === "ready"}>
+          <For each={userLibrary()?.albums}>
             {(album) => (
               <MediaTile
                 id={album.id}
                 type={album.type}
-                title={album.attributes.name}
-                artists={getItemRelationships(album)?.artists?.data?.map(
-                  (artist: any) => artist.attributes.name
-                )}
-                artistIds={getItemRelationships(album)?.artists?.data?.map(
-                  (artist: any) => artist.relationships.catalog.data?.[0]?.id
-                )}
+                title={album.title}
+                artists={[album.artists]}
+                artistIds={[album.artistCatalogId]}
                 mediaArt={
-                  getItemAttributes(album).artwork && {
-                    url: replaceSrc(getItemAttributes(album).artwork.url, 300)
+                  album.mediaArt && {
+                    url: replaceSrc(album.mediaArt.url, 300)
                   }
                 }
               />
