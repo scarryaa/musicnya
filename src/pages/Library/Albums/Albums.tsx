@@ -42,7 +42,7 @@ export function Albums(): JSX.Element {
                   (artist: any) => artist.attributes.name
                 )}
                 artistIds={getItemRelationships(album)?.artists?.data?.map(
-                  (artist: any) => artist.relationships.catalog.data?.[0].id
+                  (artist: any) => artist.relationships.catalog.data?.[0]?.id
                 )}
                 mediaArt={
                   getItemAttributes(album).artwork && {

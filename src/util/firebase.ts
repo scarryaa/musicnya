@@ -47,7 +47,12 @@ export const addUser = async () => {
         album: song.attributes.albumName || namePlaceholder,
         duration: new Date(song.attributes.durationInMillis)
           .toISOString()
-          .substr(15, 4)
+          .substr(15, 4),
+        artistCatalogId:
+          song.relationships.artists.data[0].relationships.catalog.data[0].id,
+        albumCatalogId:
+          song.relationships.albums.data[0].relationships.catalog.data[0].id,
+        id: song.id
       })),
       playlists: (
         await fetchLibraryPlaylists({

@@ -10,29 +10,61 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root">
-      <div id="apple-music-video-container" takeover="true" playsinline="false" style="position: absolute; z-index: 9999999999; height: 100%; width: 100%; margin-inline: auto; display: none;"></div>
-      <div id="apple-music-video-close-btn" style="position: absolute; z-index: 9999999999; display: none; left: 10px;">
-        <button style="width: 25px; height: 25px; background-color: white; border-radius: 50%" onclick="
+      <div
+        id="apple-music-video-container"
+        takeover="true"
+        playsinline="false"
+        style="
+          position: absolute;
+          z-index: 9999999999;
+          height: 100%;
+          width: 100%;
+          margin-inline: auto;
+          display: none;
+        "
+      ></div>
+      <div
+        id="apple-music-video-close-btn"
+        style="
+          position: absolute;
+          z-index: 9999999999;
+          display: none;
+          left: 10px;
+        "
+      >
+        <button
+          style="
+            width: 25px;
+            height: 25px;
+            background-color: white;
+            border-radius: 50%;
+          "
+          onclick="
           document.getElementById('apple-music-video-container').style.display = 'none';
           document.getElementById('apple-music-video-close-btn').style.display = 'none';
-          ">X</button>
+          "
+        >
+          X
+        </button>
       </div>
     </div>
     <script src="https://jpillora.com/xhook/dist/xhook.min.js"></script>
     <script>
       xhook.before(function (request, callback) {
-        if (request.url.includes('hls')) {
-        request.url = `http://localhost:8080/${request.url}`;
-      } else if (
-        request.url.includes('music.apple.com') ||
-        request.url.includes(
-        'https://amp-api.music.apple.com/v1/me/storefront'
-        ) || request.url.includes('buy.itunes.apple.com') || request.url.includes('universal-activity-service')
-      ) {
-        request.url = 'http://localhost:8080/' + request.url;
-      }
+        if (request.url.includes("hls")) {
+          request.url = `http://localhost:8080/${request.url}`;
+        } else if (
+          request.url.includes("music.apple.com") ||
+          request.url.includes(
+            "https://amp-api.music.apple.com/v1/me/storefront"
+          ) ||
+          request.url.includes("buy.itunes.apple.com") ||
+          request.url.includes("universal-activity-service")
+        ) {
+          request.url = "http://localhost:8080/" + request.url;
+        }
 
-      callback();
+        callback();
       });
     </script>
     <script src="/src/index.tsx" type="module"></script>
@@ -40,9 +72,9 @@
     <script src="https://js-cdn.music.apple.com/musickit/v3/amp/musickit.js"></script>
     <script src="https://js-cdn.music.apple.com/hls.js/2.141.0/hls.js/hls.js"></script>
     <link
-    rel="preconnect"
-    href="https://amp-api.music.apple.com/"
-    crossorigin
+      rel="preconnect"
+      href="https://amp-api.music.apple.com/"
+      crossorigin
     />
     <link rel="preconnect" href="https://api.music.apple.com/" crossorigin />
     <link rel="preconnect" href="https://is1-ssl.mzstatic.com/" crossorigin />
@@ -52,15 +84,15 @@
     <link rel="preconnect" href="https://is5-ssl.mzstatic.com/" crossorigin />
     <link rel="preconnect" href="https://play.itunes.apple.com/" crossorigin />
     <link
-    rel="preconnect"
-    href="
+      rel="preconnect"
+      href="
     https://buy.itunes.apple.com/"
-    crossorigin
+      crossorigin
     />
     <link
-    rel="preconnect"
-    href="https://aod-ssl.itunes.apple.com/"
-    crossorigin
+      rel="preconnect"
+      href="https://aod-ssl.itunes.apple.com/"
+      crossorigin
     />
   </body>
 </html>
