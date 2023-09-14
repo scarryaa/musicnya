@@ -1,52 +1,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Switch, Match, createSignal, For, type JSX } from "solid-js";
+import {
+  Switch,
+  Match,
+  createSignal,
+  For,
+  type JSX,
+  createResource
+} from "solid-js";
 import { MediaTile } from "../../../components/MediaTile/MediaTile";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
-import {
-  getItemAttributes,
-  getItemRelationships,
-  getNestedRelationships,
-  replaceSrc
-} from "../../../util/utils";
+import { getItemRelationships, replaceSrc } from "../../../util/utils";
 import styles from "./Artists.module.scss";
-import { createLibraryArtistsStore } from "../../../stores/api-store";
 import { Error } from "../../../components/Error/Error";
 import { ArtistTableTile } from "../../../components/ArtistTableTile/ArtistTableTile";
-import { fetchLibraryAlbum } from "../../../api/get-artist-album";
-import * as config from "../../../../config.json";
 import { A } from "@solidjs/router";
+import { getLibrary } from "../../../util/firebase";
 
 export function Artists(): JSX.Element {
-  const artistsStore = createLibraryArtistsStore();
-  const artistsData = artistsStore();
-
-  let albums: any;
+  const [userLibrary] = createResource(async () => await getLibrary());
 
   // State to hold the selected artist
   const [selectedArtist, setSelectedArtist] = createSignal(null as any);
-  const [recievedAlbums, setRecievedAlbums] = createSignal([] as any);
   const [albumArray, setAlbumArray] = createSignal([]);
 
   const handleArtistClick = async (artist: any): Promise<void> => {
     setSelectedArtist(artist);
     console.log(selectedArtist());
 
-    setRecievedAlbums(
-      await fetchLibraryAlbum({
-        devToken: config.MusicKit.token,
-        musicUserToken: MusicKit.getInstance()?.musicUserToken,
-        id: artist.id
-      })
+    setAlbumArray(
+      userLibrary()?.albums.filter((album: any) =>
+        album.artistIds.includes(artist.id)
+      )
     );
-    albums = Object.keys(recievedAlbums().resources["library-albums"]).map(
-      (key, index) => {
-        return {
-          ...recievedAlbums().resources["library-albums"][key],
-          index
-        };
-      }
-    );
-    setAlbumArray(albums);
   };
 
   return (
@@ -57,41 +42,33 @@ export function Artists(): JSX.Element {
           <Switch fallback={<div>Not found</div>}>
             <Match
               when={
-                artistsData.state === "pending" ||
-                artistsData.state === "unresolved" ||
-                artistsData.state === "refreshing"
+                userLibrary.state === "pending" ||
+                userLibrary.state === "unresolved" ||
+                userLibrary.state === "refreshing"
               }
             >
               <LoadingSpinner />
             </Match>
-            <Match when={artistsData.state === "errored"}>
-              <Error error={artistsData.error} />
+            <Match when={userLibrary.state === "errored"}>
+              <Error error={userLibrary.error} />
             </Match>
-            <Match when={artistsData.state === "ready"}>
-              <For each={artistsData()?.data}>
+            <Match when={userLibrary.state === "ready"}>
+              <For each={userLibrary()?.artists}>
                 {(artist) => (
                   <ArtistTableTile
                     id={getItemRelationships(artist)?.catalog?.data?.[0]?.id}
                     type={artist.type}
-                    title={artist.attributes.name}
-                    artists={getNestedRelationships(artist)?.artists?.data?.map(
-                      (artist: any) => artist.attributes.name
-                    )}
+                    title={artist.title}
                     mediaArt={
-                      (getItemRelationships(artist)?.catalog?.data?.[0]
-                        ?.attributes?.artwork && {
-                        url: replaceSrc(
-                          getItemRelationships(artist)?.catalog?.data?.[0]
-                            ?.attributes?.artwork.url,
-                          300
-                        )
-                      }) || { url: "" }
+                      artist.mediaArt && {
+                        url: replaceSrc(artist.mediaArt.url, 300)
+                      }
                     }
+                    artists={[""]}
                     // eslint-disable-next-line @typescript-eslint/no-misused-promises
                     onClick={async () => {
                       // Clear the selected artist and albums when a new artist is clicked
                       setSelectedArtist(null);
-                      setRecievedAlbums(null);
                       setAlbumArray([]);
                       await handleArtistClick(artist);
                     }}
@@ -109,8 +86,7 @@ export function Artists(): JSX.Element {
               <h2>{selectedArtist()?.attributes?.name}</h2>
               <A
                 class={styles.artists__albums__header__showInAppleMusic}
-                href={`/artist/${getItemRelationships(selectedArtist()).catalog
-                  ?.data?.[0]?.id}`}
+                href={`/artist/${selectedArtist()?.artistIds[0]}`}
               >
                 Show in Apple Music
               </A>
@@ -121,19 +97,12 @@ export function Artists(): JSX.Element {
                   <MediaTile
                     id={album.id}
                     type={album.type}
-                    title={album.attributes.name}
-                    artists={getNestedRelationships(album)?.artists?.data?.map(
-                      (artist: any) => artist.attributes.name
-                    )}
-                    artistIds={getNestedRelationships(
-                      album
-                    )?.artists?.data?.map((artist: any) => artist.id)}
+                    title={album.title}
+                    artists={[]}
+                    artistIds={[]}
                     mediaArt={
-                      getItemAttributes(album).artwork && {
-                        url: replaceSrc(
-                          getItemAttributes(album).artwork.url,
-                          300
-                        )
+                      album.mediaArt.url && {
+                        url: replaceSrc(album.mediaArt.url, 300)
                       }
                     }
                   />
