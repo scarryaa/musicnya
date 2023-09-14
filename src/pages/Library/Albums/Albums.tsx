@@ -1,15 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { For, Match, Switch, createResource } from "solid-js";
-import { createLibraryAlbumsStore } from "../../../stores/api-store";
 import styles from "./Albums.module.scss";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import { Error } from "../../../components/Error/Error";
 import { MediaTile } from "../../../components/MediaTile/MediaTile";
-import {
-  getItemAttributes,
-  getItemRelationships,
-  replaceSrc
-} from "../../../util/utils";
+import { replaceSrc } from "../../../util/utils";
 import type { JSX } from "solid-js";
 import { getLibrary } from "../../../util/firebase";
 

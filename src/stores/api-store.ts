@@ -12,11 +12,6 @@ import { fetchLibraryPlaylist } from "../api/library-playlist";
 import { fetchRadio } from "../api/radio";
 import { fetchStation } from "../api/station";
 import { fetchSearchCategories, fetchSearchResults } from "../api/search";
-import { fetchLibraryAlbums } from "../api/library-albums";
-import { fetchLibraryPlaylists } from "../api/library-playlists";
-import { fetchLibraryArtists } from "../api/library-artists";
-import { fetchLibrarySongs } from "../api/library-songs";
-import { getLibrary } from "../util/firebase";
 
 export const createAlbumStore = () => {
   return function (params: { id: string }) {
@@ -28,27 +23,6 @@ export const createAlbumStore = () => {
           musicUserToken: MusicKit.getInstance()?.musicUserToken,
           id: params.id
         })
-    );
-
-    return data;
-  };
-};
-
-export const createLibraryAlbumsStore = () => {
-  return function () {
-    const [data] = createResource(
-      () => {
-        return {
-          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
-          musicUserToken: MusicKit.getInstance()?.musicUserToken
-        };
-      },
-      async () => {
-        return await fetchLibraryAlbums({
-          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
-          musicUserToken: MusicKit.getInstance()?.musicUserToken
-        });
-      }
     );
 
     return data;
@@ -220,66 +194,6 @@ export const createPlaylistStore = () => {
         id: params.id
       },
       params.id.substring(0, 2) === "pl" ? fetchPlaylist : fetchLibraryPlaylist
-    );
-
-    return data;
-  };
-};
-
-export const createLibraryPlaylistStore = () => {
-  return function () {
-    const [data] = createResource(
-      () => {
-        return {
-          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
-          musicUserToken: MusicKit.getInstance()?.musicUserToken
-        };
-      },
-      async () => {
-        return await fetchLibraryPlaylists({
-          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
-          musicUserToken: MusicKit.getInstance()?.musicUserToken
-        });
-      }
-    );
-
-    return data;
-  };
-};
-
-export const createLibraryArtistsStore = () => {
-  return function () {
-    const [data] = createResource(
-      () => {
-        return {
-          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
-          musicUserToken: MusicKit.getInstance()?.musicUserToken
-        };
-      },
-      async () => {
-        return await fetchLibraryArtists({
-          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
-          musicUserToken: MusicKit.getInstance()?.musicUserToken
-        });
-      }
-    );
-
-    return data;
-  };
-};
-
-export const createLibrarySongsStore = () => {
-  return function () {
-    const [data] = createResource(
-      () => {
-        return {
-          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
-          musicUserToken: MusicKit.getInstance()?.musicUserToken
-        };
-      },
-      async () => {
-        return await getLibrary();
-      }
     );
 
     return data;
