@@ -120,16 +120,6 @@
         width: 100%;
         height: 0.2rem;
         position: relative;
-
-        &::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          appearance: none;
-          width: 0.5rem;
-          height: 0.5rem;
-          border-radius: 50%;
-          background-color: #fff;
-          cursor: pointer;
-        }
       }
     }
   }
