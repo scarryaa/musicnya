@@ -6,7 +6,7 @@ export const fetchLibrarySongs = async ({
   musicUserToken: string;
 }) => {
   return await fetch(
-    "https://amp-api.music.apple.com/v1/me/library/songs?offset=0&l=en-US&limit=100&include%5Blibrary-songs%5D=albums&sort=dateAdded",
+    "https://amp-api.music.apple.com/v1/me/library/songs?offset=0&l=en-US&limit=100&include=artists%2Calbums%2Ccatalog&art%5Burl%5D=f&sort=dateAdded",
     {
       headers: {
         authorization: `Bearer ${devToken}`,
@@ -25,7 +25,7 @@ export const fetchLibrarySongs = async ({
           fetch(
             `https://amp-api.music.apple.com/v1/me/library/songs?offset=${
               i * limit
-            }&l=en-US&limit=${limit}&include%5Blibrary-songs%5D=albums&sort=dateAdded`,
+            }&l=en-US&limit=${limit}&include=artists%2Calbums%2Ccatalog&art%5Burl%5D=f&sort=dateAdded`,
             {
               headers: {
                 authorization: `Bearer ${devToken}`,
@@ -42,6 +42,8 @@ export const fetchLibrarySongs = async ({
       const songs = jsons
         .map((json) => json.data)
         .reduce((acc, val) => acc.concat(val), []);
+
+      console.log({ ...responseJson, data: songs });
       return {
         data: songs,
         meta: {

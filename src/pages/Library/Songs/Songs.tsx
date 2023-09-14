@@ -27,12 +27,20 @@ export function Songs(): JSX.Element {
         ) : (
           <For each={userLibrary()?.songs}>
             {(song) => (
-              <div class={styles.songs__body__song}>
+              <div
+                class={styles.songs__body__song}
+                onDblClick={async () => {
+                  await MusicKit.getInstance().setQueue({
+                    songs: [song.id],
+                    startPlaying: true
+                  });
+                }}
+              >
                 <div class={styles.songs__body__song__title}>{song.title}</div>
                 <div>
                   <A
                     class={styles.songs__body__song__artist}
-                    href={`/library/artists/${song.artistId}`}
+                    href={`/artist/${song.artistCatalogId}`}
                   >
                     {song.artist}
                   </A>
@@ -40,7 +48,7 @@ export function Songs(): JSX.Element {
                 <div>
                   <A
                     class={styles.songs__body__song__album}
-                    href={`/library/albums/${song.albumId}`}
+                    href={`/album/${song.albumCatalogId}`}
                   >
                     {song.album}
                   </A>
