@@ -49,9 +49,9 @@ export const addUser = async () => {
           .toISOString()
           .substr(15, 4),
         artistCatalogId:
-          song.relationships.artists.data[0].relationships.catalog.data[0].id,
+          song.relationships.artists.data[0].relationships.catalog.data[0]?.id || namePlaceholder,
         albumCatalogId:
-          song.relationships.albums.data[0].relationships.catalog.data[0].id,
+          song.relationships.albums.data[0].relationships?.catalog.data[0]?.id || namePlaceholder,
         id: song.id
       })),
       playlists: (
@@ -60,10 +60,10 @@ export const addUser = async () => {
           musicUserToken: userToken
         })
       ).data.map((playlist) => ({
-        mediaArt: playlist.attributes.artwork || artworkPlaceholder,
+        mediaArt: playlist.attributes.artwork?.url || artworkPlaceholder,
         title: playlist.attributes.name || namePlaceholder,
         type: playlist.type,
-        id: playlist.id
+        id: playlist.id || namePlaceholder
       })),
       albums: (
         await fetchLibraryAlbums({
@@ -75,8 +75,8 @@ export const addUser = async () => {
         title: album.attributes.name || namePlaceholder,
         artists: album.attributes.artistName || namePlaceholder,
         type: album.type,
-        id: album.id,
-        artistIds: album.relationships.artists.data.map((artist) => artist.id)
+        id: album.id || namePlaceholder,
+        artistIds: album.relationships.artists.data.map((artist) => artist.id) || namePlaceholder
       })),
       artists: (
         await fetchLibraryArtists({
@@ -89,8 +89,8 @@ export const addUser = async () => {
           artworkPlaceholder,
         title: artist.attributes.name || namePlaceholder,
         type: artist.type,
-        id: artist.id,
-        artistIds: artist.relationships.catalog.data.map((artist) => artist.id)
+        id: artist.id || namePlaceholder,
+        artistIds: artist.relationships.catalog.data.map((artist) => artist.id) || namePlaceholder
       }))
     });
   }
