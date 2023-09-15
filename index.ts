@@ -2,6 +2,10 @@
 const { app, BrowserWindow, components, ipcMain } = require("electron");
 const path = require("path");
 
+const APP_PROD_URL = "https://musicnya-1e14f.web.app";
+const isDev = process.env.APP_DEV
+  ? process.env.APP_DEV.trim() === "true"
+  : false;
 // Listen on a specific host via the HOST environment variable
 const host = "0.0.0.0";
 // Listen on a specific port via the PORT environment variable
@@ -76,8 +80,12 @@ const createWindow = () => {
 
   win.removeMenu();
 
-  void win.loadURL("http://localhost:3000");
-  win.openDevTools();
+  if (isDev) {
+    void win.loadURL("http://localhost:3000");
+    win.openDevTools();
+  } else {
+    void win.loadURL(APP_PROD_URL);
+  }
 };
 
 void app.whenReady().then(async () => {

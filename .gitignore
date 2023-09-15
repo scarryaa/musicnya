@@ -4,3 +4,5 @@ dist
 hls.js
 config.json
 .DS_Store
+firebase-debug.log
+*.cache
