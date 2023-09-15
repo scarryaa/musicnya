@@ -1,0 +1,21 @@
+.libraryAddBanner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 50px;
+  background-color: black;
+  color: white;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row; /* Aligns items horizontally */
+  gap: 10px; /* Adds space between the text and the spinner */
+  margin-left: 4rem;
+}
+
+.libraryAddBanner p {
+  margin: 0;
+}
