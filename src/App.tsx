@@ -13,9 +13,13 @@ import { addUser } from "./util/firebase";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore/lite";
 import { ContextMenu } from "./components/ContextMenu/ContextMenu";
+import { LibraryAddBanner } from "./components/LibraryAddingBanner/LibraryAddBanner";
 
 export let cutToken: string;
 export let userToken: string;
+
+const [libraryAddedVisible, setLibraryAddedVisible] = createSignal(true);
+const [libraryAdded, setLibraryAdded] = createSignal(false);
 
 console.log(navigator.platform);
 
@@ -69,9 +73,13 @@ const App: Component = () => {
       console.log(err);
     });
 
-  createEffect(async () => {
-    await addUser();
-  });
+    createEffect(async () => {
+      await addUser().then(() => {
+        console.log("Added user");
+        setLibraryAdded(true);
+        setLibraryAddedVisible(false);
+      });
+    });
 
   return (
     <div>
@@ -80,6 +88,9 @@ const App: Component = () => {
       </Show>
       <Show when={navigator.platform !== "MacIntel"}>
         <Titlebar />
+      </Show>
+      <Show when={libraryAddedVisible()}>
+        <LibraryAddBanner />
       </Show>
       <div
         id="apple-music-video-container"
@@ -93,7 +104,7 @@ const App: Component = () => {
         <Queue />
       </Show>
       <Show when={isAuthorized()}>
-        <Main />
+        <Main libraryAddedVisible={libraryAddedVisible()} />
       </Show>
       <Show when={currentMediaItem.id}>
         <Player />
