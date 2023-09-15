@@ -4,8 +4,9 @@
   "description": "",
   "scripts": {
     "start": "vite",
-    "dev": "concurrently \"vite\" \"${IN_NIX_SHELL:+steam-run} electron .\"",
+    "dev": "concurrently \"vite\" \"APP_DEV=true ${IN_NIX_SHELL:+steam-run} electron .\"",
     "electron": "APP_DEV=false ${IN_NIX_SHELL:+steam-run} electron .",
+    "win": "APP_DEV=true electron .\"",
     "build": "vite build",
     "serve": "vite preview",
     "lint": "eslint --ext .ts,.tsx ."
