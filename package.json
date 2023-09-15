@@ -5,6 +5,7 @@
   "scripts": {
     "start": "vite",
     "dev": "concurrently \"vite\" \"${IN_NIX_SHELL:+steam-run} electron .\"",
+    "electron": "APP_DEV=false ${IN_NIX_SHELL:+steam-run} electron .",
     "build": "vite build",
     "serve": "vite preview",
     "lint": "eslint --ext .ts,.tsx ."
