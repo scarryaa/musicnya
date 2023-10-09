@@ -24,6 +24,7 @@
     }
   },
   "devDependencies": {
+    "@solidjs/router": "^0.8.2",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "concurrently": "^8.2.1",
     "eslint": "^8.0.1",
@@ -32,20 +33,21 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
     "eslint-plugin-promise": "^6.0.0",
+    "fast-average-color": "^9.3.0",
+    "firebase": "^10.3.1",
     "prettier": "3.0.0",
     "sass": "^1.64.0",
     "solid-devtools": "^0.27.3",
+    "solid-icons": "^1.0.11",
+    "solid-js": "^1.7.6",
     "typescript": "*",
     "vite": "^4.3.9",
-    "vite-plugin-solid": "^2.7.0",
-    "@solidjs/router": "^0.8.2",
-    "fast-average-color": "^9.3.0",
-    "firebase": "^10.3.1",
-    "solid-icons": "^1.0.11",
-    "solid-js": "^1.7.6"
+    "vite-plugin-solid": "^2.7.0"
   },
   "dependencies": {
     "cors-anywhere": "^0.4.4",
+    "discord-auto-rpc": "^1.0.17",
+    "discord-rpc": "^4.0.1",
     "electron": "https://github.com/castlabs/electron-releases#26.0.0-alpha.6+wvcus"
   }
 }

@@ -1,6 +1,16 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { app, BrowserWindow, components, ipcMain } = require("electron");
 const path = require("path");
+const { AutoClient } = require("discord-auto-rpc");
+
+// Discord RPC
+const client = new AutoClient({ transport: "ipc" });
+
+client.on("ready", () => {
+  console.log("Discord RPC connected");
+});
+
+client.endlessLogin({ clientId: "1126479353123971072" });
 
 const APP_PROD_URL = "https://musicnya-1e14f.web.app";
 const isDev = process.env.APP_DEV
@@ -76,6 +86,15 @@ const createWindow = () => {
   });
   ipcMain.on("close-window", () => {
     win.close();
+  });
+
+  // Discord RPC
+  ipcMain.on("set-activity", (_, data) => {
+    client.setActivity(data);
+  });
+
+  ipcMain.on("clear-activity", () => {
+    client.clearActivity();
   });
 
   win.removeMenu();

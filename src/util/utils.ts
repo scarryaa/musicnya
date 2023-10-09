@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { FastAverageColor } from "fast-average-color";
 import {
+  isPlaying,
   setCurrentMediaItem,
   setIsPlaying,
   setPlaybackDuration,
@@ -66,6 +67,8 @@ export const constructLink = (type: string, id: string): string => {
       return "";
   }
 };
+
+var startTime: number;
 
 // data functions
 
@@ -159,6 +162,35 @@ export const setupEvents = (): void => {
     MusicKit.Events.playbackStateDidChange as unknown as string,
     () => {
       setIsPlaying({ value: MusicKit.getInstance().isPlaying });
+
+      startTime = Date.now();
+
+      // Discord RPC
+      if (isPlaying.value) {
+        window.api.send("set-activity", {
+          details:
+            MusicKit.getInstance().nowPlayingItem?.title +
+            " - " +
+            MusicKit.getInstance().nowPlayingItem?.albumName,
+          state: MusicKit.getInstance().nowPlayingItem?.artistName,
+          largeImageKey:
+            MusicKit.getInstance().nowPlayingItem?.artwork?.url.replace(
+              "{w}x{h}",
+              "512x512"
+            ),
+          largeImageText: MusicKit.getInstance().nowPlayingItem?.albumName,
+          instance: false,
+          startTimestamp: Date.now(),
+          endTimestamp:
+            Date.now() +
+            MusicKit.getInstance().currentPlaybackDuration * 1000 -
+            MusicKit.getInstance().currentPlaybackTime * 1000
+        });
+      } else {
+        window.api.send("clear-activity", {
+          instance: false
+        });
+      }
     }
   );
 
@@ -210,6 +242,27 @@ export const setupEvents = (): void => {
         videoContainer.style.display = "none";
         videoCloseBtn.style.display = "none";
         playerArtwork.style.opacity = "1";
+      }
+
+      if (MusicKit.getInstance().nowPlayingItem !== undefined) {
+        // Discord RPC
+        window.api.send("set-activity", {
+          details:
+            MusicKit.getInstance().nowPlayingItem?.title +
+            " - " +
+            MusicKit.getInstance().nowPlayingItem?.albumName,
+          state: MusicKit.getInstance().nowPlayingItem?.artistName,
+          largeImageKey:
+            MusicKit.getInstance().nowPlayingItem?.artwork?.url.replace(
+              "{w}x{h}",
+              "512x512"
+            ),
+          largeImageText: MusicKit.getInstance().nowPlayingItem?.albumName,
+          instance: false,
+          startTimestamp: startTime,
+          endTimestamp:
+            Date.now() + MusicKit.getInstance().currentPlaybackDuration * 1000
+        });
       }
     }
   );
