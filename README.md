@@ -1,34 +1,9 @@
-## Usage
+A purrfect alternative to Apple Music for Windows, Mac, and Linux.
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+![image](https://github.com/scarryaa/musicnya/assets/77030329/4d79cb66-d9b2-47f8-b3fb-3ba7002b5eed)
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+![image](https://github.com/scarryaa/musicnya/assets/77030329/4375e8aa-4e50-4c33-bcf3-424b17dafa69)
 
-```bash
-$ npm install # or pnpm install or yarn install
-```
+![image](https://github.com/scarryaa/musicnya/assets/77030329/d3588b06-43df-4943-a59a-36db7b2789e1)
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm run dev` or `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-
-### `npm run build`
-
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-## Deployment
-
-You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
+![image](https://github.com/scarryaa/musicnya/assets/77030329/6b53a7ba-7bb8-4136-b442-6e304f82b29f)
