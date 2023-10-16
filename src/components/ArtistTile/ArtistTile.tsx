@@ -1,13 +1,13 @@
-import { IoPlay } from 'solid-icons/io';
-import styles from './ArtistTile.module.scss';
-import { A } from '@solidjs/router';
+import { IoPlay } from "solid-icons/io";
+import styles from "./ArtistTile.module.scss";
+import { A } from "@solidjs/router";
 
 export interface ArtistTileProps {
-  title: string
-  mediaArt: MusicKit.Artwork
-  artists: string[]
-  type: MusicKit.MediaItemType
-  id: string
+  title: string;
+  mediaArt: MusicKit.Artwork;
+  artists: string[];
+  type: MusicKit.MediaItemType;
+  id: string;
 }
 
 export function ArtistTile(props: ArtistTileProps) {
@@ -31,7 +31,7 @@ export function ArtistTile(props: ArtistTileProps) {
           loading="lazy"
           decoding="async"
           class={styles.artistTile__image}
-          src={props.mediaArt.url || ''}
+          src={props.mediaArt.url || ""}
           width={300}
           height={150}
         />

@@ -8,9 +8,9 @@ import {
   BsVolumeDownFill,
   BsVolumeMuteFill,
   BsVolumeUpFill
-} from 'solid-icons/bs';
-import styles from './Player.module.scss';
-import { BiRegularSkipNext, BiRegularSkipPrevious } from 'solid-icons/bi';
+} from "solid-icons/bs";
+import styles from "./Player.module.scss";
+import { BiRegularSkipNext, BiRegularSkipPrevious } from "solid-icons/bi";
 import {
   currentMediaItem,
   darkMode,
@@ -26,8 +26,8 @@ import {
   setOldVolume,
   setVolume,
   volume
-} from '../../stores/store';
-import { constructLink, formatTime, replaceSrc } from '../../util/utils';
+} from "../../stores/store";
+import { constructLink, formatTime, replaceSrc } from "../../util/utils";
 import {
   adjustVolume,
   seekToTime,
@@ -36,40 +36,40 @@ import {
   skipToNextItem,
   skipToPreviousItem,
   togglePlayPause
-} from '../../api/musickit';
-import { A } from '@solidjs/router';
-import { Show } from 'solid-js';
-import { Tooltip } from '../Tooltip/Tooltip';
+} from "../../api/musickit";
+import { A } from "@solidjs/router";
+import { Show } from "solid-js";
+import { Tooltip } from "../Tooltip/Tooltip";
 
 export function Player() {
   const lightTheme = !darkMode.value;
 
   const ButtonStyle = {
-    fill: lightTheme ? 'black' : 'white',
+    fill: lightTheme ? "black" : "white",
     size: 40,
     sizeSmall: 20,
     sizeVolume: 28,
-    marginTop: '-0.25rem',
-    marginLeft: '-0.1rem'
+    marginTop: "-0.25rem",
+    marginLeft: "-0.1rem"
   };
 
   const getPlayButtonType = () => {
-    if (currentMediaItem?.attributes?.kind === 'streaming') {
+    if (currentMediaItem?.attributes?.kind === "streaming") {
       if (isPlaying.value) {
-        return 'stop';
+        return "stop";
       } else {
-        return 'play';
+        return "play";
       }
     } else if (isPlaying.value) {
-      return 'pause';
+      return "pause";
     } else {
-      return 'play';
+      return "play";
     }
   };
 
   const playButton = () => {
     switch (getPlayButtonType()) {
-      case 'stop':
+      case "stop":
         return (
           <Tooltip text="stop" position="top">
             <BsStopCircleFill
@@ -82,23 +82,27 @@ export function Player() {
             />
           </Tooltip>
         );
-      case 'pause':
+      case "pause":
         return (
           <Tooltip text="pause" position="top">
             <BsPauseCircleFill
               fill={ButtonStyle.fill}
               size={ButtonStyle.size}
-              onclick={() => { togglePlayPause(); }}
+              onclick={() => {
+                togglePlayPause();
+              }}
             />
           </Tooltip>
         );
-      case 'play':
+      case "play":
         return (
           <Tooltip text="play" position="top">
             <BsPlayCircleFill
               fill={ButtonStyle.fill}
               size={ButtonStyle.size}
-              onclick={() => { togglePlayPause(); }}
+              onclick={() => {
+                togglePlayPause();
+              }}
             />
           </Tooltip>
         );
@@ -107,20 +111,20 @@ export function Player() {
 
   const getRepeatButtonType = () => {
     if (isRepeat.value === 0) {
-      return 'repeat';
+      return "repeat";
     } else if (isRepeat.value === 1) {
-      return 'repeat1';
+      return "repeat1";
     } else {
-      return 'repeat';
+      return "repeat";
     }
   };
 
   const repeatButton = () => {
     switch (getRepeatButtonType()) {
-      case 'repeat':
+      case "repeat":
         return (
           <Tooltip
-            text={isRepeat.value === 2 ? 'repeat off' : 'repeat one'}
+            text={isRepeat.value === 2 ? "repeat off" : "repeat one"}
             position="top"
           >
             <BsRepeat
@@ -128,27 +132,26 @@ export function Player() {
               style={{
                 fill:
                   isRepeat.value === 1 || isRepeat.value === 2
-                    ? 'var(--accent)'
-                    : 'white'
+                    ? "var(--accent)"
+                    : "white"
               }}
               size={20}
               onclick={() => {
                 setIsRepeat({
-                  value:
-                    isRepeat.value === 0 ? 1 : isRepeat.value === 1 ? 2 : 0
+                  value: isRepeat.value === 0 ? 1 : isRepeat.value === 1 ? 2 : 0
                 });
                 setRepeatMode(
                   MusicKit.getInstance().repeatMode === (0 as any)
                     ? (1 as any)
                     : MusicKit.getInstance().repeatMode === (1 as any)
-                      ? (2 as any)
-                      : (0 as any)
+                    ? (2 as any)
+                    : (0 as any)
                 );
               }}
             />
           </Tooltip>
         );
-      case 'repeat1':
+      case "repeat1":
         return (
           <Tooltip text="repeat all" position="top">
             <BsRepeat1
@@ -156,21 +159,20 @@ export function Player() {
               style={{
                 fill:
                   isRepeat.value === 1 || isRepeat.value === 2
-                    ? 'var(--accent)'
-                    : 'white'
+                    ? "var(--accent)"
+                    : "white"
               }}
               size={20}
               onclick={() => {
                 setIsRepeat({
-                  value:
-                    isRepeat.value === 0 ? 1 : isRepeat.value === 1 ? 2 : 0
+                  value: isRepeat.value === 0 ? 1 : isRepeat.value === 1 ? 2 : 0
                 });
                 setRepeatMode(
                   MusicKit.getInstance().repeatMode === (0 as any)
                     ? (1 as any)
                     : MusicKit.getInstance().repeatMode === (1 as any)
-                      ? (2 as any)
-                      : (0 as any)
+                    ? (2 as any)
+                    : (0 as any)
                 );
               }}
             />
@@ -180,19 +182,19 @@ export function Player() {
   };
 
   const getShuffleButtonType = () => {
-    return 'shuffle';
+    return "shuffle";
   };
 
   const shuffleButton = () => {
     switch (getShuffleButtonType()) {
-      case 'shuffle':
+      case "shuffle":
         return (
           <Tooltip text="shuffle" position="top">
             <BsShuffle
               fill={ButtonStyle.fill}
               size={20}
               style={{
-                fill: isShuffle.value === 1 ? 'var(--accent)' : 'white'
+                fill: isShuffle.value === 1 ? "var(--accent)" : "white"
               }}
               onclick={() => {
                 setIsShuffle({
@@ -211,23 +213,23 @@ export function Player() {
 
   const getVolumeButtonType = () => {
     if (volume.value > 0.5) {
-      return 'volumeUp';
+      return "volumeUp";
     } else if (volume.value > 0) {
-      return 'volumeDown';
+      return "volumeDown";
     } else {
-      return 'volumeMute';
+      return "volumeMute";
     }
   };
 
   const volumeButton = () => {
     switch (getVolumeButtonType()) {
-      case 'volumeUp':
+      case "volumeUp":
         return (
           <Tooltip text="mute" position="top">
             <BsVolumeUpFill
               fill={ButtonStyle.fill}
               size={28}
-              style={{ 'margin-top': '-0.1rem', 'margin-left': '-0.3rem' }}
+              style={{ "margin-top": "-0.1rem", "margin-left": "-0.3rem" }}
               onclick={() => {
                 setOldVolume({ value: volume.value });
                 setVolume({ value: 0 });
@@ -236,13 +238,13 @@ export function Player() {
             />
           </Tooltip>
         );
-      case 'volumeDown':
+      case "volumeDown":
         return (
           <Tooltip text="mute" position="top">
             <BsVolumeDownFill
               fill={ButtonStyle.fill}
               size={28}
-              style={{ 'margin-top': '-0.1rem', 'margin-left': '-0.3rem' }}
+              style={{ "margin-top": "-0.1rem", "margin-left": "-0.3rem" }}
               onclick={() => {
                 setOldVolume({ value: volume.value });
                 setVolume({ value: 0 });
@@ -251,13 +253,13 @@ export function Player() {
             />
           </Tooltip>
         );
-      case 'volumeMute':
+      case "volumeMute":
         return (
           <Tooltip text="unmute" position="top">
             <BsVolumeMuteFill
               fill={ButtonStyle.fill}
               size={28}
-              style={{ 'margin-top': '-0.1rem', 'margin-left': '-0.3rem' }}
+              style={{ "margin-top": "-0.1rem", "margin-left": "-0.3rem" }}
               onclick={() => {
                 setVolume({ value: oldVolume.value });
                 adjustVolume(oldVolume.value);
@@ -295,8 +297,10 @@ export function Player() {
           >
             {currentMediaItem?.attributes?.name}
           </A>
-          {/* TODO implement search for artist */}
-          <A class={styles.player__left__mediaInfo__artist} href="#">
+          <A
+            class={styles.player__left__mediaInfo__artist}
+            href={"/search/" + currentMediaItem?.attributes?.artistName}
+          >
             {currentMediaItem?.attributes?.artistName}
           </A>
         </div>
@@ -308,7 +312,9 @@ export function Player() {
               <BiRegularSkipPrevious
                 fill={ButtonStyle.fill}
                 size={40}
-                onclick={() => { skipToPreviousItem(); }}
+                onclick={() => {
+                  skipToPreviousItem();
+                }}
               />
             </Tooltip>
           </button>
@@ -320,13 +326,15 @@ export function Player() {
               <BiRegularSkipNext
                 fill={ButtonStyle.fill}
                 size={40}
-                onclick={() => { skipToNextItem(); }}
+                onclick={() => {
+                  skipToNextItem();
+                }}
               />
             </Tooltip>
           </button>
         </div>
         <div class={styles.player__middle__progress}>
-          <Show when={currentMediaItem?.attributes?.kind !== 'streaming'}>
+          <Show when={currentMediaItem?.attributes?.kind !== "streaming"}>
             <div class={styles.player__middle__progress__time}>
               {formattedPlaybackTime()}
             </div>
@@ -337,9 +345,11 @@ export function Player() {
             max={playbackDuration.value}
             value={playbackTime.value}
             class={styles.player__middle__progress__bar}
-            onchange={(e) => { seekToTime(e.target.valueAsNumber); }}
+            onchange={(e) => {
+              seekToTime(e.target.valueAsNumber);
+            }}
           />
-          <Show when={currentMediaItem?.attributes?.kind !== 'streaming'}>
+          <Show when={currentMediaItem?.attributes?.kind !== "streaming"}>
             <div class={styles.player__middle__progress__time}>
               {formattedPlaybackDuration()}
             </div>

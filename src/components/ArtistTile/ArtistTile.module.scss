@@ -2,8 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 0.5rem;
   border-radius: var(--border-radius);
 
   &:hover {
@@ -48,8 +46,8 @@
   }
 
   &__image {
-    width: 10rem;
-    height: 10rem;
+    width: 12rem;
+    height: 12rem;
     border-radius: 50%;
     object-fit: cover;
     aspect-ratio: 1;

@@ -1,0 +1,31 @@
+:root {
+  --spacing-search-results: 0.5rem;
+  --spacing-search-results-lg: 0.8rem;
+}
+
+.searchResults {
+  padding-block: var(--page-padding);
+  padding-top: var(--spacing-search-lg) !important;
+  padding-left: var(--page-padding);
+  height: calc(
+    100% - var(--content-offset) - var(--titlebar-height) / 2 -
+      var(--page-padding-bottom)
+  );
+  padding-bottom: var(--page-padding-bottom);
+  overflow-y: overlay;
+  overflow-x: hidden;
+  color: #fff;
+
+  &__top,
+  &__songs,
+  &__artists,
+  &__albums,
+  &__playlists,
+  &__musicVideos,
+  &__videoExtras,
+  &__radioShows,
+  &__radioEpisodes,
+  &__stations {
+    margin-block: var(--spacing-search-results-lg);
+  }
+}

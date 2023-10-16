@@ -11,7 +11,11 @@ import { fetchPlaylist } from "../api/playlist";
 import { fetchLibraryPlaylist } from "../api/library-playlist";
 import { fetchRadio } from "../api/radio";
 import { fetchStation } from "../api/station";
-import { fetchSearchCategories, fetchSearchResults } from "../api/search";
+import {
+  fetchSearchCategories,
+  fetchSearchResults,
+  fetchSearchSuggestions
+} from "../api/search";
 
 export const createAlbumStore = () => {
   return function (params: { id: string }) {
@@ -44,6 +48,23 @@ export const createSearchCategoriesStore = () => {
         musicUserToken: MusicKit.getInstance()?.musicUserToken
       },
       fetchSearchCategories
+    );
+
+    return data;
+  };
+};
+
+export const createSearchSuggestionsStore = () => {
+  return function (params: { term: string }) {
+    const [data] = createResource(
+      () => params.term,
+      async () => {
+        return await fetchSearchSuggestions({
+          devToken: import.meta.env.VITE_MUSICKIT_TOKEN,
+          musicUserToken: MusicKit.getInstance()?.musicUserToken,
+          term: params.term
+        });
+      }
     );
 
     return data;

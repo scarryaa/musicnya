@@ -33,7 +33,7 @@ export function MediaShelf(props: MediaShelfProps) {
   };
 
   return (
-    <div class={styles.mediaShelf + props.class}>
+    <div class={styles.mediaShelf + " " + props.class}>
       <Show when={props.title}>
         <h2 class={styles.mediaShelf__title}>{props.title}</h2>
       </Show>

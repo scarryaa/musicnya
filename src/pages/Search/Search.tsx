@@ -1,12 +1,12 @@
-import { For, Match, Show, Switch, createSignal } from 'solid-js';
-import { createSearchCategoriesStore } from '../../stores/api-store';
-import styles from './Search.module.scss';
-import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner';
-import { Error } from '../../components/Error/Error';
-import { replaceSrc } from '../../util/utils';
-import { SearchTile } from '../../components/SearchTile/SearchTile';
-import { fetchSearchResults } from '../../api/search';
-import { SearchResultTile } from '../../components/SearchResultTile/SearchResultTile';
+import { For, Match, Show, Switch, createSignal } from "solid-js";
+import { createSearchCategoriesStore } from "../../stores/api-store";
+import styles from "./Search.module.scss";
+import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
+import { Error } from "../../components/Error/Error";
+import { replaceSrc } from "../../util/utils";
+import { SearchTile } from "../../components/SearchTile/SearchTile";
+import { fetchSearchSuggestions } from "../../api/search";
+import { SearchResultTile } from "../../components/SearchResultTile/SearchResultTile";
 
 export function Search() {
   const searchCategoriesStore = createSearchCategoriesStore();
@@ -21,9 +21,9 @@ export function Search() {
     id: string,
     url: string
   ) => {
-    const albumId = url?.split('/')?.pop()?.split('?')[0];
-    if (kind === 'terms') return `/search/${term}`;
-    else if (type === 'songs') return `/album/${albumId}#${id}`;
+    const albumId = url?.split("/")?.pop()?.split("?")[0];
+    if (kind === "terms") return `/search/${term}`;
+    else if (type === "songs") return `/album/${albumId}#${id}`;
     return `/${type?.substring(0, type.length - 1)}/${id}`;
   };
 
@@ -32,17 +32,17 @@ export function Search() {
       <Switch fallback={<div>Not found</div>}>
         <Match
           when={
-            searchCategoriesData.state === 'pending' ||
-            searchCategoriesData.state === 'unresolved' ||
-            searchCategoriesData.state === 'refreshing'
+            searchCategoriesData.state === "pending" ||
+            searchCategoriesData.state === "unresolved" ||
+            searchCategoriesData.state === "refreshing"
           }
         >
           <LoadingSpinner />
         </Match>
-        <Match when={searchCategoriesData.state === 'errored'}>
+        <Match when={searchCategoriesData.state === "errored"}>
           <Error error={searchCategoriesData.error} />
         </Match>
-        <Match when={searchCategoriesData.state === 'ready'}>
+        <Match when={searchCategoriesData.state === "ready"}>
           <Show when={searchCategoriesData}>
             <div class={styles.search__header}>
               <h1 class={styles.search__header__title}>search</h1>
@@ -56,7 +56,7 @@ export function Search() {
                   }
 
                   setResults(
-                    await fetchSearchResults({
+                    await fetchSearchSuggestions({
                       devToken: MusicKit.getInstance().developerToken,
                       musicUserToken: MusicKit.getInstance().musicUserToken,
                       term: (e.target as HTMLInputElement).value
