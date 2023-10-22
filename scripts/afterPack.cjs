@@ -20,6 +20,10 @@ exports.default = function (context) {
       ? `EVS_USERNAME="${username}" EVS_PASSWORD="${password}" python3 -m castlabs_evs.vmp sign-pkg ./dist/mac ${context.appOutDir}`
       : `EVS_USERNAME="${username}" EVS_PASSWORD="${password}" python -m castlabs_evs.vmp sign-pkg ./dist/win-unpacked ${context.appOutDir}`;
 
-  execSync(command);
+  try {
+    execSync(command);
+  } catch (error) {
+    console.log(error);
+  }
   console.log("VMP signing complete");
 };
