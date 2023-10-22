@@ -30,7 +30,6 @@
       "mirror": "https://github.com/castlabs/electron-releases/releases/download/v"
     },
     "afterPack": "./scripts/afterPack.cjs",
-    "afterSign": "./scripts/afterSign.cjs",
     "mac": {
       "target": [
         {
