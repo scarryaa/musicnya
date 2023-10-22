@@ -16,6 +16,7 @@ jobs:
 
       - name: Decode and create config.json
         run: echo "${{ secrets.CONFIG_JSON }}" | base64 -d > config.json
+        shell: bash
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
