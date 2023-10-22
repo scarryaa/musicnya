@@ -26,10 +26,10 @@
     "artifactName": "musicnya",
     "appId": "org.nyan-inc.musicnya",
     "copyright": "Copyright © 2023 nyan-inc",
-    "electronVersion": "26.0.0-alpha.6",
     "electronDownload": {
       "mirror": "https://github.com/castlabs/electron-releases/releases/download/v"
     },
+    "afterPack": "./scripts/afterPack.cjs",
     "mac": {
       "target": [
         {
