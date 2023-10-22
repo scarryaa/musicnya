@@ -6,7 +6,7 @@
     "start": "vite",
     "dev": "concurrently \"vite\" \"APP_DEV=true ${IN_NIX_SHELL:+steam-run} electron .\"",
     "electron": "APP_DEV=false ${IN_NIX_SHELL:+steam-run} electron .",
-    "win": "APP_DEV=true electron .\"",
+    "win": "electron .\"",
     "build": "vite build",
     "serve": "vite preview",
     "lint": "eslint --ext .ts,.tsx .",
@@ -15,8 +15,11 @@
     "buildLinux": "electron-builder -l"
   },
   "type": "module",
-  "main": "index.ts",
+  "main": "index.cjs",
   "license": "MIT",
+  "compilerOptions": {
+    "esModuleInterop": true
+  },
   "author": {
     "name": "scarryaa",
     "email": "scarryaa@gmail.com"
@@ -92,10 +95,9 @@
     "typescript": "*",
     "vite": "^4.3.9",
     "vite-plugin-solid": "^2.7.0",
-    "electron": "https://github.com/castlabs/electron-releases#26.0.0-alpha.6+wvcus"
+    "electron": "https://github.com/castlabs/electron-releases#28.0.0-alpha.4+wvcus"
   },
   "dependencies": {
-    "electron": "https://github.com/castlabs/electron-releases#26.0.0-alpha.6+wvcus",
     "cors-anywhere": "^0.4.4",
     "discord-auto-rpc": "^1.0.17",
     "discord-rpc": "^4.0.1"
