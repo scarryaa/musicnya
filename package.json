@@ -43,6 +43,18 @@
       ],
       "artifactName": "${productName}-${version}-${arch}.${ext}"
     },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
     "linux": {
       "target": [
         "AppImage"
