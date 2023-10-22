@@ -15,6 +15,8 @@ exports.default = function (context) {
     return;
   }
 
+  console.log("APP_DIR:" + context.appOutDir);
+
   const command =
     process.platform === "darwin"
       ? `EVS_USERNAME="${username}" EVS_PASSWORD="${password}" python3 -m castlabs_evs.vmp sign-pkg ./dist/mac ${context.appOutDir}`
