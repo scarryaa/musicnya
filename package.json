@@ -23,7 +23,7 @@
   },
   "build": {
     "productName": "musicnya",
-    "artifactName": "musicnya-desktop",
+    "artifactName": "musicnya",
     "appId": "org.nyan-inc.musicnya",
     "copyright": "Copyright © 2023 nyan-inc",
     "electronDownload": {
@@ -31,6 +31,18 @@
     },
     "afterPack": "./scripts/afterPack.cjs",
     "afterSign": "./scripts/afterSign.cjs",
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
     "linux": {
       "target": [
         "AppImage"
