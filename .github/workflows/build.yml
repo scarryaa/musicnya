@@ -34,10 +34,12 @@ jobs:
         with:
           node-version: 18
 
-      - name: Sign and publish Electron app
+      - name: Build and publish Electron app
         run: |
+          npm install
           npx electron-builder build --config.extraMetadata.EVS_SIGNING=true --publish always
         env:
           EVS_USERNAME: ${{ secrets.EVS_USERNAME }}
           EVS_PASSWORD: ${{ secrets.EVS_PASSWORD }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
