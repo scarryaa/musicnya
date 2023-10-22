@@ -1,6 +1,7 @@
 name: Build/release
 
-on: push
+on:
+  push:
 
 jobs:
   release:
@@ -33,12 +34,10 @@ jobs:
         with:
           node-version: 18
 
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
+      - name: Sign and publish Electron app
+        run: |
+          npx electron-builder build --config.extraMetadata.EVS_SIGNING=true --publish always
         env:
           EVS_USERNAME: ${{ secrets.EVS_USERNAME }}
           EVS_PASSWORD: ${{ secrets.EVS_PASSWORD }}
-        with:
-          github_token: ${{ secrets.github_token }}
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
-          yarn_args: --network-timeout 600000  # 10 minutes in milliseconds
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
