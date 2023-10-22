@@ -9,11 +9,18 @@
     "win": "APP_DEV=true electron .\"",
     "build": "vite build",
     "serve": "vite preview",
-    "lint": "eslint --ext .ts,.tsx ."
+    "lint": "eslint --ext .ts,.tsx .",
+    "buildMac": "electron-builder -m",
+    "buildWin": "electron-builder -w",
+    "buildLinux": "electron-builder -l"
   },
   "type": "module",
   "main": "index.ts",
   "license": "MIT",
+  "author": {
+    "name": "scarryaa",
+    "email": "scarryaa@gmail.com"
+  },
   "build": {
     "productName": "musicnya",
     "artifactName": "musicnya-desktop",
@@ -21,12 +28,32 @@
     "copyright": "Copyright © 2023 nyan-inc",
     "electronDownload": {
       "mirror": "https://github.com/castlabs/electron-releases/releases/download/v"
+    },
+    "afterPack": "./scripts/afterPack.cjs",
+    "afterSign": "./scripts/afterSign.cjs",
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "AudioVideo",
+      "synopsis": "A purrfect alternative to Apple Music for Windows, Mac, and Linux.",
+      "description": "A purrfect alternative to Apple Music for Windows, Mac, and Linux.",
+      "icon": "public/icon.png",
+      "desktop": {
+        "Name": "musicnya",
+        "Comment": "A purrfect alternative to Apple Music for Windows, Mac, and Linux.",
+        "Icon": "musicnya",
+        "Terminal": "false",
+        "Type": "Application",
+        "Categories": "AudioVideo;Audio;Player;"
+      }
     }
   },
   "devDependencies": {
     "@solidjs/router": "^0.8.2",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "concurrently": "^8.2.1",
+    "electron-builder": "^24.6.4",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard-with-typescript": "^39.0.0",
@@ -42,12 +69,12 @@
     "solid-js": "^1.7.6",
     "typescript": "*",
     "vite": "^4.3.9",
-    "vite-plugin-solid": "^2.7.0"
+    "vite-plugin-solid": "^2.7.0",
+    "electron": "https://github.com/castlabs/electron-releases#26.0.0-alpha.6+wvcus"
   },
   "dependencies": {
     "cors-anywhere": "^0.4.4",
     "discord-auto-rpc": "^1.0.17",
-    "discord-rpc": "^4.0.1",
-    "electron": "https://github.com/castlabs/electron-releases#26.0.0-alpha.6+wvcus"
+    "discord-rpc": "^4.0.1"
   }
 }

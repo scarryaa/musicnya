@@ -7,12 +7,14 @@ import { replaceSrc } from "../../util/utils";
 import { SearchTile } from "../../components/SearchTile/SearchTile";
 import { fetchSearchSuggestions } from "../../api/search";
 import { SearchResultTile } from "../../components/SearchResultTile/SearchResultTile";
+import { useNavigate } from "@solidjs/router";
 
 export function Search() {
   const searchCategoriesStore = createSearchCategoriesStore();
   const searchCategoriesData = searchCategoriesStore();
 
   const [results, setResults] = createSignal({} as any);
+  const navigate = useNavigate();
 
   const constructLink = (
     kind: string,
@@ -63,7 +65,16 @@ export function Search() {
                     })
                   );
                 }}
+                onkeydown={(e) => {
+                  if (e.key === "Enter") {
+                    const searchTerm = (e.target as HTMLInputElement).value;
+                    const searchResultsPageUrl = `/search/${searchTerm}`;
+
+                    navigate(searchResultsPageUrl);
+                  }
+                }}
               />
+
               <div class={styles.search__header__results}>
                 <For each={results()?.results?.suggestions}>
                   {(suggestion) => (
