@@ -35,6 +35,9 @@ jobs:
 
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
+        env:
+          EVS_USERNAME: ${{ secrets.EVS_USERNAME }}
+          EVS_PASSWORD: ${{ secrets.EVS_PASSWORD }}
         with:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
