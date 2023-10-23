@@ -67,12 +67,15 @@ export const Album = (): JSX.Element => {
                     ) ?? ""
                 }
               }
+              year={getNestedAttributes(albumData())?.releaseDate}
               subtitle={
                 getNestedRelationships(albumData())?.catalog?.data?.[0]
                   ?.attributes?.curatorName
               }
               description={
-                getNestedAttributes(albumData())?.description?.standard
+                getNestedAttributes(albumData())?.description?.standard ||
+                getNestedAttributes(albumData())?.description?.short ||
+                getNestedAttributes(albumData())?.editorialNotes?.standard
               }
               id={getNestedData(albumData())?.id}
               artistIds={

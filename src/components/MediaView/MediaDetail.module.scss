@@ -52,6 +52,16 @@
       margin-top: auto;
       margin-bottom: 0.15rem;
     }
+
+    &__year {
+      font-weight: 400;
+      color: var(--text-muted);
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      padding-bottom: 0.1rem;
+    }
   }
 
   &__table {
