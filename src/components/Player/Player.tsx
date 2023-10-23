@@ -42,10 +42,7 @@ import { Show } from "solid-js";
 import { Tooltip } from "../Tooltip/Tooltip";
 
 export function Player() {
-  const lightTheme = !darkMode.value;
-
   const ButtonStyle = {
-    fill: lightTheme ? "black" : "white",
     size: 40,
     sizeSmall: 20,
     sizeVolume: 28,
@@ -73,7 +70,7 @@ export function Player() {
         return (
           <Tooltip text="stop" position="top">
             <BsStopCircleFill
-              fill={ButtonStyle.fill}
+              fill={darkMode.value ? "white" : "black"}
               size={ButtonStyle.size}
               onclick={async () => {
                 await MusicKit.getInstance().stop();
@@ -86,7 +83,7 @@ export function Player() {
         return (
           <Tooltip text="pause" position="top">
             <BsPauseCircleFill
-              fill={ButtonStyle.fill}
+              fill={darkMode.value ? "white" : "black"}
               size={ButtonStyle.size}
               onclick={() => {
                 togglePlayPause();
@@ -98,7 +95,7 @@ export function Player() {
         return (
           <Tooltip text="play" position="top">
             <BsPlayCircleFill
-              fill={ButtonStyle.fill}
+              fill={darkMode.value ? "white" : "black"}
               size={ButtonStyle.size}
               onclick={() => {
                 togglePlayPause();
@@ -128,12 +125,14 @@ export function Player() {
             position="top"
           >
             <BsRepeat
-              fill={ButtonStyle.fill}
+              fill={darkMode.value ? "white" : "black"}
               style={{
                 fill:
                   isRepeat.value === 1 || isRepeat.value === 2
                     ? "var(--accent)"
-                    : "white"
+                    : darkMode.value
+                    ? "white"
+                    : "black"
               }}
               size={20}
               onclick={() => {
@@ -155,7 +154,7 @@ export function Player() {
         return (
           <Tooltip text="repeat all" position="top">
             <BsRepeat1
-              fill={ButtonStyle.fill}
+              fill={darkMode.value ? "white" : "black"}
               style={{
                 fill:
                   isRepeat.value === 1 || isRepeat.value === 2
@@ -191,10 +190,15 @@ export function Player() {
         return (
           <Tooltip text="shuffle" position="top">
             <BsShuffle
-              fill={ButtonStyle.fill}
+              fill={darkMode.value ? "white" : "black"}
               size={20}
               style={{
-                fill: isShuffle.value === 1 ? "var(--accent)" : "white"
+                fill:
+                  isShuffle.value === 1
+                    ? "var(--accent)"
+                    : darkMode.value
+                    ? "white"
+                    : "black"
               }}
               onclick={() => {
                 setIsShuffle({
@@ -227,7 +231,7 @@ export function Player() {
         return (
           <Tooltip text="mute" position="top">
             <BsVolumeUpFill
-              fill={ButtonStyle.fill}
+              fill={darkMode.value ? "white" : "black"}
               size={28}
               style={{ "margin-top": "-0.1rem", "margin-left": "-0.3rem" }}
               onclick={() => {
@@ -242,7 +246,7 @@ export function Player() {
         return (
           <Tooltip text="mute" position="top">
             <BsVolumeDownFill
-              fill={ButtonStyle.fill}
+              fill={darkMode.value ? "white" : "black"}
               size={28}
               style={{ "margin-top": "-0.1rem", "margin-left": "-0.3rem" }}
               onclick={() => {
@@ -257,7 +261,7 @@ export function Player() {
         return (
           <Tooltip text="unmute" position="top">
             <BsVolumeMuteFill
-              fill={ButtonStyle.fill}
+              fill={darkMode.value ? "white" : "black"}
               size={28}
               style={{ "margin-top": "-0.1rem", "margin-left": "-0.3rem" }}
               onclick={() => {
@@ -310,7 +314,7 @@ export function Player() {
           <button class={styles.player__left__controls__button}>
             <Tooltip text="previous" position="top">
               <BiRegularSkipPrevious
-                fill={ButtonStyle.fill}
+                fill={darkMode.value ? "white" : "black"}
                 size={40}
                 onclick={() => {
                   skipToPreviousItem();
@@ -324,7 +328,7 @@ export function Player() {
           <button class={styles.player__left__controls__button}>
             <Tooltip text="next" position="top">
               <BiRegularSkipNext
-                fill={ButtonStyle.fill}
+                fill={darkMode.value ? "white" : "black"}
                 size={40}
                 onclick={() => {
                   skipToNextItem();
