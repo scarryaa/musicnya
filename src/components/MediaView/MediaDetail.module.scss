@@ -43,6 +43,33 @@
       overflow: hidden;
       -webkit-box-orient: vertical;
       padding-bottom: 0.1rem;
+      margin-right: 1rem;
+      transition: background-color 0.2s ease-in-out;
+
+      &:hover {
+        background-color: var(--background-hover);
+        border-radius: 0.5rem;
+      }
+    }
+
+    &__descriptionExpanded {
+      padding-right: 1rem;
+      margin-top: var(--media_info_info-description-margin);
+      font-size: var(--font-micro);
+      font-weight: 400;
+      color: var(--text-muted);
+      display: -webkit-box;
+      -webkit-line-clamp: unset;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      padding-bottom: 0.1rem;
+      margin-right: 1rem;
+      transition: background-color 0.2s ease-in-out;
+
+      &:hover {
+        background-color: var(--background-hover);
+        border-radius: 0.5rem;
+      }
     }
 
     &__actions {

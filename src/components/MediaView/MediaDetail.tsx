@@ -4,7 +4,7 @@ import { IoPlay, IoShuffle } from "solid-icons/io";
 import { ButtonPrimary } from "../ButtonPrimary/ButtonPrimary";
 import { A } from "@solidjs/router";
 import { constructLink } from "../../util/utils";
-import { For, Show } from "solid-js";
+import { For, Show, createSignal } from "solid-js";
 import { setQueue, setShuffleMode } from "../../api/musickit";
 import { setIsShuffle } from "../../stores/store";
 
@@ -21,6 +21,8 @@ export interface MediaDetailProps {
 }
 
 export function MediaDetail(props: MediaDetailProps) {
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = createSignal(false);
+
   return (
     <div class={styles.mediaDetail}>
       <MediaTileNoControls
@@ -66,8 +68,13 @@ export function MediaDetail(props: MediaDetailProps) {
           </div>
         </Show>
         <div
-          class={styles.mediaDetail__details__description}
+          class={
+            isDescriptionExpanded()
+              ? styles.mediaDetail__details__descriptionExpanded
+              : styles.mediaDetail__details__description
+          }
           innerHTML={props.description}
+          onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded())}
         ></div>
         <div class={styles.mediaDetail__details__actions}>
           <ButtonPrimary
