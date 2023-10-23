@@ -19,13 +19,13 @@ exports.default = function (context) {
 
   const command =
     process.platform === "darwin"
-      ? `EVS_USERNAME=${username} EVS_PASSWORD=${password} python -m castlabs_evs.vmp sign-pkg ./dist/mac ${context.appOutDir}`
+      ? `EVS_ACCOUNT_NAME=${username} EVS_PASSWD=${password} python -m castlabs_evs.vmp sign-pkg ./dist/mac ${context.appOutDir}`
       : `set EVS_USERNAME=${username} ; set EVS_PASSWORD=${password} ; python -m castlabs_evs.vmp sign-pkg ./dist/win-unpacked ${context.appOutDir}`;
 
   try {
     execSync(command);
+    console.log("VMP signing complete");
   } catch (error) {
     console.log(error);
   }
-  console.log("VMP signing complete");
 };
