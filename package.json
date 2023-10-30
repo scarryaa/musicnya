@@ -6,7 +6,7 @@
     "start": "vite",
     "dev": "concurrently \"vite\" \"APP_DEV=true ${IN_NIX_SHELL:+steam-run} electron .\"",
     "electron": "APP_DEV=false ${IN_NIX_SHELL:+steam-run} electron .",
-    "win": "electron .\"",
+    "win": "concurrently \"set APP_DEV=true && electron .\" \"vite\"",
     "build": "vite build",
     "serve": "vite preview",
     "lint": "eslint --ext .ts,.tsx .",
