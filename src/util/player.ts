@@ -68,7 +68,7 @@ class Player {
     attributes = attributes.attributes;
     this.player.metadata = {
       "mpris:trackid": this.player.objectPath(
-        `track/${attributes?.playParams?.id?.replace(/[^a-zA-Z 0-9]+/g, "")}`
+        `track/${attributes?.playParams?.id}`
       ),
       "mpris:length": attributes.durationInMillis * 1000,
       "mpris:artUrl": attributes.artwork.url
