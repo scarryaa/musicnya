@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { app, BrowserWindow, components, ipcMain } = require("electron");
+const { app, components, ipcMain } = require("electron");
 const path = require("path");
 const { AutoClient } = require("discord-auto-rpc");
+const Player = require('./src/util/player.ts');
+const { BrowserWindow } = require("./browserwindow.ts");
 
 // Discord RPC
 const client = new AutoClient({ transport: "ipc" });
@@ -22,6 +24,7 @@ const host = "0.0.0.0";
 const corsPort = 8080;
 
 const corsProxy = require("cors-anywhere");
+const { platform } = require("os");
 corsProxy
   .createServer({
     originWhitelist: [], // Allow all origins
@@ -64,19 +67,8 @@ if (process.platform === "linux") {
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const createWindow = () => {
-  const win = new BrowserWindow({
-    width: 1100,
-    height: 700,
-    minWidth: 1100,
-    minHeight: 700,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: true,
-      preload: path.join(__dirname, "preload.cjs")
-    },
-    autoHideMenuBar: true,
-    frame: false
-  });
+  const browserWindow = new BrowserWindow();
+  const win = browserWindow.createWindow();
 
   ipcMain.on("minimize-window", () => {
     win.minimize();
@@ -88,6 +80,11 @@ const createWindow = () => {
     win.close();
   });
 
+  // MusicKit
+  ipcMain.on('musickit-loaded', (event) => {
+    console.log('MusicKit has been loaded!');
+  });
+
   // Discord RPC
   ipcMain.on("set-activity", (_, data) => {
     client.setActivity(data);
@@ -97,6 +94,26 @@ const createWindow = () => {
     client.clearActivity();
   });
 
+  // MPRIS
+  if (platform() === "linux") {
+  ipcMain.on('pause', (event, arg) => {
+    player.setIsPaused();
+  });
+
+  ipcMain.on('play', (event, arg) => {
+    player.setIsPlaying();
+  });
+
+  ipcMain.on('stop', (event, arg) => {
+    player.setIsStopped();
+  });
+
+  ipcMain.on('mpris-update-data', (event, arg) => {
+    player.updateMetadata(arg);
+  }
+  );
+}
+
   win.removeMenu();
 
   if (isDev) {
@@ -105,9 +122,12 @@ const createWindow = () => {
   } else {
     void win.loadURL(APP_PROD_URL);
   }
+
+const player = new Player();
 };
 
 void app.whenReady().then(async () => {
   await components.whenReady();
   createWindow();
-});
+}
+);

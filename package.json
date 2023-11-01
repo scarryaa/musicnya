@@ -78,6 +78,7 @@
     "@solidjs/router": "^0.8.2",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "concurrently": "^8.2.1",
+    "electron": "https://github.com/castlabs/electron-releases#28.0.0-alpha.4+wvcus",
     "electron-builder": "^24.6.4",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^9.0.0",
@@ -94,12 +95,12 @@
     "solid-js": "^1.7.6",
     "typescript": "*",
     "vite": "^4.3.9",
-    "vite-plugin-solid": "^2.7.0",
-    "electron": "https://github.com/castlabs/electron-releases#28.0.0-alpha.4+wvcus"
+    "vite-plugin-solid": "^2.7.0"
   },
   "dependencies": {
     "cors-anywhere": "^0.4.4",
     "discord-auto-rpc": "^1.0.17",
-    "discord-rpc": "^4.0.1"
+    "discord-rpc": "^4.0.1",
+    "mpris-service": "^2.1.2"
   }
 }

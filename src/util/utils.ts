@@ -191,6 +191,13 @@ export const setupEvents = (): void => {
           instance: false
         });
       }
+
+      // MPRIS
+      if (isPlaying.value) {
+        window.api.send("play");
+      } else {
+        window.api.send("pause");
+      }
     }
   );
 
@@ -304,6 +311,43 @@ export const setupEvents = (): void => {
       setPlaybackTime({
         value: MusicKit.getInstance().currentPlaybackTime
       });
+
+      // MPRIS
+      window.api.send("mpris-update-data", {
+        attributes: {
+          playParams: {
+            id: MusicKit.getInstance().nowPlayingItem?.playParams.id
+          },
+          durationInMillis: MusicKit.getInstance().currentPlaybackDuration,
+          artwork: {
+            url: MusicKit.getInstance().nowPlayingItem?.artwork.url
+          },
+          name: MusicKit.getInstance().nowPlayingItem?.title,
+          albumName: MusicKit.getInstance().nowPlayingItem?.albumName,
+          artistName: MusicKit.getInstance().nowPlayingItem?.artistName,
+          genreNames: MusicKit.getInstance().nowPlayingItem?.genreNames
+        }
+      });
     }
   );
+
+  window.api.receive("mpris-play", () => {
+    MusicKit.getInstance().play();
+  });
+
+  window.api.receive("mpris-pause", () => {
+    MusicKit.getInstance().pause();
+  });
+
+  window.api.receive("mpris-stop", () => {
+    MusicKit.getInstance().stop();
+  });
+
+  window.api.receive("mpris-next", () => {
+    MusicKit.getInstance().skipToNextItem();
+  });
+
+  window.api.receive("mpris-previous", () => {
+    MusicKit.getInstance().skipToPreviousItem();
+  });
 };

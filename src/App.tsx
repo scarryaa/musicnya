@@ -68,18 +68,20 @@ const App: Component = () => {
       }
       userToken = music.musicUserToken;
       cutToken = userToken.slice(-20);
+
+      window.api.send("musickit-loaded");
     })
     .catch((err) => {
       console.log(err);
     });
 
-    createEffect(async () => {
-      await addUser().then(() => {
-        console.log("Added user");
-        setLibraryAdded(true);
-        setLibraryAddedVisible(false);
-      });
+  createEffect(async () => {
+    await addUser().then(() => {
+      console.log("Added user");
+      setLibraryAdded(true);
+      setLibraryAddedVisible(false);
     });
+  });
 
   return (
     <div>
