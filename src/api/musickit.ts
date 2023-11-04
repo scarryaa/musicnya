@@ -71,18 +71,18 @@ export const getLyrics = async () => {
   if (!instance) return;
   else {
     songID = instance.nowPlayingItem?._songId;
-    if (songID?.startsWith('i.')) {
-      return 'Lyrics not available for this song.';
+    if (songID?.startsWith("i.")) {
+      return "Lyrics not available for this song.";
     }
   }
 
-  if (!songID) return '';
+  if (!songID) return "";
   const response: MusicKit.APIResponseObject = await fetch(
     `https://amp-api.music.apple.com/v1/catalog/${instance.storefrontId}/songs/${songID}/lyrics`,
     {
       headers: {
         authorization: `Bearer ${instance.developerToken}`,
-        'music-user-token': instance.musicUserToken
+        "music-user-token": instance.musicUserToken
       }
     }
   ).then(async (response) => {
@@ -90,16 +90,5 @@ export const getLyrics = async () => {
   });
 
   const ttml: string = (response.data as any)?.[0]?.attributes.ttml;
-  return parseTTML(ttml);
-};
-
-const parseTTML = (ttml: string) => {
-  const parser = new DOMParser();
-  const xmlDoc = parser.parseFromString(ttml, 'text/xml');
-  const lines = xmlDoc.getElementsByTagName('p');
-  let lyrics = '';
-  for (let i = 0; i < lines.length; i++) {
-    lyrics += lines[i].innerHTML + '\n';
-  }
-  return lyrics;
+  return ttml;
 };

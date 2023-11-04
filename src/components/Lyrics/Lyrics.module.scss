@@ -13,14 +13,31 @@
 }
 
 .lyrics pre {
-  color: var(--text);
+  color: rgb(172, 172, 172);
   font-size: 1rem;
   line-height: 1.5;
+  font-weight: 700;
+  overflow-y: overlay;
+  font-family: "Inter", sans-serif;
+  padding-right: 1rem;
+  font-size: clamp(16px, 10cqw, 24px);
   white-space: pre-wrap;
   word-wrap: break-word;
-  overflow-y: overlay;
-  font-family: "Roboto", sans-serif;
-  padding-right: 1rem;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+    z-index: 10;
+  }
+
+  &:first-child {
+    padding-top: 2rem;
+  }
 
   &:last-child {
     padding-bottom: 2rem;

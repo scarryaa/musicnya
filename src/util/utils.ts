@@ -8,7 +8,7 @@ import {
   setPlaybackDuration,
   setPlaybackTime
 } from "../stores/store";
-import { fetchLyrics } from "../components/Lyrics/Lyrics";
+import { fetchLyrics, syncLyrics } from "../components/Lyrics/Lyrics";
 
 export const replaceSrc = (
   src: string | undefined,
@@ -328,6 +328,9 @@ export const setupEvents = (): void => {
           genreNames: MusicKit.getInstance().nowPlayingItem?.genreNames
         }
       });
+
+      // scroll lyrics
+      syncLyrics(MusicKit.getInstance().currentPlaybackTime * 1000);
     }
   );
 
