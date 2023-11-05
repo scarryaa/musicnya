@@ -28,6 +28,10 @@ export const [darkMode, setDarkMode] = createStore({
   value: localStorage.getItem("theme") === "dark"
 });
 
+export const [immersiveBackground, setImmersiveBackground] = createStore({
+  value: localStorage.getItem("immersion") === "true"
+});
+
 export const [contextMenu, setContextMenu] = createStore({
   value: {
     open: false,
@@ -35,6 +39,11 @@ export const [contextMenu, setContextMenu] = createStore({
     y: 0,
     items: [] as ContextMenuItem[],
     id: "",
-    type: ""
+    type: "",
+    display: "none"
   }
+});
+
+export const [currentAlbumArt, setCurrentAlbumArt] = createStore({
+  value: ""
 });

@@ -1,4 +1,4 @@
-import { For, type JSX } from "solid-js";
+import { For, onMount, type JSX } from "solid-js";
 import styles from "./ContextMenu.module.scss";
 import { contextMenu, setContextMenu } from "../../stores/store";
 
@@ -8,8 +8,8 @@ export function ContextMenu(): JSX.Element {
     e.preventDefault();
     setContextMenu({
       value: {
-        x: -1000,
-        y: -1000,
+        x: -10000,
+        y: -10000,
         items: [],
         open: false,
         id: "",

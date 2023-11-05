@@ -65,25 +65,19 @@ export function Lyrics(): JSX.Element {
 }
 
 function parseTTMLtoJS(ttmlString) {
-  // Parse the TTML string using DOMParser
   const parser = new DOMParser();
   const xmlDoc = parser.parseFromString(ttmlString, "text/xml");
 
-  // Get all the <div> elements from the TTML
   const divElements = xmlDoc.getElementsByTagName("div");
   const scriptArray = [];
 
-  // Iterate over each <div> element
   Array.from(divElements).forEach((div) => {
-    // Extract the begin and end attributes
     const begin = div.getAttribute("begin");
     const end = div.getAttribute("end");
 
-    // Get all <p> elements within this <div>
     const pElements = div.getElementsByTagName("p");
     const lines = [];
 
-    // Iterate over each <p> element to get the lyrics and timings
     Array.from(pElements).forEach((p) => {
       const lineBegin = p.getAttribute("begin");
       const lineEnd = p.getAttribute("end");
@@ -92,11 +86,10 @@ function parseTTMLtoJS(ttmlString) {
       lines.push({
         begin: lineBegin,
         end: lineEnd,
-        text: text.trim() // Trim the text to remove any whitespace
+        text: text.trim()
       });
     });
 
-    // Add the constructed object to the scriptArray
     scriptArray.push({
       begin: begin,
       end: end,
@@ -108,10 +101,11 @@ function parseTTMLtoJS(ttmlString) {
 }
 
 function timecodeToMs(timecode) {
+  if (!timecode) return 0;
   const parts = timecode.split(":");
-  const seconds = parts.pop(); // get seconds and ms
-  const minutes = parts.length > 0 ? parseInt(parts.pop(), 10) : 0; // get minutes or 0 if none
-  const hours = parts.length > 0 ? parseInt(parts.pop(), 10) : 0; // get hours or 0 if none
+  const seconds = parts.pop();
+  const minutes = parts.length > 0 ? parseInt(parts.pop(), 10) : 0;
+  const hours = parts.length > 0 ? parseInt(parts.pop(), 10) : 0;
 
   // Split seconds and milliseconds
   const [secs, millis] = seconds.split(".");
@@ -122,24 +116,19 @@ function timecodeToMs(timecode) {
 }
 
 function scrollToLyric(lyricIndex) {
-  // If there's an active lyric, remove the class from it
   if (currentLyricElement) {
     currentLyricElement.classList.remove("active-lyric");
   }
 
-  // Get the new active lyric element
   const lyricElement = document.getElementById("lyric-" + lyricIndex);
 
   if (lyricElement && lyricsPane) {
-    // Add the active class to the new active lyric
     lyricElement.classList.add("active-lyric");
-    currentLyricElement = lyricElement; // Update the current active lyric
+    currentLyricElement = lyricElement;
 
-    // Calculate the offset to center the lyric in the container
     const lyricElementRect = lyricElement.getBoundingClientRect();
     const lyricsPaneRect = lyricsPane.getBoundingClientRect();
 
-    // Calculate the offset to center the lyric in the container
     const offset =
       lyricElementRect.top -
       lyricsPaneRect.top +
@@ -147,7 +136,6 @@ function scrollToLyric(lyricIndex) {
       lyricsPaneRect.height / 2 +
       lyricElementRect.height / 2;
 
-    // Scroll the container to the calculated offset
     lyricsPane.scroll({
       top: offset,
       behavior: "smooth"

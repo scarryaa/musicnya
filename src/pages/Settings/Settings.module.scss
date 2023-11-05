@@ -10,5 +10,24 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-block: 2rem;
+  }
+
+  &__button {
+    cursor: pointer;
+    border: none;
+    background-color: var(--accent);
+    outline: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    color: white;
+
+    &:hover {
+      background-color: var(--accent-hover);
+    }
+
+    &:active {
+      background-color: var(--accent-active);
+    }
   }
 }

@@ -10,6 +10,7 @@
   display: flex;
   flex-direction: column;
   padding-bottom: 2rem;
+  z-index: 10;
 }
 
 .lyrics pre {
@@ -23,17 +24,7 @@
   font-size: clamp(16px, 10cqw, 24px);
   white-space: pre-wrap;
   word-wrap: break-word;
-
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 40px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
-    z-index: 10;
-  }
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 
   &:first-child {
     padding-top: 2rem;

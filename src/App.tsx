@@ -5,7 +5,11 @@ import { Titlebar, TitlebarMac } from "./components/Titlebar/Titlebar";
 import { Main } from "./components/Main/Main";
 import { setupEvents } from "./util/utils";
 import { Lyrics } from "./components/Lyrics/Lyrics";
-import { rightPanelContent, rightPanelOpen } from "./stores/store";
+import {
+  immersiveBackground,
+  rightPanelContent,
+  rightPanelOpen
+} from "./stores/store";
 import { Queue } from "./components/Queue/Queue";
 import { currentMediaItem } from "../src/stores/store";
 import { Player } from "./components/Player/Player";
@@ -14,6 +18,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore/lite";
 import { ContextMenu } from "./components/ContextMenu/ContextMenu";
 import { LibraryAddBanner } from "./components/LibraryAddingBanner/LibraryAddBanner";
+import ImmersiveBackground from "./components/ImmersiveBackground/ImmersiveBackground";
 
 export let cutToken: string;
 export let userToken: string;
@@ -39,6 +44,19 @@ export const db = getFirestore(firebaseApp);
 const App: Component = () => {
   // Check if user is logged in
   const [isAuthorized, setIsAuthorized] = createSignal(false);
+
+  function updateCanvas(ctx, canvas) {
+    // Calculate the next color
+    ctx.fillStyle = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${
+      Math.random() * 255
+    })`;
+
+    // Fill the canvas with the new color
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Request the next frame in the animation
+    requestAnimationFrame(updateCanvas);
+  }
 
   // Initialize MusicKit
   MusicKit.configure({
@@ -66,6 +84,13 @@ const App: Component = () => {
       if (lightTheme) {
         document.documentElement.setAttribute("theme", "light");
       }
+
+      // Check for immersive background
+      const immersiveBackground = localStorage.getItem("immersion") === "true";
+      if (immersiveBackground) {
+        document.documentElement.setAttribute("immersion", "true");
+      }
+
       userToken = music.musicUserToken;
       cutToken = userToken.slice(-20);
 
@@ -111,6 +136,7 @@ const App: Component = () => {
       <Show when={currentMediaItem.id}>
         <Player />
       </Show>
+      <ImmersiveBackground />
       <ContextMenu />
     </div>
   );

@@ -110,8 +110,12 @@ const createWindow = () => {
 
   ipcMain.on('mpris-update-data', (event, arg) => {
     player.updateMetadata(arg);
-  }
-  );
+  });
+
+  ipcMain.on('reload-app', (event, arg) => {
+    console.log('Reloading app...');
+    win.reload();
+  });
 }
 
   win.removeMenu();

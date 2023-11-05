@@ -2,10 +2,16 @@ import styles from "./Titlebar.module.scss";
 import { IoClose } from "solid-icons/io";
 import { VsChromeMinimize, VsChromeMaximize } from "solid-icons/vs";
 import type { JSX } from "solid-js";
+import { immersiveBackground } from "../../stores/store";
 
 export function Titlebar(): JSX.Element {
   return (
-    <div class={styles.titlebar}>
+    <div
+      class={styles.titlebar}
+      style={
+        immersiveBackground.value ? { "background-color": "transparent" } : {}
+      }
+    >
       <button
         onclick={() => window.api.send("minimize-window")}
         class={styles["titlebar--button"]}

@@ -21,13 +21,14 @@ contextBridge.exposeInMainWorld("api", {
       'mpris-stop',
       'mpris-next',
       'mpris-previous',
+      'reload-app'
     ];
     if (validChannels.includes(channel)) {
       ipcRenderer.send(channel, data);
     }
   },
   receive: (channel, func) => {
-    let validChannels = ["fromMain", "mpris-play", "mpris-pause", "mpris-stop", "mpris-next", "mpris-previous"];
+    let validChannels = ["fromMain", "mpris-play", "mpris-pause", "mpris-stop", "mpris-next", "mpris-previous", "reload-app"];
     if (validChannels.includes(channel)) {
       // Deliberately strip event as it includes `sender`
       ipcRenderer.on(channel, (event, ...args) => func(...args));
