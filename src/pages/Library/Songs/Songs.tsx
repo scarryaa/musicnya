@@ -40,44 +40,49 @@ export function Songs(): JSX.Element {
                   });
                 }}
               >
-                <div
-                  class={styles.songs__body__song__play}
-                  style={
-                    song.id === currentMediaItem.id
-                      ? "opacity: 1"
-                      : "opacity: 0"
-                  }
-                >
-                  {isPlaying.value && song.id === currentMediaItem.id ? (
-                    <IoPause
-                      onClick={async () => {
-                        await MusicKit.getInstance().pause();
-                      }}
-                      size={20}
-                      fill={
-                        song.id === currentMediaItem.id
-                          ? "var(--accent)"
-                          : "var(--text)"
-                      }
-                    />
-                  ) : (
-                    <IoPlay
-                      onClick={async () => {
-                        song.id === currentMediaItem.id
-                          ? await MusicKit.getInstance().play()
-                          : await MusicKit.getInstance().setQueue({
-                              songs: [song.id],
-                              startPlaying: true
-                            });
-                      }}
-                      size={20}
-                      fill={
-                        song.id === currentMediaItem.id
-                          ? "var(--accent)"
-                          : "var(--text)"
-                      }
-                    />
-                  )}
+                <div class={styles.songs__body__song__artwork_wrapper}>
+                  <img
+                    class={styles.songs__body__song__artwork}
+                    src={song.mediaArt
+                      .replace("{w}x{h}", "30x30")
+                      .replace("{f}", "png")}
+                  />
+                  <div
+                    class={`${styles.songs__body__song__play} ${
+                      song.id === currentMediaItem.id ? styles.visible : ""
+                    }`}
+                  >
+                    {isPlaying.value && song.id === currentMediaItem.id ? (
+                      <IoPause
+                        onClick={async () => {
+                          await MusicKit.getInstance().pause();
+                        }}
+                        size={20}
+                        fill={
+                          song.id === currentMediaItem.id
+                            ? "var(--accent)"
+                            : "var(--text)"
+                        }
+                      />
+                    ) : (
+                      <IoPlay
+                        onClick={async () => {
+                          song.id === currentMediaItem.id
+                            ? await MusicKit.getInstance().play()
+                            : await MusicKit.getInstance().setQueue({
+                                songs: [song.id],
+                                startPlaying: true
+                              });
+                        }}
+                        size={20}
+                        fill={
+                          song.id === currentMediaItem.id
+                            ? "var(--accent)"
+                            : "var(--text)"
+                        }
+                      />
+                    )}
+                  </div>
                 </div>
                 <div class={styles.songs__body__song__title}>{song.title}</div>
                 <div>
