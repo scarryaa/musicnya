@@ -181,7 +181,7 @@ export const setupEvents = (): void => {
           largeImageText:
             MusicKit.getInstance().nowPlayingItem?.albumName +
             (MusicKit.getInstance().nowPlayingItem?.albumName.length < 2
-              ? " "
+              ? "     "
               : ""),
           instance: false,
           startTimestamp: Date.now(),
