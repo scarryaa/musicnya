@@ -38,12 +38,39 @@
     overflow-x: hidden;
 
     &__song {
+      position: relative;
       width: 100%;
       display: grid;
       grid-template-columns: 0.315fr 3fr 3fr 3fr 1fr 0.6fr;
       gap: 0.5rem;
       padding: 0.3rem 0.5rem;
       color: var(--color-gray-400);
+
+      &__artwork_wrapper {
+        margin-left: 2.8vw;
+        position: relative;
+        width: 30px;
+        height: 30px;
+      }
+
+      &__artwork {
+        width: 30px;
+        height: 30px;
+        border-radius: 0.2rem;
+      }
+
+      &__play {
+        position: absolute;
+        top: 0.3rem;
+        left: 0.3rem;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        filter: drop-shadow(0 0 0.5rem rgba(0, 0, 0, 1));
+        z-index: 2;
+      }
 
       &__title {
         color: var(--color-gray-100);
@@ -60,7 +87,8 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        padding-right: 2rem;
+        padding-right: 0.2rem;
+        align-self: center;
 
         a {
           display: block;
@@ -77,15 +105,6 @@
         text-align: right;
       }
 
-      &__play {
-        display: flex;
-        flex-direction: row;
-        gap: 0.5rem;
-        opacity: 0;
-        justify-content: end;
-        padding-right: 0 !important;
-      }
-
       &__more {
         display: none;
         flex-direction: row;
@@ -97,7 +116,14 @@
       &:hover {
         background-color: rgba(255, 255, 255, 0.05);
 
-        .songs__body__song__play,
+        .songs__body__song__play.visible {
+          opacity: 1;
+        }
+
+        .songs__body__song__play {
+          opacity: 1;
+        }
+
         .songs__body__song__more {
           display: flex !important;
           opacity: 1 !important;

@@ -13,7 +13,8 @@ export function ContextMenu(): JSX.Element {
         items: [],
         open: false,
         id: "",
-        type: ""
+        type: "",
+        display: "none"
       }
     });
 
@@ -32,7 +33,7 @@ export function ContextMenu(): JSX.Element {
     <div
       onClick={handleClick}
       class={styles.contextMenu}
-      style={`top: ${contextMenu.value.y}px; left: ${contextMenu.value.x}px; position: absolute;`}
+      style={`top: ${contextMenu.value.y}px; left: ${contextMenu.value.x}px; position: absolute; display: ${contextMenu.value.display}`}
     >
       <div>
         <div style="display: flex; flex-direction: row">
