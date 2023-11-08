@@ -7,4 +7,51 @@
   padding-bottom: 6rem;
   overflow-y: auto;
   height: calc(100vh - 13rem);
+  width: 100%;
+
+  .modal__title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .modal__content {
+    display: flex;
+    padding-block: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+
+    &__buttons {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-right: 1rem;
+    }
+
+    &__input {
+      margin-right: 1rem;
+      appearance: none;
+      border: none;
+      border-radius: 5px;
+      padding: 0.5rem 1rem;
+      padding-left: rem;
+    }
+
+    &__button {
+      background-color: var(--accent);
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      color: #fff;
+      cursor: pointer;
+      height: 2rem;
+      margin-top: 0.5rem;
+    }
+
+    .modal__close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+  }
 }

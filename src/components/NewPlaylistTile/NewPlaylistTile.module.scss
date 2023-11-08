@@ -1,0 +1,37 @@
+.newPlaylistTile {
+  border-radius: var(--border-radius);
+  max-width: 12rem;
+  min-width: 12rem;
+  position: relative;
+  height: 11.3rem;
+
+  .inlay {
+    border: 6px dashed rgba(255, 255, 255, 0.4);
+    padding: 0;
+    border-radius: var(--border-radius);
+    height: 100%;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    > div {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.4);
+
+      .plus {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .text {
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+    }
+  }
+}

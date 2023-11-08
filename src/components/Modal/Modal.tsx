@@ -1,32 +1,20 @@
-import styles from './Modal.module.scss';
-import { type Component, type JSX } from 'solid-js';
+import { Show } from "solid-js";
+import styles from "./Modal.module.scss";
 
-interface ModalProps {
-  children?: JSX.Element | JSX.Element[]
-  isOpen: boolean
-  onClose: () => void
-}
-
-export const Modal: Component<ModalProps> = (props) => {
+const Modal = (props) => {
   return (
-    <div
-      class={styles.modal}
-      style={{ display: props.isOpen ? 'block' : 'none' }}
-    >
-      <div class={styles.modalContent}>
-        <div class={styles.modalHeader}>
-          <span class={styles.close} onClick={() => { props.onClose(); }}>
+    <Show when={props.isOpen()}>
+      <div class={styles.backdrop} onClick={props.onClose}></div>
+      <div class={styles.modal} onClick={props.onClose}>
+        <div class={styles.modal__content} onClick={(e) => e.stopPropagation()}>
+          <button class="close-button" onClick={props.onClose}>
             &times;
-          </span>
-          <slot name="header" />
-        </div>
-        <div class={styles.modalBody}>
-          <slot name="body" />
-        </div>
-        <div class={styles.modalFooter}>
-          <slot name="footer" />
+          </button>
+          {props.children}
         </div>
       </div>
-    </div>
+    </Show>
   );
 };
+
+export default Modal;

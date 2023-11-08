@@ -20,6 +20,14 @@
     flex-direction: row;
     gap: 1rem;
 
+    &__button {
+      border-radius: 50%;
+      color: #fff;
+      cursor: pointer;
+      height: 2rem;
+      margin-top: 0.5rem;
+    }
+
     &--chip--selected {
       background-color: var(--accent);
       color: #fff;

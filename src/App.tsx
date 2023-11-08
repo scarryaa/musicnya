@@ -1,4 +1,10 @@
-import { Show, type Component, createSignal, createEffect } from "solid-js";
+import {
+  Show,
+  type Component,
+  createSignal,
+  createEffect,
+  onCleanup
+} from "solid-js";
 import * as config from "../config.json";
 import { Drawer } from "./components/Drawer/Drawer";
 import { Titlebar, TitlebarMac } from "./components/Titlebar/Titlebar";
@@ -19,12 +25,24 @@ import { getFirestore } from "firebase/firestore/lite";
 import { ContextMenu } from "./components/ContextMenu/ContextMenu";
 import { LibraryAddBanner } from "./components/LibraryAddingBanner/LibraryAddBanner";
 import ImmersiveBackground from "./components/ImmersiveBackground/ImmersiveBackground";
+import Modal from "./components/Modal/Modal";
 
 export let cutToken: string;
 export let userToken: string;
 
 const [libraryAddedVisible, setLibraryAddedVisible] = createSignal(true);
 const [libraryAdded, setLibraryAdded] = createSignal(false);
+
+let audioContext;
+let source;
+let filters;
+
+onCleanup(() => {
+  if (source) {
+    source.disconnect();
+    filters.forEach((filter) => filter.disconnect());
+  }
+});
 
 console.log(navigator.platform);
 

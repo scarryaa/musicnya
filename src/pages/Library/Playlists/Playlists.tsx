@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Switch, Match, For, createResource } from "solid-js";
+import { Switch, Match, For, createResource, createSignal } from "solid-js";
 import type { JSX } from "solid-js";
 import { LoadingSpinner } from "../../../components/LoadingSpinner/LoadingSpinner";
 import { MediaTile } from "../../../components/MediaTile/MediaTile";
@@ -7,9 +6,28 @@ import { replaceSrc } from "../../../util/utils";
 import { Error } from "../../../components/Error/Error";
 import styles from "./Playlists.module.scss";
 import { getLibrary } from "../../../util/firebase";
+import { NewPlaylistTile } from "../../../components/NewPlaylistTile/NewPlaylistTile";
+import Modal from "../../../components/Modal/Modal";
+import { createPlaylist } from "../../../api/library-actions";
 
 export function Playlists(): JSX.Element {
   const [userLibrary] = createResource(async () => await getLibrary());
+  const [isModalOpen, setIsModalOpen] = createSignal(false);
+  const [playlistName, setPlaylistName] = createSignal("");
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const createNewPlaylist = () => {
+    if (playlistName() === "") return;
+    closeModal();
+    createPlaylist(playlistName());
+  };
 
   return (
     <div class={styles.playlists}>
@@ -27,6 +45,7 @@ export function Playlists(): JSX.Element {
           <Error error={userLibrary.error} />
         </Match>
         <Match when={userLibrary.state === "ready"}>
+          <NewPlaylistTile onclick={openModal} />
           <For each={userLibrary()?.playlists}>
             {(playlist) => (
               <MediaTile
@@ -45,6 +64,30 @@ export function Playlists(): JSX.Element {
           </For>
         </Match>
       </Switch>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <h1 class={styles.modal__title}>Create new playlist</h1>
+        <div class={styles.modal__content}>
+          <input
+            type="text"
+            placeholder="Playlist name"
+            class={styles.modal__content__input}
+            value={playlistName()}
+            autofocus
+            onInput={(e) => setPlaylistName(e.currentTarget.value)}
+          />
+          <div class={styles.modal__content__buttons}>
+            <button
+              class={styles.modal__content__button}
+              onClick={createNewPlaylist}
+            >
+              Create
+            </button>
+            <button class={styles.modal__content__button} onClick={closeModal}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
