@@ -54,7 +54,8 @@ export const addUser = async () => {
         albumCatalogId:
           song.relationships.albums.data[0].relationships?.catalog.data[0]
             ?.id || namePlaceholder,
-        id: song.id
+        id: song.id,
+        mediaArt: song?.attributes?.artwork.url || artworkPlaceholder
       })),
       playlists: (
         await fetchLibraryPlaylists({

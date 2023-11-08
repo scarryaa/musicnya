@@ -44,8 +44,8 @@ export function Songs(): JSX.Element {
                   <img
                     class={styles.songs__body__song__artwork}
                     src={song.mediaArt
-                      .replace("{w}x{h}", "30x30")
-                      .replace("{f}", "png")}
+                      ?.replace("{w}x{h}", "30x30")
+                      ?.replace("{f}", "png")}
                   />
                   <div
                     class={`${styles.songs__body__song__play} ${
