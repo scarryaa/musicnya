@@ -7,7 +7,7 @@
 }
 
 .queue {
-  height: 100%;
+  height: calc(100% - 3rem);
   position: absolute;
   right: 0;
   top: 0;
@@ -20,6 +20,16 @@
   flex-direction: column;
   justify-content: space-between;
   z-index: 10;
+
+  &__footer {
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    // align center
+    align-items: center;
+  }
 
   &__header {
     display: flex;

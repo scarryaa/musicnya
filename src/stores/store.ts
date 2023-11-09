@@ -71,3 +71,7 @@ export const [queue, setQueue] = createStore({
 export const [queuePosition, setQueuePosition] = createStore({
   value: 0
 });
+
+export const [history, setHistory] = createStore({
+  value: []
+});
