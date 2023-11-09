@@ -1,3 +1,5 @@
+import { setQueue as _setQueue } from "../stores/store";
+
 export const togglePlayPause = () => {
   if (MusicKit.getInstance().isPlaying) {
     MusicKit.getInstance().pause();
@@ -11,8 +13,8 @@ export const setAutoplay = (on: boolean) => {
   MusicKit.getInstance()._autoplayEnabled = on;
 };
 
-export const getQueueItems = () => {
-  return MusicKit.getInstance().queue.items;
+export const updateQueue = () => {
+  _setQueue("items", MusicKit.getInstance().queue.items);
 };
 
 export const play = async () => {

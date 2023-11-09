@@ -63,3 +63,11 @@ export const [playlists, setPlaylists] = createStore({
 export const [currentAlbumArt, setCurrentAlbumArt] = createStore({
   value: ""
 });
+
+export const [queue, setQueue] = createStore({
+  items: []
+});
+
+export const [queuePosition, setQueuePosition] = createStore({
+  value: 0
+});

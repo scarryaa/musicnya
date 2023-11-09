@@ -1,18 +1,19 @@
-import { A } from '@solidjs/router';
-import { formatTime } from '../../util/utils';
-import styles from './QueueItem.module.scss';
+import { A } from "@solidjs/router";
+import { formatTime } from "../../util/utils";
+import styles from "./QueueItem.module.scss";
 
 export interface QueueItemProps {
-  title?: string
-  type: MusicKit.MediaItemType
-  id: string
-  mediaArt: MusicKit.Artwork
-  artist?: string
-  album?: string
-  duration?: number
-  index: number
-  isCurrentItem: boolean
-  albumId?: string
+  title?: string;
+  type: MusicKit.MediaItemType;
+  id: string;
+  mediaArt: MusicKit.Artwork;
+  artist?: string;
+  album?: string;
+  duration?: number;
+  index: number;
+  isCurrentItem: boolean;
+  albumId?: string;
+  class?: string;
 }
 
 export function QueueItem(props: QueueItemProps) {
@@ -35,9 +36,10 @@ export function QueueItem(props: QueueItemProps) {
       </div>
       <div class={styles.queueItem__info}>
         <A
-          class={styles.queueItem__info__title}
+          class={styles.queueItem__info__title + " " + props.class}
           title={props.title}
-          href={'/album/' + props.albumId}
+          href={"/album/" + props.albumId}
+          style={{ color: props.isCurrentItem ? "var(--accent)" : "" }}
         >
           {props.title}
         </A>
@@ -46,7 +48,7 @@ export function QueueItem(props: QueueItemProps) {
         </div>
       </div>
       <div class={styles.queueItem__duration}>
-        {props.duration ? formatTime(props.duration / 1000) : ''}
+        {props.duration ? formatTime(props.duration / 1000) : ""}
       </div>
     </div>
   );

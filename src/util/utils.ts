@@ -6,9 +6,11 @@ import {
   setCurrentMediaItem,
   setIsPlaying,
   setPlaybackDuration,
-  setPlaybackTime
+  setPlaybackTime,
+  setQueuePosition
 } from "../stores/store";
 import { fetchLyrics, syncLyrics } from "../components/Lyrics/Lyrics";
+import { updateQueue } from "../api/musickit";
 
 export const replaceSrc = (
   src: string | undefined,
@@ -281,15 +283,20 @@ export const setupEvents = (): void => {
   MusicKit.getInstance().addEventListener(
     MusicKit.Events.queueItemsDidChange as string,
     () => {
-      console.log("queueItemsDidChange");
       void fetchLyrics();
+      updateQueue();
+      setQueuePosition({
+        value: MusicKit.getInstance().queue.position
+      });
     }
   );
 
   MusicKit.getInstance().addEventListener(
     MusicKit.Events.queuePositionDidChange as string,
     () => {
-      console.log("queuePositionDidChange");
+      setQueuePosition({
+        value: MusicKit.getInstance().queue.position
+      });
     }
   );
 

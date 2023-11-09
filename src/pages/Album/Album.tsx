@@ -102,6 +102,25 @@ export const Album = (): JSX.Element => {
               items={getNestedRelationships(albumData())?.tracks?.data}
               class={styles.album__table}
             />
+            {getNestedData(albumData())?.views?.["other-versions"].data
+              .length && (
+              <div class={styles.album__youMightAlsoLike}>
+                <MediaSelector
+                  links={getNestedAttributes(albumData())?.links}
+                  displayKind="album"
+                  type="albums"
+                  children={
+                    getNestedData(albumData())?.views?.["other-versions"].data
+                  }
+                  class={styles.album__footer__selector}
+                  title="Other Versions"
+                  artistId={
+                    getNestedRelationships(albumData())?.artists?.data?.[0]?.id
+                  }
+                  editorialElementKind="album"
+                />
+              </div>
+            )}
             {getNestedData(albumData())?.views?.["more-by-artist"].data
               .length && (
               <div class={styles.album__youMightAlsoLike}>

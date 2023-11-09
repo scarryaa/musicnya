@@ -1,9 +1,10 @@
-import { IoInfinite } from 'solid-icons/io';
-import styles from './Queue.module.scss';
-import { getQueueItems, setAutoplay } from '../../api/musickit';
-import { For, createEffect, createSignal } from 'solid-js';
-import { replaceSrc } from '../../util/utils';
-import { QueueItem } from './QueueItem';
+import { IoInfinite } from "solid-icons/io";
+import styles from "./Queue.module.scss";
+import { setAutoplay } from "../../api/musickit";
+import { For, createEffect, createSignal } from "solid-js";
+import { replaceSrc } from "../../util/utils";
+import { QueueItem } from "./QueueItem";
+import { queue, queuePosition } from "../../stores/store";
 
 export function Queue() {
   const [autoplay, _setAutoplay] = createSignal(true);
@@ -26,7 +27,7 @@ export function Queue() {
         <h1>Queue</h1>
         <IoInfinite
           size={30}
-          color={'var(--text)'}
+          color={"var(--text)"}
           class={styles.queue__autoplay}
           onclick={async () => {
             await setAutoplay(autoplay());
@@ -49,13 +50,16 @@ export function Queue() {
         />
       </div>
       <div class={styles.queue__items}>
-        <For each={getQueueItems()}>
-          {(item) => (
+        <For each={queue.items.slice(queuePosition.value)}>
+          {(item, index) => (
             <QueueItem
+              class={
+                queuePosition.value === index() ? styles.queue__current : ""
+              }
               id={item.id}
               type={item.type}
               index={item.trackNumber || 0}
-              isCurrentItem={false}
+              isCurrentItem={index() === 0}
               mediaArt={{
                 ...item.attributes?.artwork,
                 url: replaceSrc(item.attributes?.artwork?.url, 50)

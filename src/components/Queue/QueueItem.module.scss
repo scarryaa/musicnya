@@ -9,6 +9,10 @@
     background-color: var(--autoplay-on);
   }
 
+  &__current {
+    background-color: var(--autoplay-on);
+  }
+
   &__image {
     border-radius: var(--border-radius);
     object-fit: cover;
