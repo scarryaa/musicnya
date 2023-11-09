@@ -44,6 +44,22 @@ export const [contextMenu, setContextMenu] = createStore({
   }
 });
 
+export const [subContextMenu, setSubContextMenu] = createStore({
+  value: {
+    open: false,
+    x: 0,
+    y: 0,
+    items: [] as ContextMenuItem[],
+    id: "",
+    type: "",
+    display: "none"
+  }
+});
+
+export const [playlists, setPlaylists] = createStore({
+  value: []
+});
+
 export const [currentAlbumArt, setCurrentAlbumArt] = createStore({
   value: ""
 });

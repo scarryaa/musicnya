@@ -18,7 +18,12 @@ import { A } from "@solidjs/router";
 import musicNote from "../../assets/music_note.png";
 import { BiSolidPlaylist } from "solid-icons/bi";
 import { CgRowFirst, CgRowLast } from "solid-icons/cg";
-import { setContextMenu } from "../../stores/store";
+import {
+  playlists,
+  setContextMenu,
+  setSubContextMenu,
+  subContextMenu
+} from "../../stores/store";
 import {
   checkIsLoved,
   dislike,
@@ -29,6 +34,14 @@ import {
 import { getUrl } from "../../api/get-url";
 import { constructLink } from "../../util/utils";
 import { addToLibrary, removeFromLibrary } from "../../api/library-actions";
+import {
+  addToLibraryPlaylist,
+  fetchLibraryPlaylist
+} from "../../api/library-playlist";
+import { fetchLibraryAlbum } from "../../api/library-album";
+import { fetchAlbum } from "../../api/album";
+import { fetchPlaylist } from "../../api/playlist";
+import * as config from "../../../config.json";
 
 export interface MediaTileProps {
   mediaArt: MusicKit.Artwork;
@@ -148,7 +161,112 @@ export function MediaTile(props: MediaTileProps): JSX.Element {
       : {
           label: "Add to Playlist",
           icon: BiSolidPlaylist,
-          action: () => {}
+          action: () => {},
+          hasSubContextMenu: true,
+          onMouseOver: () => {
+            setSubContextMenu({
+              value: {
+                open: true,
+                x: 0,
+                y: 40,
+                items: playlists.value.map((playlist) => {
+                  console.log(props.id);
+                  return {
+                    label: playlist.attributes.name,
+                    icon: IoCheckmarkCircleOutline,
+                    action: async () => {
+                      props.type === "library-playlists"
+                        ? await fetchLibraryPlaylist({
+                            devToken: config.MusicKit.token,
+                            musicUserToken: config.MusicKit.musicUserToken,
+                            id: props.id
+                          })
+                            .then((res) => res.data[0])
+                            .then(async (res) => {
+                              const trackList =
+                                res.relationships.tracks.data.map((track) => {
+                                  return {
+                                    id: track.id,
+                                    type: track.type
+                                  };
+                                });
+
+                              await addToLibraryPlaylist({
+                                id: playlist.id,
+                                tracks: trackList
+                              });
+                            })
+                        : props.type === "library-albums"
+                        ? await fetchLibraryAlbum({
+                            devToken: config.MusicKit.token,
+                            musicUserToken: config.MusicKit.musicUserToken,
+                            id: props.id
+                          })
+                            .then((res) => res.data[0])
+                            .then(async (res) => {
+                              const trackList =
+                                res.relationships.tracks.data.map((track) => {
+                                  return {
+                                    id: track.id,
+                                    type: track.type
+                                  };
+                                });
+
+                              await addToLibraryPlaylist({
+                                id: playlist.id,
+                                tracks: trackList
+                              });
+                            })
+                        : props.type === "albums"
+                        ? await fetchAlbum({
+                            devToken: config.MusicKit.token,
+                            musicUserToken: config.MusicKit.musicUserToken,
+                            id: props.id
+                          })
+                            .then((res) => res.data[0])
+                            .then(async (res) => {
+                              const trackList =
+                                res.relationships.tracks.data.map((track) => {
+                                  return {
+                                    id: track.id,
+                                    type: track.type
+                                  };
+                                });
+
+                              await addToLibraryPlaylist({
+                                id: playlist.id,
+                                tracks: trackList
+                              });
+                            })
+                        : props.type === "playlists"
+                        ? await fetchPlaylist({
+                            devToken: config.MusicKit.token,
+                            musicUserToken: config.MusicKit.musicUserToken,
+                            id: props.id
+                          })
+                            .then((res) => res.data[0])
+                            .then(async (res) => {
+                              const trackList =
+                                res.relationships.tracks.data.map((track) => {
+                                  return {
+                                    id: track.id,
+                                    type: track.type
+                                  };
+                                });
+
+                              await addToLibraryPlaylist({
+                                id: playlist.id,
+                                tracks: trackList
+                              });
+                            })
+                        : null;
+                    },
+                    onMouseOver: () => {}
+                  };
+                })
+              }
+            });
+          }
         },
     {
       label: "Share",
@@ -162,6 +280,15 @@ export function MediaTile(props: MediaTileProps): JSX.Element {
           .then(async (res) => {
             await navigator.clipboard.writeText(res);
           });
+      },
+      onMouseOver: () => {
+        setSubContextMenu({
+          value: {
+            open: false,
+            x: 0,
+            y: 0
+          }
+        });
       }
     }
   ];

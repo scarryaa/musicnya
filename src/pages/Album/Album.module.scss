@@ -16,6 +16,12 @@
   overflow-x: hidden;
   color: var(--text);
 
+  &__youMightAlsoLike {
+    display: flex;
+    margin-top: var(--spacing-album-lg);
+    display: block;
+  }
+
   &__title {
     margin-bottom: 1rem;
   }
@@ -29,5 +35,10 @@
   &__table {
     margin-top: var(--spacing-album-lg);
     padding-right: 1rem;
+  }
+
+  &__footer {
+    display: flex;
+    flex-direction: row;
   }
 }

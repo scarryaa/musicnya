@@ -2,7 +2,7 @@
 import styles from "./Album.module.scss";
 
 import { useParams } from "@solidjs/router";
-import { Match, Show, Switch, createEffect, createSignal } from "solid-js";
+import { For, Match, Show, Switch, createEffect, createSignal } from "solid-js";
 import {
   getItemRelationships,
   getNestedArtwork,
@@ -17,6 +17,9 @@ import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { Error } from "../../components/Error/Error";
 import { createAlbumStore } from "../../stores/api-store";
 import type { JSX } from "solid-js";
+import { ArtistTile } from "../../components/ArtistTile/ArtistTile";
+import { MediaTile } from "../../components/MediaTile/MediaTile";
+import { MediaSelector } from "../../components/MediaSelector/MediaSelector";
 
 const ARTWORK_RESOLUTION = 300;
 
@@ -99,6 +102,45 @@ export const Album = (): JSX.Element => {
               items={getNestedRelationships(albumData())?.tracks?.data}
               class={styles.album__table}
             />
+            {getNestedData(albumData())?.views?.["more-by-artist"].data
+              .length && (
+              <div class={styles.album__youMightAlsoLike}>
+                <MediaSelector
+                  links={getNestedAttributes(albumData())?.links}
+                  displayKind="album"
+                  type="albums"
+                  children={
+                    getNestedData(albumData())?.views?.["more-by-artist"].data
+                  }
+                  class={styles.album__footer__selector}
+                  title="More By Artist"
+                  artistId={
+                    getNestedRelationships(albumData())?.artists?.data?.[0]?.id
+                  }
+                  editorialElementKind="album"
+                />
+              </div>
+            )}
+            {getNestedData(albumData())?.views?.["you-might-also-like"].data
+              .length && (
+              <div class={styles.album__youMightAlsoLike}>
+                <MediaSelector
+                  links={getNestedAttributes(albumData())?.links}
+                  displayKind="album"
+                  type="albums"
+                  children={
+                    getNestedData(albumData())?.views?.["you-might-also-like"]
+                      .data
+                  }
+                  class={styles.album__footer__selector}
+                  title="You Might Also Like"
+                  artistId={
+                    getNestedRelationships(albumData())?.artists?.data?.[0]?.id
+                  }
+                  editorialElementKind="album"
+                />
+              </div>
+            )}
           </Show>
         </Match>
       </Switch>

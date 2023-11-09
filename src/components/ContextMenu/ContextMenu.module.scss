@@ -18,6 +18,18 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
 
+  &__subContextMenu {
+    position: absolute;
+    z-index: 100;
+    background: var(--contextmenu-background);
+    border-radius: 4px;
+    padding: 0.5rem 0.5rem;
+    color: var(--contextmenu-color);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    overflow-y: auto;
+  }
+
   .contextMenu__quick__item {
     padding: 0.2rem 0.2rem;
     border-radius: 4px;
@@ -36,6 +48,7 @@
     font-size: 0.875rem;
     vertical-align: middle;
     border-radius: 4px;
+    display: flex;
     margin-inline: 0.1rem;
 
     &:hover {

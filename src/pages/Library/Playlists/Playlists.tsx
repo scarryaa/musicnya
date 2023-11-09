@@ -9,6 +9,9 @@ import { getLibrary } from "../../../util/firebase";
 import { NewPlaylistTile } from "../../../components/NewPlaylistTile/NewPlaylistTile";
 import Modal from "../../../components/Modal/Modal";
 import { createPlaylist } from "../../../api/library-actions";
+import { fetchLibraryPlaylists } from "../../../api/library-playlists";
+import * as config from "../../../../config.json";
+import { playlists, setPlaylists } from "../../../stores/store";
 
 export function Playlists(): JSX.Element {
   const [userLibrary] = createResource(async () => await getLibrary());
@@ -26,7 +29,17 @@ export function Playlists(): JSX.Element {
   const createNewPlaylist = () => {
     if (playlistName() === "") return;
     closeModal();
-    createPlaylist(playlistName());
+    createPlaylist(playlistName()).then(() => {
+      fetchLibraryPlaylists({
+        devToken: config.MusicKit.token,
+        musicUserToken: config.MusicKit.musicUserToken
+      }).then((res) => {
+        console.log(res);
+        setPlaylists({
+          value: res.data
+        });
+      });
+    });
   };
 
   return (

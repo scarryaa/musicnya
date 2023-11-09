@@ -14,7 +14,8 @@ import { Lyrics } from "./components/Lyrics/Lyrics";
 import {
   immersiveBackground,
   rightPanelContent,
-  rightPanelOpen
+  rightPanelOpen,
+  setPlaylists
 } from "./stores/store";
 import { Queue } from "./components/Queue/Queue";
 import { currentMediaItem } from "../src/stores/store";
@@ -26,6 +27,7 @@ import { ContextMenu } from "./components/ContextMenu/ContextMenu";
 import { LibraryAddBanner } from "./components/LibraryAddingBanner/LibraryAddBanner";
 import ImmersiveBackground from "./components/ImmersiveBackground/ImmersiveBackground";
 import Modal from "./components/Modal/Modal";
+import { fetchLibraryPlaylists } from "./api/library-playlists";
 
 export let cutToken: string;
 export let userToken: string;
@@ -92,6 +94,17 @@ const App: Component = () => {
         setIsAuthorized(true);
       });
 
+      config.MusicKit.musicUserToken = music.musicUserToken;
+
+      fetchLibraryPlaylists({
+        devToken: config.MusicKit.token,
+        musicUserToken: music.musicUserToken
+      }).then((res) => {
+        console.log(res);
+        setPlaylists({
+          value: res.data
+        });
+      });
       setupEvents();
       music.volume = 0.2;
       music.autoplayEnabled = true;
@@ -149,7 +162,7 @@ const App: Component = () => {
         <Queue />
       </Show>
       <Show when={isAuthorized()}>
-        <Main libraryAddedVisible={libraryAddedVisible()} />
+        <Main libraryAddedVisible={libraryAddedVisible()}></Main>
       </Show>
       <Show when={currentMediaItem.id}>
         <Player />
